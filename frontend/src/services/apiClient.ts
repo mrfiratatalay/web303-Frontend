@@ -1,8 +1,14 @@
 import axios from 'axios';
 import { AUTH_TOKEN_KEY, clearAuth } from '../utils/storage';
 
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+
+if (!apiBaseUrl) {
+  throw new Error('VITE_API_BASE_URL is not defined. Set it in your environment configuration.');
+}
+
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1',
+  baseURL: apiBaseUrl,
   withCredentials: false,
 });
 

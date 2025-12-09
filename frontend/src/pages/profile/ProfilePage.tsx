@@ -46,8 +46,12 @@ const unwrap = <T,>(response: { data?: { data?: T } | T } | T): T =>
 
 const API_BASE_ORIGIN =
   (() => {
+    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+    if (!apiBaseUrl) {
+      return '';
+    }
     try {
-      return new URL(import.meta.env.VITE_API_BASE_URL || '').origin;
+      return new URL(apiBaseUrl).origin;
     } catch (err) {
       return '';
     }

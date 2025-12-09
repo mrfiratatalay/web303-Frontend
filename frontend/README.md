@@ -5,8 +5,7 @@ React + TypeScript + Vite frontend for the Smart Campus backend. Implements full
 ## Prerequisites
 
 - Node.js 18+ (recommended) and npm
-- Backend running at `http://localhost:5000/api/v1`
-  - `.env` should contain `VITE_API_BASE_URL=http://localhost:5000/api/v1`
+- Backend reachable via `VITE_API_BASE_URL` (local default `http://localhost:5000/api/v1`)
 
 ## Installation
 
@@ -17,10 +16,10 @@ npm install
 
 ## Scripts
 
-- `npm run dev` – start Vite dev server (default http://localhost:5173)
-- `npm run build` – production build
-- `npm run preview` – preview production build
-- `npm test` – run vitest + Testing Library (jsdom)
+- `npm run dev` - start Vite dev server (default http://localhost:5173)
+- `npm run build` - production build
+- `npm run preview` - preview production build
+- `npm test` - run vitest + Testing Library (jsdom)
 
 ## Project Structure
 
@@ -40,13 +39,48 @@ App.tsx             # routes
 main.tsx            # app entry
 ```
 
-## Environment
+## Environment Setup
 
-Create `frontend/.env`:
+The frontend uses `VITE_API_BASE_URL` to know where the backend API lives.
 
-```
-VITE_API_BASE_URL=http://localhost:5000/api/v1
-```
+### Local development
+
+1. Copy the example env file:
+
+   ```bash
+   cd frontend
+   cp .env.example .env
+   ```
+
+2. Edit `.env` and make sure it points to your local backend (Docker default):
+
+   ```env
+   VITE_API_BASE_URL=http://localhost:5000/api/v1
+   ```
+
+3. Start the dev server:
+
+   ```bash
+   npm run dev
+   ```
+
+The app runs at `http://localhost:5173` and talks to the backend at `http://localhost:5000/api/v1`.
+
+### Production (Vercel) with live backend
+
+When deploying to Vercel:
+
+- Build command: `npm run build`
+- Output directory: `dist`
+- Framework preset: Vite (or Static Site if auto-detected)
+
+In Vercel project settings, under **Environment Variables**, add:
+
+- `VITE_API_BASE_URL = https://smart-campus-api-g53d.onrender.com/api/v1`
+
+After deploy, the frontend will call the live backend at `https://smart-campus-api-g53d.onrender.com/api/v1`.
+
+`.env.example` is tracked in git; `.env` is local-only. Use the same codebase for local and production by switching `VITE_API_BASE_URL`.
 
 ## Routing
 
@@ -85,7 +119,7 @@ VITE_API_BASE_URL=http://localhost:5000/api/v1
 ```bash
 cd frontend
 npm install
-echo "VITE_API_BASE_URL=http://localhost:5000/api/v1" > .env
+cp .env.example .env
 npm run dev
 ```
 
