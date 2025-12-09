@@ -42,7 +42,6 @@ type DepartmentOption = { id: string; name: string; code?: string; faculty?: str
 function RegisterPage() {
   const [serverError, setServerError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [departments, setDepartments] = useState<DepartmentOption[]>([]);
   const [departmentsError, setDepartmentsError] = useState('');
   const navigate = useNavigate();
@@ -51,7 +50,7 @@ function RegisterPage() {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     setValue,
   } = useForm<RegisterForm>({
     resolver: yupResolver(registerSchema),
@@ -80,7 +79,8 @@ function RegisterPage() {
         const response = await apiClient.get<{ data?: DepartmentOption[] } | DepartmentOption[]>(
           '/departments',
         );
-        const list = (response.data as { data?: DepartmentOption[] })?.data ||
+        const list =
+          (response.data as { data?: DepartmentOption[] })?.data ||
           (response.data as DepartmentOption[]);
         if (Array.isArray(list) && list.length > 0) {
           setDepartments(list);
@@ -102,7 +102,6 @@ function RegisterPage() {
   const onSubmit: SubmitHandler<RegisterForm> = async (values) => {
     setServerError('');
     setSuccessMessage('');
-    setIsSubmitting(true);
     try {
       const payload: Record<string, unknown> = {
         firstName: values.firstName,
@@ -145,7 +144,8 @@ function RegisterPage() {
           const response = await apiClient.get<{ data?: DepartmentOption[] } | DepartmentOption[]>(
             '/departments',
           );
-          const list = (response.data as { data?: DepartmentOption[] })?.data ||
+          const list =
+            (response.data as { data?: DepartmentOption[] })?.data ||
             (response.data as DepartmentOption[]);
           if (Array.isArray(list)) {
             setDepartments(list);
@@ -156,8 +156,6 @@ function RegisterPage() {
           );
         }
       }
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
