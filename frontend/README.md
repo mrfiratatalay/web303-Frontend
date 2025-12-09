@@ -82,6 +82,20 @@ After deploy, the frontend will call the live backend at `https://smart-campus-a
 
 `.env.example` is tracked in git; `.env` is local-only. Use the same codebase for local and production by switching `VITE_API_BASE_URL`.
 
+## Deployment – Vercel (Frontend)
+
+1. Connect the GitHub repo to Vercel (framework preset: **Vite**).
+2. Build settings:
+   - Build command: `npm run build`
+   - Output directory: `dist`
+3. Environment variables:
+   - `VITE_API_BASE_URL = https://smart-campus-api-g53d.onrender.com/api/v1`
+4. Deploy and verify:
+   - Open the Vercel URL (e.g. `https://<your-vercel-domain>.vercel.app`).
+   - Load the login page, then try logging in and opening dashboard/profile.
+   - In DevTools Network tab, confirm calls go to `https://smart-campus-api-g53d.onrender.com/api/v1/...`.
+   - If you see CORS errors, add your Vercel domain to the backend `FRONTEND_URL` list.
+
 ## Routing
 
 - Public: `/login`, `/register`, `/forgot-password`, `/reset-password/:token`, `/verify-email/:token`
