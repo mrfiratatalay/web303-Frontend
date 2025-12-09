@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+﻿import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 
@@ -66,7 +66,7 @@ describe('LoginPage', () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/e-posta/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/şifre/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /giriş yap/i })).toBeInTheDocument();
   });
@@ -91,7 +91,7 @@ describe('LoginPage', () => {
       </MemoryRouter>,
     );
 
-    await userEvent.type(screen.getByLabelText(/email/i), 'not-an-email');
+    await userEvent.type(screen.getByLabelText(/e-posta/i), 'not-an-email');
     await userEvent.type(screen.getByLabelText(/şifre/i), 'Password1');
     await userEvent.click(screen.getByRole('button', { name: /giriş yap/i }));
 
@@ -105,7 +105,7 @@ describe('LoginPage', () => {
       </MemoryRouter>,
     );
 
-    await userEvent.type(screen.getByLabelText(/email/i), 'user@example.com');
+    await userEvent.type(screen.getByLabelText(/e-posta/i), 'user@example.com');
     await userEvent.type(screen.getByLabelText(/şifre/i), 'Password1');
     await userEvent.click(screen.getByRole('button', { name: /giriş yap/i }));
 

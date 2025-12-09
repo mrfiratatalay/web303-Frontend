@@ -1,9 +1,12 @@
-import { render, screen } from '@testing-library/react';
+﻿import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 
 const mockRegister = vi.hoisted(() => vi.fn().mockResolvedValue({ data: { message: 'ok' } }));
 const mockNavigate = vi.hoisted(() => vi.fn());
+const mockGet = vi.hoisted(() =>
+  vi.fn().mockResolvedValue({ data: { data: [{ id: 'dept-1', name: 'Bilgisayar Mühendisliği' }] } }),
+);
 
 vi.mock('../components/form/PasswordInput', () => ({
   __esModule: true,
@@ -31,6 +34,17 @@ vi.mock('../components/form/PasswordInput', () => ({
 
 vi.mock('../services/authApi', () => ({
   register: mockRegister,
+}));
+
+vi.mock('../services/apiClient', () => ({
+  __esModule: true,
+  default: {
+    get: mockGet,
+    interceptors: {
+      request: { use: vi.fn() },
+      response: { use: vi.fn() },
+    },
+  },
 }));
 
 vi.mock('react-router-dom', async (importOriginal) => {
@@ -81,12 +95,8 @@ describe('RegisterPage', () => {
     expect(await screen.findByText(/email zorunludur/i)).toBeInTheDocument();
     expect(await screen.findByText(/bölüm seçimi zorunludur/i)).toBeInTheDocument();
     // Password may fail with required or min-length; accept either
-    expect(
-      await screen.findByText(/şifre (zorunludur|en az 8 karakter olmalıdır)/i),
-    ).toBeInTheDocument();
-    expect(
-      await screen.findByText(/şifre tekrar (zorunludur|eşleşmiyor|en az 8)/i),
-    ).toBeInTheDocument();
+    expect(await screen.findByText(/şifre (zorunludur|en az 8 karakter olmalıdır)/i)).toBeInTheDocument();
+    expect(await screen.findByText(/şifre tekrar (zorunludur|eşleşmiyor|en az 8)/i)).toBeInTheDocument();
     expect(await screen.findByText(/öğrenci numarası zorunludur/i)).toBeInTheDocument();
     expect(await screen.findByText(/kullanım şartlarını onaylayın/i)).toBeInTheDocument();
   });

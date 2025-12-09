@@ -1,4 +1,4 @@
-import * as Yup from 'yup';
+﻿import * as Yup from 'yup';
 
 const passwordSchema = Yup.string()
   .min(8, 'Şifre en az 8 karakter olmalıdır')
@@ -30,7 +30,7 @@ export const registerSchema = Yup.object({
   }),
   title: Yup.string().when('role', {
     is: 'faculty',
-    then: (schema) => schema.required('Ünvan zorunludur'),
+    then: (schema) => schema.required('Unvan zorunludur'),
     otherwise: (schema) => schema.optional(),
   }),
   password: passwordSchema,

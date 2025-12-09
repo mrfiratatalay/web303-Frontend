@@ -1,4 +1,4 @@
-import { yupResolver } from '@hookform/resolvers/yup';
+﻿import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
@@ -59,7 +59,7 @@ function LoginPage() {
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <TextInput
-          label="Email"
+          label="E-posta"
           type="email"
           placeholder="ornek@kampus.com"
           register={register}

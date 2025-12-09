@@ -1,4 +1,4 @@
-import { yupResolver } from '@hookform/resolvers/yup';
+﻿import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
@@ -35,7 +35,7 @@ function ForgotPasswordPage() {
     setIsSubmitting(true);
     try {
       await forgotPassword(email);
-      setMessage('Eğer bu email kayıtlıysa, şifre sıfırlama linki gönderildi.');
+      setMessage('Eğer bu e-posta kayıtlıysa, şifre sıfırlama linki gönderildi.');
     } catch (err) {
       setError(getErrorMessage(err, 'İşlem sırasında bir hata oluştu.'));
     } finally {
@@ -46,7 +46,7 @@ function ForgotPasswordPage() {
   return (
     <AuthLayout
       title="Şifre Sıfırlama"
-      subtitle="Email adresinizi girin, kayıtlıysa sıfırlama linki gönderilecektir."
+      subtitle="E-posta adresinizi girin; kayıtlıysa sıfırlama linki gönderilecektir."
     >
       <Stack spacing={1.5}>
         {message && <Alert variant="success" message={message} />}
@@ -55,7 +55,7 @@ function ForgotPasswordPage() {
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <TextInput
-          label="Email"
+          label="E-posta"
           name="email"
           type="email"
           register={register}

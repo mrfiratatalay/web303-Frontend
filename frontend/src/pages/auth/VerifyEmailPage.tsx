@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Alert from '../../components/feedback/Alert';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
@@ -24,7 +24,7 @@ function VerifyEmailPage() {
         setStatus({
           loading: false,
           success: true,
-          message: 'Email doğrulandı, birkaç saniye içinde giriş sayfasına yönlendirileceksiniz.',
+          message: 'E-posta doğrulandı, birkaç saniye içinde giriş sayfasına yönlendirileceksiniz.',
         });
         setTimeout(() => navigate('/login'), 3000);
       } catch (err) {
@@ -39,7 +39,7 @@ function VerifyEmailPage() {
   }, [navigate, token]);
 
   return (
-    <AuthLayout title="Email Doğrulama" subtitle="Hesabınızı doğruluyoruz.">
+    <AuthLayout title="E-posta Doğrulama" subtitle="Hesabınızı doğruluyoruz.">
       {status.loading ? (
         <div className="flex items-center justify-center py-6">
           <LoadingSpinner label="Doğrulanıyor..." />
