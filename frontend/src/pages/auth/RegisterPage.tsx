@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -18,6 +18,7 @@ import CheckboxInput from '../../components/form/CheckboxInput';
 import PasswordInput from '../../components/form/PasswordInput';
 import TextInput from '../../components/form/TextInput';
 import { register as registerRequest } from '../../services/authApi';
+import apiClient from '../../services/apiClient';
 import { getErrorMessage } from '../../utils/error';
 import { registerSchema } from '../../utils/validationSchemas';
 import AuthLayout from '../../components/layout/AuthLayout';
@@ -36,19 +37,14 @@ type RegisterForm = {
   acceptTerms: boolean;
 };
 
-// Backend expects department UUIDs (seeded)
-const departmentOptions = [
-  { value: 'fca3dbca-08d6-41bd-8717-0f5223a6a016', label: 'Bilgisayar MÃ¼hendisliÄŸi' },
-  { value: '3b96085f-1f0a-4bcb-b634-568b961ac969', label: 'Elektrik-Elektronik MÃ¼hendisliÄŸi' },
-  { value: 'e31533d4-ec23-46ae-82f6-f719913abf9e', label: 'Makine MÃ¼hendisliÄŸi' },
-  { value: 'c947f133-b288-4fd8-b05f-238586f6d767', label: 'Ä°ÅŸletme' },
-  { value: 'fe33da2c-f030-49ce-972c-3e5be54e626b', label: 'Psikoloji' },
-];
+type DepartmentOption = { id: string; name: string; code?: string; faculty?: string };
 
 function RegisterPage() {
   const [serverError, setServerError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [departments, setDepartments] = useState<DepartmentOption[]>([]);
+  const [departmentsError, setDepartmentsError] = useState('');
   const navigate = useNavigate();
 
   const {
@@ -77,6 +73,32 @@ function RegisterPage() {
   const selectedRole = watch('role');
   const departmentValue = watch('departmentId');
 
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      setDepartmentsError('');
+      try {
+        const response = await apiClient.get<{ data?: DepartmentOption[] } | DepartmentOption[]>(
+          '/departments',
+        );
+        const list = (response.data as { data?: DepartmentOption[] })?.data ||
+          (response.data as DepartmentOption[]);
+        if (Array.isArray(list) && list.length > 0) {
+          setDepartments(list);
+        } else {
+          setDepartments([]);
+          setDepartmentsError('Bölümler yüklenemedi. Lütfen daha sonra tekrar deneyin.');
+        }
+      } catch (error) {
+        setDepartments([]);
+        setDepartmentsError(
+          getErrorMessage(error, 'Bölümler yüklenemedi. Lütfen sayfayı yenileyin.'),
+        );
+      }
+    };
+
+    fetchDepartments();
+  }, []);
+
   const onSubmit: SubmitHandler<RegisterForm> = async (values) => {
     setServerError('');
     setSuccessMessage('');
@@ -102,13 +124,31 @@ function RegisterPage() {
       const response = await registerRequest(payload);
       const message =
         (response as { data?: { message?: string } })?.data?.message ||
-        'KayÄ±t baÅŸarÄ±lÄ±. LÃ¼tfen e-postanÄ±zÄ± doÄŸrulama iÃ§in kontrol edin.';
+        'KayZñt baYarZñlZñ. Lütfen e-postanızı doğrulama için kontrol edin.';
       setSuccessMessage(message);
 
       // Redirect to login after a short pause so the user can see the message
       setTimeout(() => navigate('/login'), 3000);
     } catch (error) {
-      setServerError(getErrorMessage(error, 'KayÄ±t baÅŸarÄ±sÄ±z.'));
+      const message = getErrorMessage(error, 'KayZñt baYarZñsZñz.');
+      setServerError(message);
+      if (message.toLowerCase().includes('bölüm')) {
+        // Refresh departments in case the list changed
+        try {
+          const response = await apiClient.get<{ data?: DepartmentOption[] } | DepartmentOption[]>(
+            '/departments',
+          );
+          const list = (response.data as { data?: DepartmentOption[] })?.data ||
+            (response.data as DepartmentOption[]);
+          if (Array.isArray(list)) {
+            setDepartments(list);
+          }
+        } catch (err) {
+          setDepartmentsError(
+            getErrorMessage(err, 'Bölümler güncellenemedi. Lütfen tekrar deneyin.'),
+          );
+        }
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -116,12 +156,12 @@ function RegisterPage() {
 
   return (
     <AuthLayout
-      title="Yeni hesap oluÅŸtur"
-      subtitle="Ã–ÄŸrenci veya akademisyen olarak kayÄ±t olun"
+      title="Yeni hesap oluştur"
+      subtitle="Öğrenci veya akademisyen olarak kayıt olun"
       maxWidth="64rem"
       action={
         <Link to="/login" className="text-sm text-blue-600 hover:underline">
-          Zaten hesabÄ±nÄ±z var mÄ±?
+          Zaten hesabınız var mı?
         </Link>
       }
     >
@@ -134,9 +174,9 @@ function RegisterPage() {
         <Grid container spacing={2}>
           <Grid item xs={12} md={4}>
             <TextInput
-              label="Ä°sim"
+              label="İsim"
               name="firstName"
-              placeholder="AdÄ±nÄ±zÄ± girin"
+              placeholder="Adınızı girin"
               register={register}
               error={errors.firstName?.message}
             />
@@ -145,7 +185,7 @@ function RegisterPage() {
             <TextInput
               label="Soyisim"
               name="lastName"
-              placeholder="SoyadÄ±nÄ±zÄ± girin"
+              placeholder="Soyadınızı girin"
               register={register}
               error={errors.lastName?.message}
             />
@@ -162,7 +202,7 @@ function RegisterPage() {
           </Grid>
         </Grid>
 
-        {/* SECOND ROW: Rol / BÃ¶lÃ¼m / Åifre / Åifre Tekrar */}
+        {/* SECOND ROW: Rol / Bölüm / Şifre / Şifre Tekrar */}
         <Grid container spacing={3} alignItems="flex-start" sx={{ mt: 3 }}>
           <Grid item xs={12} md={3}>
             <FormControl
@@ -182,9 +222,9 @@ function RegisterPage() {
                 }
               >
                 <MenuItem value="">
-                  <em>SeÃ§iniz</em>
+                  <em>Seçiniz</em>
                 </MenuItem>
-                <MenuItem value="student">Ã–ÄŸrenci</MenuItem>
+                <MenuItem value="student">Öğrenci</MenuItem>
                 <MenuItem value="faculty">Akademisyen</MenuItem>
               </Select>
               <FormHelperText>{errors.role?.message}</FormHelperText>
@@ -196,34 +236,37 @@ function RegisterPage() {
               fullWidth
               size="medium"
               margin="normal"
-              error={!!errors.departmentId}
+              error={!!errors.departmentId || !!departmentsError}
             >
-              <InputLabel id="department-label">BÃ¶lÃ¼m</InputLabel>
+              <InputLabel id="department-label">Bölüm</InputLabel>
               <Select
                 labelId="department-label"
                 id="department"
-                label="BÃ¶lÃ¼m"
+                label="Bölüm"
                 value={departmentValue || ''}
                 onChange={(e) =>
                   setValue('departmentId', e.target.value as string, { shouldValidate: true })
                 }
+                disabled={departments.length === 0}
               >
                 <MenuItem value="">
-                  <em>SeÃ§iniz</em>
+                  <em>Seçiniz</em>
                 </MenuItem>
-                {departmentOptions.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
+                {departments.map((option) => (
+                  <MenuItem key={option.id} value={option.id}>
+                    {option.name}
                   </MenuItem>
                 ))}
               </Select>
-              <FormHelperText>{errors.departmentId?.message}</FormHelperText>
+              <FormHelperText>
+                {errors.departmentId?.message || departmentsError}
+              </FormHelperText>
             </FormControl>
           </Grid>
 
           <Grid item xs={12} md={3}>
             <PasswordInput
-              label="Åifre"
+              label="Şifre"
               name="password"
               placeholder="********"
               register={register}
@@ -233,7 +276,7 @@ function RegisterPage() {
 
           <Grid item xs={12} md={3}>
             <PasswordInput
-              label="Åifre Tekrar"
+              label="Şifre Tekrar"
               name="confirmPassword"
               placeholder="********"
               register={register}
@@ -245,9 +288,9 @@ function RegisterPage() {
         <Grid container spacing={2} sx={{ mt: 1 }}>
           <Grid item xs={12} md={4}>
             <TextInput
-              label={selectedRole === 'student' ? 'Ã–ÄŸrenci NumarasÄ±' : 'Personel NumarasÄ±'}
+              label={selectedRole === 'student' ? 'Öğrenci Numarası' : 'Personel Numarası'}
               name={selectedRole === 'student' ? 'studentNumber' : 'employeeNumber'}
-              placeholder={selectedRole === 'student' ? 'Ã–ÄŸrenci numaranÄ±z' : 'Personel numaranÄ±z'}
+              placeholder={selectedRole === 'student' ? 'Öğrenci numaranız' : 'Personel numaranız'}
               register={register}
               error={
                 selectedRole === 'student'
@@ -261,7 +304,7 @@ function RegisterPage() {
               <TextInput
                 label="Unvan"
                 name="title"
-                placeholder="Dr. Ã–ÄŸr. Ãœyesi"
+                placeholder="Dr. Öğr. Üyesi"
                 register={register}
                 error={errors.title?.message}
               />
@@ -277,13 +320,13 @@ function RegisterPage() {
           sx={{ mt: 2 }}
         >
           <CheckboxInput
-            label="KullanÄ±m ÅŸartlarÄ±nÄ± kabul ediyorum"
+            label="Kullanım Şartlarını kabul ediyorum"
             name="acceptTerms"
             register={register}
             error={errors.acceptTerms?.message}
           />
-          <Button type="submit" variant="contained" disabled={isSubmitting}>
-            {isSubmitting ? <LoadingSpinner label="KayÄ±t oluyor..." /> : 'Hesap OluÅŸtur'}
+          <Button type="submit" variant="contained" disabled={isSubmitting || departments.length === 0}>
+            {isSubmitting ? <LoadingSpinner label="Kayıt oluyor..." /> : 'Hesap Oluştur'}
           </Button>
         </Stack>
       </form>
