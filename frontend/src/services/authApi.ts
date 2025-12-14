@@ -1,5 +1,5 @@
 import apiClient from './apiClient';
-import { AuthPayload, User } from '../types/auth';
+import { AuthPayload, AuthTokens, User } from '../types/auth';
 
 export const login = (data: { email: string; password: string }) =>
   apiClient.post<AuthPayload>('/auth/login', data);
@@ -12,8 +12,15 @@ export const verifyEmail = (token: string) => apiClient.post<{ message: string }
 export const forgotPassword = (email: string) =>
   apiClient.post<{ message: string }>('/auth/forgot-password', { email });
 
-export const resetPassword = ({ token, password }: { token: string; password: string }) =>
-  apiClient.post<{ message: string }>('/auth/reset-password', { token, password });
+export const resetPassword = ({
+  token,
+  password,
+  confirmPassword,
+}: { token: string; password: string; confirmPassword: string }) =>
+  apiClient.post<{ message: string }>('/auth/reset-password', { token, password, confirmPassword });
+
+export const refreshAccessToken = (refreshToken: string) =>
+  apiClient.post<AuthTokens>('/auth/refresh', { refreshToken });
 
 export const getCurrentUser = () => apiClient.get<User>('/users/me');
 

@@ -32,12 +32,12 @@ function ResetPasswordPage() {
     defaultValues: { password: '', confirmPassword: '' },
   });
 
-  const onSubmit: SubmitHandler<ResetForm> = async ({ password }) => {
+  const onSubmit: SubmitHandler<ResetForm> = async ({ password, confirmPassword }) => {
     setMessage('');
     setError('');
     setIsSubmitting(true);
     try {
-      await resetPassword({ token: token || '', password });
+      await resetPassword({ token: token || '', password, confirmPassword });
       setMessage('Şifreniz güncellendi. Giriş sayfasına yönlendiriliyorsunuz...');
       setTimeout(() => navigate('/login'), 1500);
     } catch (err) {
