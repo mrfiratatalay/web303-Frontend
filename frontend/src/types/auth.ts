@@ -1,5 +1,12 @@
 export type UserRole = 'student' | 'faculty' | 'admin';
 
+export interface DepartmentInfo {
+  id: string;
+  name: string;
+  code?: string;
+  faculty?: string;
+}
+
 export interface User {
   id: string;
   email: string;
@@ -11,14 +18,26 @@ export interface User {
   phone?: string | null;
   profile_picture_url?: string | null;
   profilePictureUrl?: string | null;
+  is_active?: boolean;
+  isActive?: boolean;
+  created_at?: string;
+  createdAt?: string;
+  updated_at?: string;
+  updatedAt?: string;
   student?: {
+    id?: string;
     student_number?: string;
-    department?: { id: string; name: string; code?: string } | null;
+    enrollment_year?: number;
+    gpa?: number | null;
+    cgpa?: number | null;
+    department?: DepartmentInfo | null;
   } | null;
   faculty?: {
+    id?: string;
     employee_number?: string;
     title?: string;
-    department?: { id: string; name: string; code?: string } | null;
+    office_location?: string | null;
+    department?: DepartmentInfo | null;
   } | null;
 }
 
