@@ -29,8 +29,8 @@ function StudentGradesPage() {
       setError('');
       try {
         const response = await getMyGrades();
-        const data = extractData<GradeEntry[]>(response);
-        setGrades(data || []);
+        const data = extractData<GradeEntry[] | GradeEntry>(response);
+        setGrades(Array.isArray(data) ? data : data ? [data] : []);
       } catch (err) {
         setError(getErrorMessage(err, 'Notlar yüklenemedi.'));
         setGrades([]);

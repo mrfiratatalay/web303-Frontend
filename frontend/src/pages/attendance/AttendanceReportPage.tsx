@@ -85,14 +85,16 @@ function AttendanceReportPage() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {report.students?.map((s, idx) => (
-                    <TableRow key={idx}>
-                      <TableCell>{s.name}</TableCell>
-                      <TableCell>{s.studentNumber}</TableCell>
-                      <TableCell>{s.attendanceRate ?? '-'}%</TableCell>
-                      <TableCell>{s.absences ?? '-'}</TableCell>
-                    </TableRow>
-                  )) || (
+                  {Array.isArray(report.students) && report.students.length > 0 ? (
+                    report.students.map((s, idx) => (
+                      <TableRow key={idx}>
+                        <TableCell>{s.name}</TableCell>
+                        <TableCell>{s.studentNumber}</TableCell>
+                        <TableCell>{s.attendanceRate ?? '-'}%</TableCell>
+                        <TableCell>{s.absences ?? '-'}</TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
                     <TableRow>
                       <TableCell colSpan={4} align="center">
                         <Typography color="text.secondary">Kayıt yok.</Typography>

@@ -70,6 +70,8 @@ function TranscriptPage() {
     return <Alert variant="error" message={error} />;
   }
 
+  const semesters = Array.isArray(transcript?.semesters) ? transcript?.semesters : [];
+
   return (
     <Stack spacing={2}>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
@@ -91,7 +93,7 @@ function TranscriptPage() {
               Bölüm: {transcript.student?.department || '-'} | Başlangıç: {transcript.student?.enrollmentYear || '-'}
             </Typography>
             <Stack spacing={2}>
-              {transcript.semesters.map((sem, idx) => (
+              {semesters.map((sem, idx) => (
                 <Card key={idx} variant="outlined">
                   <CardContent>
                     <Typography fontWeight={700}>

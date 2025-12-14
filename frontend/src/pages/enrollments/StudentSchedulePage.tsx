@@ -17,8 +17,29 @@ function StudentSchedulePage() {
       setError('');
       try {
         const response = await getMySchedule();
-        const data = extractData<ScheduleEntry[]>(response);
-        setSchedule(data || []);
+        const raw = extractData<any>(response);
+        // Backend returns array of {day, slots:[]}; flatten to entries
+        if (Array.isArray(raw)) {
+          const flattened: ScheduleEntry[] = [];
+          raw.forEach((day: any) => {
+            if (Array.isArray(day?.slots)) {
+              day.slots.forEach((slot: any) =>
+                flattened.push({
+                  courseCode: slot.courseCode,
+                  courseName: slot.courseName,
+                  sectionNumber: slot.sectionNumber,
+                  day: day.day,
+                  startTime: slot.startTime,
+                  endTime: slot.endTime,
+                  classroom: slot.classroom,
+                }),
+              );
+            }
+          });
+          setSchedule(flattened);
+        } else {
+          setSchedule([]);
+        }
       } catch (err) {
         setError(getErrorMessage(err, 'Ders programı yüklenemedi.'));
         setSchedule([]);
