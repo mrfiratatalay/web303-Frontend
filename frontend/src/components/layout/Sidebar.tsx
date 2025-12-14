@@ -10,7 +10,9 @@ const navItems = [
   { to: '/dashboard', label: 'Dashboard' },
   { to: '/profile', label: 'Profil' },
   { to: '/courses', label: 'Dersler' },
+  { to: '/sections', label: 'Sectionlar' },
   { to: '/admin/courses/new', label: 'Ders Yönetimi', roles: ['admin'] },
+  { to: '/admin/sections/new', label: 'Section Yönetimi', roles: ['admin'] },
   { to: '/admin/users', label: 'Kullanıcılar', roles: ['admin'] },
 ];
 

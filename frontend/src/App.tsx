@@ -13,6 +13,9 @@ import UserManagementPage from './pages/admin/UserManagementPage';
 import CourseListPage from './pages/courses/CourseListPage';
 import CourseDetailPage from './pages/courses/CourseDetailPage';
 import CourseFormPage from './pages/courses/CourseFormPage';
+import SectionListPage from './pages/sections/SectionListPage';
+import SectionDetailPage from './pages/sections/SectionDetailPage';
+import SectionFormPage from './pages/sections/SectionFormPage';
 
 function App() {
   return (
@@ -56,6 +59,24 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={['admin']}>
               <CourseFormPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/sections" element={<SectionListPage />} />
+        <Route path="/sections/:id" element={<SectionDetailPage />} />
+        <Route
+          path="/admin/sections/new"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <SectionFormPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/sections/:id/edit"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <SectionFormPage />
             </ProtectedRoute>
           }
         />
