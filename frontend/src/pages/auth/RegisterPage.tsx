@@ -121,15 +121,8 @@ function RegisterPage() {
       }
 
       const response = await registerRequest(payload);
-      const status = (response as { status?: number })?.status ?? 0;
-      const isSuccess = status >= 200 && status < 300;
-
-      if (!isSuccess) {
-        throw new Error('Kayıt başarısız.');
-      }
-
       const message =
-        (response as { data?: { message?: string } })?.data?.message ||
+        (response as { data?: { data?: { message?: string } } })?.data?.data?.message ||
         'Kayıt başarılı. Lütfen e-postanızı doğrulama için kontrol edin.';
       setSuccessMessage(message);
 

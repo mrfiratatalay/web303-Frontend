@@ -34,8 +34,11 @@ function ForgotPasswordPage() {
     setMessage('');
     setIsSubmitting(true);
     try {
-      await forgotPassword(email);
-      setMessage('Eğer bu e-posta kayıtlıysa, şifre sıfırlama linki gönderildi.');
+      const response = await forgotPassword(email);
+      const successMessage =
+        (response as { data?: { data?: { message?: string } } })?.data?.data?.message ||
+        'Eğer bu e-posta kayıtlıysa, şifre sıfırlama linki gönderildi.';
+      setMessage(successMessage);
     } catch (err) {
       setError(getErrorMessage(err, 'İşlem sırasında bir hata oluştu.'));
     } finally {

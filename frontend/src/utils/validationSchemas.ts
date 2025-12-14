@@ -52,9 +52,15 @@ export const resetPasswordSchema = Yup.object({
 });
 
 export const profileSchema = Yup.object({
-  firstName: Yup.string().required('İsim zorunludur'),
-  lastName: Yup.string().required('Soyisim zorunludur'),
-  phone: Yup.string().nullable(),
+  firstName: Yup.string().optional(),
+  lastName: Yup.string().optional(),
+  phone: Yup.string().nullable().optional(),
+}).test('at-least-one', 'En az bir alan guncellenmelidir', (value) => {
+  if (!value) return false;
+  const hasFirst = !!value.firstName && value.firstName.trim().length > 0;
+  const hasLast = !!value.lastName && value.lastName.trim().length > 0;
+  const hasPhone = value.phone !== undefined && value.phone !== null;
+  return hasFirst || hasLast || hasPhone;
 });
 
 export const changePasswordSchema = Yup.object({

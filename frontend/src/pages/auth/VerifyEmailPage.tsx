@@ -20,11 +20,14 @@ function VerifyEmailPage() {
   useEffect(() => {
     const handleVerify = async () => {
       try {
-        await verifyEmail(token || '');
+        const response = await verifyEmail(token || '');
+        const message =
+          (response as { data?: { data?: { message?: string } } })?.data?.data?.message ||
+          'E-posta doğrulandı, birkaç saniye içinde giriş sayfasına yönlendirileceksiniz.';
         setStatus({
           loading: false,
           success: true,
-          message: 'E-posta doğrulandı, birkaç saniye içinde giriş sayfasına yönlendirileceksiniz.',
+          message,
         });
         setTimeout(() => navigate('/login'), 3000);
       } catch (err) {
