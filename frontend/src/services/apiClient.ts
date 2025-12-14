@@ -10,6 +10,7 @@ if (!apiBaseUrl) {
 const apiClient = axios.create({
   baseURL: apiBaseUrl,
   withCredentials: false,
+  timeout: 15000,
 });
 
 apiClient.interceptors.request.use(

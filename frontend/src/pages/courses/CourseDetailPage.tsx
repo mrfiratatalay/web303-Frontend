@@ -1,22 +1,23 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams, Link as RouterLink } from 'react-router-dom';
 import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Chip,
-  Divider,
-  Grid,
-  Stack,
-  Typography,
+    Box,
+    Button,
+    Card,
+    CardContent,
+    CardHeader,
+    Chip,
+    Divider,
+    Grid,
+    Stack,
+    Typography,
 } from '@mui/material';
-import LoadingSpinner from '../../components/feedback/LoadingSpinner';
+import { useEffect, useState } from 'react';
+import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import Alert from '../../components/feedback/Alert';
-import { getCourseById, extractData, deleteCourse } from '../../services/courseApi';
+import LoadingSpinner from '../../components/feedback/LoadingSpinner';
+import { useAuth } from '../../hooks/useAuth';
+import { deleteCourse, extractData, getCourseById } from '../../services/courseApi';
 import { Course, PrerequisiteNode } from '../../types/academics';
 import { getErrorMessage } from '../../utils/error';
-import { useAuth } from '../../hooks/useAuth';
 
 function renderPrerequisiteTree(node?: PrerequisiteNode | null) {
   if (!node) return null;

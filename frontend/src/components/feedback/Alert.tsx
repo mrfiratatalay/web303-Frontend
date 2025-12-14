@@ -1,16 +1,18 @@
+import MuiAlert, { AlertColor } from '@mui/material/Alert';
+import { SxProps, Theme } from '@mui/material/styles';
 import React from 'react';
-import MuiAlert, { AlertColor, AlertProps } from '@mui/material/Alert';
 
 type Props = {
   variant?: AlertColor;
   title?: string;
   message?: string;
   children?: React.ReactNode;
-} & Omit<AlertProps, 'severity'>;
+  sx?: SxProps<Theme>;
+};
 
-function Alert({ variant = 'info', title, message, children, ...rest }: Props) {
+function Alert({ variant = 'info', title, message, children, sx }: Props) {
   return (
-    <MuiAlert severity={variant} {...rest}>
+    <MuiAlert severity={variant} sx={sx}>
       {title && <strong>{title}</strong>} {message || children}
     </MuiAlert>
   );

@@ -22,24 +22,32 @@ export const saveAuth = ({ user, accessToken, refreshToken }: SaveParams) => {
   }
 };
 
-export const loadAuth = (): AuthPayload | null => {
-  const storedUser = localStorage.getItem(AUTH_USER_KEY);
-  const accessToken = localStorage.getItem(AUTH_TOKEN_KEY);
-  const refreshToken = localStorage.getItem(AUTH_REFRESH_TOKEN_KEY);
-
-  if (!storedUser && !accessToken && !refreshToken) {
-    return null;
-  }
-
-  return {
-    user: storedUser ? (JSON.parse(storedUser) as AuthPayload['user']) : null,
-    accessToken: accessToken || null,
-    refreshToken: refreshToken || null,
-  };
-};
-
 export const clearAuth = (): void => {
   localStorage.removeItem(AUTH_USER_KEY);
   localStorage.removeItem(AUTH_TOKEN_KEY);
   localStorage.removeItem(AUTH_REFRESH_TOKEN_KEY);
+};
+
+export const loadAuth = (): AuthPayload | null => {
+  try {
+    const storedUser = localStorage.getItem(AUTH_USER_KEY);
+    const accessToken = localStorage.getItem(AUTH_TOKEN_KEY);
+    const refreshToken = localStorage.getItem(AUTH_REFRESH_TOKEN_KEY);
+
+    if (!storedUser && !accessToken && !refreshToken) {
+      return null;
+    }
+
+    const parsedUser = storedUser ? (JSON.parse(storedUser) as AuthPayload['user']) : null;
+
+    return {
+      user: parsedUser,
+      accessToken: accessToken || null,
+      refreshToken: refreshToken || null,
+    };
+  } catch (error) {
+    // Guard against malformed data in localStorage that would otherwise crash the app
+    clearAuth();
+    return null;
+  }
 };

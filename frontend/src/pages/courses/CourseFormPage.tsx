@@ -1,5 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Box,
   Button,
@@ -11,14 +10,15 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useEffect, useMemo, useState } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 import Alert from '../../components/feedback/Alert';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
-import { Course, CourseListResult, Department } from '../../types/academics';
-import { CoursePayload, createCourse, extractData, getCourseById, getCourses, updateCourse } from '../../services/courseApi';
 import apiClient from '../../services/apiClient';
+import { CoursePayload, createCourse, extractData, getCourseById, getCourses, normalizeCourseListResponse, updateCourse } from '../../services/courseApi';
+import { Course, Department } from '../../types/academics';
 import { getErrorMessage } from '../../utils/error';
 
 type FormValues = {
@@ -32,19 +32,24 @@ type FormValues = {
   prerequisite_ids: string[];
 };
 
-const schema = Yup.object({
+const schema: Yup.ObjectSchema<FormValues> = Yup.object({
   code: Yup.string().min(3).max(20).required('Kod zorunlu'),
   name: Yup.string().min(3).max(200).required('İsim zorunlu'),
-  description: Yup.string().max(2000).nullable(),
+  description: Yup.string().max(2000).optional(),
   credits: Yup.number().typeError('Kredi sayı olmalı').min(1).max(10).required('Kredi zorunlu'),
   ects: Yup.number().typeError('ECTS sayı olmalı').min(1).max(30).required('ECTS zorunlu'),
-  syllabus_url: Yup.string().url('Geçerli bir URL girin').nullable().optional(),
+  syllabus_url: Yup.string().url('Geçerli bir URL girin').optional(),
   department_id: Yup.string().required('Bölüm zorunlu'),
-  prerequisite_ids: Yup.array().of(Yup.string()).optional(),
+  prerequisite_ids: Yup.array().of(Yup.string().required()).default([]),
 });
 
-const unwrapDepartments = (response: { data?: { data?: Department[] } } | Department[]): Department[] =>
-  (response as { data?: { data?: Department[] } })?.data?.data ?? (response as Department[]);
+const unwrapDepartments = (response: unknown): Department[] => {
+  if (Array.isArray(response)) return response;
+  const typed = response as { data?: Department[] | { data?: Department[] } };
+  if (Array.isArray(typed?.data)) return typed.data;
+  if (Array.isArray((typed?.data as { data?: Department[] })?.data)) return (typed.data as { data: Department[] }).data;
+  return [];
+};
 
 function CourseFormPage() {
   const { id } = useParams();
@@ -62,6 +67,7 @@ function CourseFormPage() {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
@@ -93,8 +99,8 @@ function CourseFormPage() {
     const loadCourses = async () => {
       try {
         const response = await getCourses({ limit: 100 });
-        const data = extractData<CourseListResult>(response);
-        setAvailableCourses(data.courses || []);
+        const data = normalizeCourseListResponse(response, { limit: 100 });
+        setAvailableCourses(data.courses);
       } catch (err) {
         // ignore
       }
@@ -188,7 +194,7 @@ function CourseFormPage() {
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <Grid container spacing={2}>
-              <Grid item xs={12} md={6}>
+              <Grid size={{ xs: 12, md: 6 }}>
                 <TextField
                   fullWidth
                   label="Kod"
@@ -197,7 +203,7 @@ function CourseFormPage() {
                   helperText={errors.code?.message}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid size={{ xs: 12, md: 6 }}>
                 <TextField
                   fullWidth
                   label="Ad"
@@ -206,7 +212,7 @@ function CourseFormPage() {
                   helperText={errors.name?.message}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <TextField
                   fullWidth
                   label="Açıklama"
@@ -217,7 +223,7 @@ function CourseFormPage() {
                   helperText={errors.description?.message}
                 />
               </Grid>
-              <Grid item xs={6} md={3}>
+              <Grid size={{ xs: 6, md: 3 }}>
                 <TextField
                   fullWidth
                   type="number"
@@ -228,7 +234,7 @@ function CourseFormPage() {
                   helperText={errors.credits?.message}
                 />
               </Grid>
-              <Grid item xs={6} md={3}>
+              <Grid size={{ xs: 6, md: 3 }}>
                 <TextField
                   fullWidth
                   type="number"
@@ -239,7 +245,7 @@ function CourseFormPage() {
                   helperText={errors.ects?.message}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid size={{ xs: 12, md: 6 }}>
                 <TextField
                   fullWidth
                   label="Syllabus URL"
@@ -248,7 +254,7 @@ function CourseFormPage() {
                   helperText={errors.syllabus_url?.message}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid size={{ xs: 12, md: 6 }}>
                 <TextField
                   select
                   fullWidth
@@ -268,21 +274,29 @@ function CourseFormPage() {
                   ))}
                 </TextField>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  select
-                  fullWidth
-                  SelectProps={{ multiple: true }}
-                  label="Önkoşullar"
-                  {...register('prerequisite_ids')}
-                  helperText="İsteğe bağlı"
-                >
-                  {filteredPrereqOptions.map((c) => (
-                    <MenuItem key={c.id} value={c.id}>
-                      {c.code} - {c.name}
-                    </MenuItem>
-                  ))}
-                </TextField>
+              <Grid size={12}>
+                <Controller
+                  name="prerequisite_ids"
+                  control={control}
+                  defaultValue={[]}
+                  render={({ field }) => (
+                    <TextField
+                      select
+                      fullWidth
+                      SelectProps={{ multiple: true }}
+                      label="Önkoşullar"
+                      value={field.value || []}
+                      onChange={field.onChange}
+                      helperText="İsteğe bağlı"
+                    >
+                      {filteredPrereqOptions.map((c) => (
+                        <MenuItem key={c.id} value={c.id}>
+                          {c.code} - {c.name}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  )}
+                />
               </Grid>
             </Grid>
 

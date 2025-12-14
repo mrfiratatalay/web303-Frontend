@@ -25,7 +25,7 @@ import {
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import Alert from '../../components/feedback/Alert';
-import { getCourses, extractData } from '../../services/courseApi';
+import { getCourses, normalizeCourseListResponse } from '../../services/courseApi';
 import apiClient from '../../services/apiClient';
 import { Course, CourseListQuery, CourseListResult, Department } from '../../types/academics';
 import { getErrorMessage } from '../../utils/error';
@@ -38,8 +38,13 @@ const DEFAULT_QUERY: CourseListQuery = {
   sort_order: 'ASC',
 };
 
-const unwrapDepartments = (response: { data?: { data?: Department[] } } | Department[]): Department[] =>
-  (response as { data?: { data?: Department[] } })?.data?.data ?? (response as Department[]);
+const unwrapDepartments = (response: unknown): Department[] => {
+  if (Array.isArray(response)) return response;
+  const typed = response as { data?: Department[] | { data?: Department[] } };
+  if (Array.isArray(typed?.data)) return typed.data;
+  if (Array.isArray((typed?.data as { data?: Department[] })?.data)) return (typed.data as { data: Department[] }).data;
+  return [];
+};
 
 function CourseListPage() {
   const navigate = useNavigate();
@@ -77,8 +82,8 @@ function CourseListPage() {
       setError('');
       try {
         const response = await getCourses(query);
-        const data = extractData<CourseListResult>(response);
-        setCourses(data.courses || []);
+        const data = normalizeCourseListResponse(response, { page: query.page, limit: query.limit });
+        setCourses(data.courses);
         setPagination(data.pagination || null);
       } catch (err) {
         setError(getErrorMessage(err, 'Dersler yüklenemedi.'));

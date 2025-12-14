@@ -17,7 +17,7 @@ export type CoursePayload = {
 };
 
 export const getCourses = (params?: CourseListQuery) =>
-  apiClient.get<CourseListResult>('/courses', { params });
+  apiClient.get<CourseListResult | Course[]>('/courses', { params });
 
 export const getCourseById = (id: string) => apiClient.get<Course>(`/courses/${id}`);
 
@@ -30,3 +30,30 @@ export const updateCourse = (id: string, payload: Partial<CoursePayload>) =>
 export const deleteCourse = (id: string) => apiClient.delete<{ message?: string }>(`/courses/${id}`);
 
 export const extractData = unwrap;
+
+export const normalizeCourseListResponse = (
+  response: AxiosResponse<{ data: CourseListResult | Course[] }> | { data?: CourseListResult | Course[] } | CourseListResult | Course[],
+  fallback?: { page?: number; limit?: number },
+): CourseListResult => {
+  const raw = extractData<CourseListResult | Course[]>(response);
+  const courses = Array.isArray(raw) ? raw : raw?.courses || [];
+
+  const pagination = !Array.isArray(raw) && raw?.pagination
+    ? raw.pagination
+    : undefined;
+
+  const limit = pagination?.limit ?? fallback?.limit ?? (courses.length || 10);
+  const page = pagination?.page ?? fallback?.page ?? 1;
+  const total = pagination?.total ?? courses.length;
+  const totalPages = pagination?.totalPages ?? (total && limit ? Math.ceil(total / limit) : 0);
+
+  return {
+    courses,
+    pagination: {
+      total,
+      page,
+      limit,
+      totalPages,
+    },
+  };
+};
