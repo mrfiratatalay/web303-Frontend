@@ -10,6 +10,9 @@ import DashboardPage from './pages/dashboard/DashboardPage';
 import ProfilePage from './pages/profile/ProfilePage';
 import NotFoundPage from './pages/error/NotFoundPage';
 import UserManagementPage from './pages/admin/UserManagementPage';
+import CourseListPage from './pages/courses/CourseListPage';
+import CourseDetailPage from './pages/courses/CourseDetailPage';
+import CourseFormPage from './pages/courses/CourseFormPage';
 
 function App() {
   return (
@@ -35,6 +38,24 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={['admin']}>
               <UserManagementPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/courses" element={<CourseListPage />} />
+        <Route path="/courses/:id" element={<CourseDetailPage />} />
+        <Route
+          path="/admin/courses/new"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <CourseFormPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/courses/:id/edit"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <CourseFormPage />
             </ProtectedRoute>
           }
         />
