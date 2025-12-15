@@ -1,4 +1,4 @@
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+﻿import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
 import ChecklistIcon from '@mui/icons-material/Checklist';
@@ -10,19 +10,19 @@ import ShowChartRoundedIcon from '@mui/icons-material/ShowChartRounded';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingUpRoundedIcon from '@mui/icons-material/TrendingUpRounded';
 import {
-    Alert,
-    Avatar,
-    Box,
-    Button,
-    Chip,
-    LinearProgress,
-    List,
-    ListItem,
-    ListItemAvatar,
-    ListItemText,
-    Paper,
-    Stack,
-    Typography,
+  Alert,
+  Avatar,
+  Box,
+  Button,
+  Chip,
+  LinearProgress,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Paper,
+  Stack,
+  Typography,
 } from '@mui/material';
 import Grid from '@mui/material/GridLegacy';
 import { alpha } from '@mui/material/styles';
@@ -31,14 +31,15 @@ import { Link as RouterLink } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { extractDashboard, getDashboard } from '../../services/dashboardApi';
 import {
-    AdminDashboard,
-    DashboardActivity,
-    DashboardClass,
-    DashboardData,
-    DashboardGrade,
-    FacultyDashboard,
-    StudentDashboard,
+  AdminDashboard,
+  DashboardActivity,
+  DashboardClass,
+  DashboardData,
+  DashboardGrade,
+  FacultyDashboard,
+  StudentDashboard,
 } from '../../types/dashboard';
+import { strings } from '../../strings';
 
 type StatCardProps = {
   label: string;
@@ -129,7 +130,7 @@ const StatCard = ({ label, value, helper, tone = 'primary', icon, progress, tren
             >
               {trend === 'up' ? <ArrowDropUpIcon fontSize="small" /> : <ArrowDropDownIcon fontSize="small" />}
               <Typography variant="caption" fontWeight={700}>
-                {trend === 'up' ? 'Artış' : 'Düşüş'}
+                {trend === 'up' ? strings.dashboard.trend.up : strings.dashboard.trend.down}
               </Typography>
             </Stack>
           )}
@@ -204,12 +205,6 @@ const formatTime = (time?: string | null) => (time ? time.slice(0, 5) : '--:--')
 const formatDateTime = (value?: string) =>
   value ? new Date(value).toLocaleString('tr-TR', { hour12: false }) : '-';
 
-const roleLabel: Record<string, string> = {
-  student: 'Öğrenci',
-  faculty: 'Akademisyen',
-  admin: 'Yönetici',
-};
-
 const getInitial = (text?: string | null) => (text ? text.charAt(0).toUpperCase() : '?');
 
 function DashboardPage() {
@@ -231,8 +226,7 @@ function DashboardPage() {
           setDashboard(data);
         }
       } catch (err) {
-        const message =
-          (err as Error)?.message || 'Dashboard verileri alinirken bir hata olustu.';
+        const message = (err as Error)?.message || strings.dashboard.error;
         if (isMounted) {
           setError(message);
         }
@@ -249,37 +243,35 @@ function DashboardPage() {
     };
   }, []);
 
+  const userDisplayName = useMemo(() => {
+    const fullName = `${user?.first_name || user?.firstName || ''} ${user?.last_name || user?.lastName || ''}`.trim();
+    return fullName || strings.common.userFallback;
+  }, [user?.firstName, user?.first_name, user?.lastName, user?.last_name]);
+
   const headerCopy = useMemo(
     () => ({
-      title: `Hoş geldin, ${user?.first_name || user?.firstName || 'kullanici'}`,
+      title: `${strings.dashboard.header.greeting}, ${userDisplayName}`,
       subtitle:
         dashboard?.role === 'student'
-          ? 'Kayıtlı derslerin, notların ve yoklama özetin burada.'
+          ? strings.dashboard.header.subtitles.student
           : dashboard?.role === 'faculty'
-          ? 'Sectionlar, yoklama ve not işlemleri için hızlı özet.'
-          : 'Kampüsteki metrikler, sistem durumu ve son hareketler.',
+          ? strings.dashboard.header.subtitles.faculty
+          : dashboard?.role === 'admin'
+          ? strings.dashboard.header.subtitles.admin
+          : strings.dashboard.header.subtitles.fallback,
     }),
-    [dashboard?.role, user?.firstName, user?.first_name],
+    [dashboard?.role, userDisplayName],
   );
 
   const quickActions = useMemo(() => {
     if (dashboard?.role === 'student') {
-      return [
-        { label: 'Programımı Gör', to: '/enrollments/schedule' },
-        { label: 'Yoklama Ver', to: '/attendance/checkin' },
-      ];
+      return strings.dashboard.quickActions.student;
     }
     if (dashboard?.role === 'faculty') {
-      return [
-        { label: 'Oturumlar', to: '/attendance/sessions' },
-        { label: 'Not Girişi', to: '/faculty/grades/entry' },
-      ];
+      return strings.dashboard.quickActions.faculty;
     }
     if (dashboard?.role === 'admin') {
-      return [
-        { label: 'Kullanıcılar', to: '/admin/users' },
-        { label: 'Ders Yönetimi', to: '/admin/courses/new' },
-      ];
+      return strings.dashboard.quickActions.admin;
     }
     return [];
   }, [dashboard?.role]);
@@ -310,6 +302,14 @@ function DashboardPage() {
       );
     }
 
+    const getStatusLabel = (status?: string | null, fallback?: string | null) => {
+      if (status === 'in_progress') return strings.dashboard.labels.inProgress;
+      if (status === 'upcoming') return strings.dashboard.labels.upcoming;
+      if (status) return status;
+      if (fallback) return fallback;
+      return strings.dashboard.labels.planned;
+    };
+
     return (
       <List sx={{ width: '100%' }}>
         {items.map((item, idx) => (
@@ -334,11 +334,11 @@ function DashboardPage() {
               primary={
                 <Stack direction="row" justifyContent="space-between" alignItems="center">
                   <Typography variant="subtitle2" fontWeight={700}>
-                    {item.courseCode} · Section {item.sectionNumber}
+                    {item.courseCode} - {strings.dashboard.labels.section} {item.sectionNumber}
                   </Typography>
                   <Chip
                     size="small"
-                    label={item.status || item.day || 'Planlı'}
+                    label={getStatusLabel(item.status, item.day)}
                     color={
                       item.status === 'in_progress'
                         ? 'success'
@@ -356,10 +356,10 @@ function DashboardPage() {
                     {item.courseName}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    {item.day ? `${item.day} · ` : ''}
+                    {item.day ? `${item.day} - ` : ''}
                     {formatTime(item.startTime)} - {formatTime(item.endTime)}
-                    {item.classroom ? ` · ${item.classroom}` : ''}
-                    {item.nextDate ? ` · ${formatDateTime(item.nextDate)}` : ''}
+                    {item.classroom ? ` - ${item.classroom}` : ''}
+                    {item.nextDate ? ` - ${formatDateTime(item.nextDate)}` : ''}
                   </Typography>
                 </Box>
               }
@@ -375,9 +375,9 @@ function DashboardPage() {
       return (
         <EmptyState
           icon={TrendingUpRoundedIcon}
-          title="Henüz not bulunmuyor"
-          description="Notlar güncellendiğinde burada görebilirsin."
-          actionLabel="Notları Aç"
+          title={strings.dashboard.student.sections.recentGrades.emptyTitle}
+          description={strings.dashboard.student.sections.recentGrades.emptyDescription}
+          actionLabel={strings.dashboard.student.sections.recentGrades.emptyAction}
           actionTo="/grades/my"
         />
       );
@@ -402,14 +402,14 @@ function DashboardPage() {
                 <Stack direction="row" justifyContent="space-between" alignItems="center">
                   <Box>
                     <Typography variant="subtitle2" fontWeight={700}>
-                      {grade.courseCode} · {grade.courseName}
+                      {grade.courseCode} - {grade.courseName}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      Section {grade.sectionNumber} · Güncelleme: {formatDateTime(grade.updatedAt)}
+                      {strings.dashboard.labels.section} {grade.sectionNumber} - {strings.dashboard.labels.updatedAt}: {formatDateTime(grade.updatedAt)}
                     </Typography>
                   </Box>
                   <Chip
-                    label={grade.letter || 'Bekliyor'}
+                    label={grade.letter || strings.dashboard.labels.awaiting}
                     color={grade.letter ? 'success' : 'default'}
                     variant="outlined"
                   />
@@ -417,7 +417,7 @@ function DashboardPage() {
               }
               secondary={
                 <Typography variant="body2" color="text.secondary">
-                  Vize: {grade.midterm ?? '-'} · Final: {grade.final ?? '-'} · Not Ort: {grade.gradePoint ?? '-'}
+                  {strings.dashboard.labels.midterm}: {grade.midterm ?? '-'} - {strings.dashboard.labels.final}: {grade.final ?? '-'} - {strings.dashboard.labels.gradePoint}: {grade.gradePoint ?? '-'}
                 </Typography>
               }
             />
@@ -428,25 +428,25 @@ function DashboardPage() {
   };
 
   const renderStudent = (data: StudentDashboard) => {
-    const gpaTrend = data.summary.gpa >= data.summary.cgpa ? 'up' : 'down';
+    const gpaTrend: StatCardProps['trend'] = data.summary.gpa >= data.summary.cgpa ? 'up' : 'down';
 
     return (
       <Stack spacing={2.25}>
         <Grid container spacing={2.25} alignItems="stretch">
           <Grid item xs={12} md={3}>
             <StatCard
-              label="Kayıtlı Ders"
+              label={strings.dashboard.student.stats.courses.label}
               value={data.summary.registeredCourses}
-              helper="Aktif ve tamamlanan kayıtlar"
+              helper={strings.dashboard.student.stats.courses.helper}
               icon={<SchoolRoundedIcon fontSize="small" />}
               tone="primary"
             />
           </Grid>
           <Grid item xs={12} md={3}>
             <StatCard
-              label="GPA"
+              label={strings.dashboard.student.stats.gpa.label}
               value={data.summary.gpa.toFixed(2)}
-              helper={`CGPA: ${data.summary.cgpa.toFixed(2)}`}
+              helper={`${strings.dashboard.student.stats.gpa.helperPrefix}: ${data.summary.cgpa.toFixed(2)}`}
               icon={<ShowChartRoundedIcon fontSize="small" />}
               tone="info"
               trend={gpaTrend}
@@ -454,9 +454,9 @@ function DashboardPage() {
           </Grid>
           <Grid item xs={12} md={3}>
             <StatCard
-              label="Devam Oranı"
+              label={strings.dashboard.student.stats.attendance.label}
               value={`${data.summary.attendanceRate}%`}
-              helper="Genel ortalama"
+              helper={strings.dashboard.student.stats.attendance.helper}
               icon={<FactCheckRoundedIcon fontSize="small" />}
               tone="success"
               progress={data.summary.attendanceRate}
@@ -464,9 +464,9 @@ function DashboardPage() {
           </Grid>
           <Grid item xs={12} md={3}>
             <StatCard
-              label="Bugünkü Ders"
+              label={strings.dashboard.student.stats.today.label}
               value={data.summary.todayCourseCount}
-              helper="Günün programı"
+              helper={strings.dashboard.student.stats.today.helper}
               icon={<CalendarMonthRoundedIcon fontSize="small" />}
               tone="warning"
             />
@@ -476,28 +476,28 @@ function DashboardPage() {
         <Grid container spacing={2.25}>
           <Grid item xs={12} md={6}>
             <SectionCard
-              title="Bugünkü dersler"
+              title={strings.dashboard.student.sections.todayClasses.title}
               action={
                 <Button component={RouterLink} to="/enrollments/schedule" size="small" variant="text">
-                  Programı Aç
+                  {strings.dashboard.student.sections.todayClasses.action}
                 </Button>
               }
             >
               {renderClasses(
                 data.todayClasses,
-                'Bugün ders yok',
-                'Takvimine yeni ders eklenince burada görebilirsin.',
+                strings.dashboard.student.sections.todayClasses.emptyTitle,
+                strings.dashboard.student.sections.todayClasses.emptyDescription,
                 '/enrollments/schedule',
-                'Programımı Gör',
+                strings.dashboard.student.sections.todayClasses.emptyAction,
               )}
             </SectionCard>
           </Grid>
           <Grid item xs={12} md={6}>
             <SectionCard
-              title="Son notlar"
+              title={strings.dashboard.student.sections.recentGrades.title}
               action={
                 <Button component={RouterLink} to="/grades/my" size="small" variant="text">
-                  Tüm notlar
+                  {strings.dashboard.student.sections.recentGrades.action}
                 </Button>
               }
             >
@@ -514,27 +514,27 @@ function DashboardPage() {
       <Grid container spacing={2.25} alignItems="stretch">
         <Grid item xs={12} md={4}>
           <StatCard
-            label="Verdiğin Section"
+            label={strings.dashboard.faculty.stats.sections.label}
             value={data.summary.sectionCount}
-            helper="Aktif ve planlı"
+            helper={strings.dashboard.faculty.stats.sections.helper}
             icon={<SchoolRoundedIcon fontSize="small" />}
             tone="primary"
           />
         </Grid>
         <Grid item xs={12} md={4}>
           <StatCard
-            label="Toplam Öğrenci"
+            label={strings.dashboard.faculty.stats.students.label}
             value={data.summary.studentCount}
-            helper="Section bazlı toplam"
+            helper={strings.dashboard.faculty.stats.students.helper}
             icon={<ChecklistIcon fontSize="small" />}
             tone="info"
           />
         </Grid>
         <Grid item xs={12} md={4}>
           <StatCard
-            label="Bekleyen İşlem"
+            label={strings.dashboard.faculty.stats.pending.label}
             value={data.summary.pendingGrades + data.summary.pendingExcuses}
-            helper={`Not: ${data.summary.pendingGrades} · Mazeret: ${data.summary.pendingExcuses}`}
+            helper={`Not: ${data.summary.pendingGrades} - Mazeret: ${data.summary.pendingExcuses}`}
             icon={<TrendingUpRoundedIcon fontSize="small" />}
             tone="warning"
           />
@@ -544,29 +544,29 @@ function DashboardPage() {
       <Grid container spacing={2.25}>
         <Grid item xs={12} md={7}>
           <SectionCard
-            title="Yaklaşan oturumlar"
+            title={strings.dashboard.faculty.sections.upcoming.title}
             action={
               <Button component={RouterLink} to="/attendance/sessions" size="small" variant="text">
-                Oturumları Aç
+                {strings.dashboard.faculty.sections.upcoming.action}
               </Button>
             }
           >
             {renderClasses(
               data.upcomingSessions,
-              'Oturum bulunmuyor',
-              'Yaklaşan oturum eklenince listede göreceksin.',
+              strings.dashboard.faculty.sections.upcoming.emptyTitle,
+              strings.dashboard.faculty.sections.upcoming.emptyDescription,
               '/attendance/sessions',
-              'Oturum Planla',
+              strings.dashboard.faculty.sections.upcoming.emptyAction,
             )}
           </SectionCard>
         </Grid>
         <Grid item xs={12} md={5}>
-          <SectionCard title="Bekleyen işlemler" minHeight={320}>
+          <SectionCard title={strings.dashboard.faculty.sections.pending.title} minHeight={320}>
             {data.pendingActions.length === 0 ? (
               <EmptyState
                 icon={TrendingUpRoundedIcon}
-                title="Bekleyen işlem yok"
-                description="Tamamlanacak öğe bulunmuyor."
+                title={strings.dashboard.faculty.sections.pending.emptyTitle}
+                description={strings.dashboard.faculty.sections.pending.emptyDescription}
               />
             ) : (
               <List>
@@ -598,7 +598,7 @@ function DashboardPage() {
                       }
                       secondary={
                         <Typography variant="body2" color="text.secondary">
-                          {action.helper || 'Tamamlanmayı bekliyor'}
+                          {action.helper || strings.dashboard.faculty.sections.pending.helperFallback}
                         </Typography>
                       }
                     />
@@ -617,45 +617,45 @@ function DashboardPage() {
       <Grid container spacing={2.25} alignItems="stretch">
         <Grid item xs={12} md={3}>
           <StatCard
-            label="Öğrenci Sayısı"
+            label={strings.dashboard.admin.stats.students.label}
             value={data.summary.totalStudents}
             icon={<SchoolRoundedIcon fontSize="small" />}
             tone="primary"
-            helper="Aktif öğrenciler"
+            helper={strings.dashboard.admin.stats.students.helper}
           />
         </Grid>
         <Grid item xs={12} md={3}>
           <StatCard
-            label="Akademisyen"
+            label={strings.dashboard.admin.stats.faculty.label}
             value={data.summary.facultyCount}
             icon={<ChecklistIcon fontSize="small" />}
             tone="info"
-            helper="Sistemdeki toplam"
+            helper={strings.dashboard.admin.stats.faculty.helper}
           />
         </Grid>
         <Grid item xs={12} md={3}>
           <StatCard
-            label="Aktif Ders"
+            label={strings.dashboard.admin.stats.courses.label}
             value={data.summary.activeCourses}
             icon={<CalendarMonthRoundedIcon fontSize="small" />}
             tone="warning"
-            helper="Bu dönem"
+            helper={strings.dashboard.admin.stats.courses.helper}
           />
         </Grid>
         <Grid item xs={12} md={3}>
           <StatCard
-            label="Aktif Section"
+            label={strings.dashboard.admin.stats.sections.label}
             value={data.summary.activeSections}
             icon={<TrendingUpRoundedIcon fontSize="small" />}
             tone="success"
-            helper="Açık section sayısı"
+            helper={strings.dashboard.admin.stats.sections.helper}
           />
         </Grid>
       </Grid>
 
       <Grid container spacing={2.25}>
         <Grid item xs={12} md={5}>
-          <SectionCard title="Sistem durumu" minHeight={320}>
+          <SectionCard title={strings.dashboard.admin.sections.systemStatus.title} minHeight={320}>
             <Stack spacing={1.5}>
               <Stack direction="row" spacing={1} alignItems="center">
                 <TrendingUpIcon color="success" />
@@ -670,21 +670,21 @@ function DashboardPage() {
                 </Typography>
               </Stack>
               <Typography variant="body2" color="text.secondary">
-                Son kontrol: {formatDateTime(data.systemStatus.checkedAt)}
+                {strings.dashboard.admin.sections.systemStatus.lastCheck}: {formatDateTime(data.systemStatus.checkedAt)}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Uptime: {data.systemStatus.uptimeSeconds ?? 0} sn
+                {strings.dashboard.admin.sections.systemStatus.uptime}: {data.systemStatus.uptimeSeconds ?? 0} sn
               </Typography>
             </Stack>
           </SectionCard>
         </Grid>
         <Grid item xs={12} md={7}>
-          <SectionCard title="Son aktiviteler" minHeight={320}>
+          <SectionCard title={strings.dashboard.admin.sections.activities.title} minHeight={320}>
             {data.recentActivities.length === 0 ? (
               <EmptyState
                 icon={TrendingUpRoundedIcon}
-                title="Aktivite bulunmuyor"
-                description="Yeni hareketler burada listelenecek."
+                title={strings.dashboard.admin.sections.activities.emptyTitle}
+                description={strings.dashboard.admin.sections.activities.emptyDescription}
               />
             ) : (
               <List>
@@ -713,7 +713,7 @@ function DashboardPage() {
                       }
                       secondary={
                         <Typography variant="body2" color="text.secondary">
-                          {activity.detail || 'Güncelleme'} · {formatDateTime(activity.timestamp)}
+                          {activity.detail || strings.dashboard.admin.sections.activities.fallbackDetail} - {formatDateTime(activity.timestamp)}
                         </Typography>
                       }
                     />
@@ -757,7 +757,7 @@ function DashboardPage() {
             justifyContent={{ xs: 'flex-start', md: 'flex-end' }}
           >
             <Chip
-              label={roleLabel[user?.role || ''] || 'Rol'}
+              label={strings.roles[user?.role || ''] || strings.common.userFallback}
               color="primary"
               variant="outlined"
               size="small"
@@ -794,4 +794,3 @@ function DashboardPage() {
 }
 
 export default DashboardPage;
-

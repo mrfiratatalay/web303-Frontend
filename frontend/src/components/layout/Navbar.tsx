@@ -15,15 +15,15 @@ import { Link as RouterLink } from 'react-router-dom';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import { useAuth } from '../../hooks/useAuth';
+import { strings } from '../../strings';
 
-const ROLE_LABELS: Record<string, string> = {
-  student: 'Öğrenci',
-  faculty: 'Akademisyen',
-  admin: 'Yönetici',
+type NavbarProps = {
+  onMenuClick?: () => void;
 };
 
-function Navbar() {
+function Navbar({ onMenuClick }: NavbarProps) {
   const { user, logout } = useAuth();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -40,11 +40,12 @@ function Navbar() {
     logout();
   };
 
-  const userName = useMemo(
-    () => (user ? `${user.first_name || user.firstName || ''} ${user.last_name || user.lastName || ''}`.trim() : ''),
-    [user],
-  );
-  const roleLabel = useMemo(() => (user?.role ? ROLE_LABELS[user.role] || user.role : ''), [user?.role]);
+  const userName = useMemo(() => {
+    if (!user) return '';
+    return `${user.first_name || user.firstName || ''} ${user.last_name || user.lastName || ''}`.trim();
+  }, [user]);
+
+  const roleLabel = useMemo(() => (user?.role ? strings.roles[user.role] || user.role : ''), [user?.role]);
 
   return (
     <AppBar
@@ -67,7 +68,16 @@ function Navbar() {
           gap: 2,
         }}
       >
-        <Stack direction="row" spacing={1.25} alignItems="center">
+        <Stack direction="row" spacing={1.25} alignItems="center" sx={{ flex: 1 }}>
+          {user && (
+            <IconButton
+              aria-label={strings.common.menuAriaLabel}
+              onClick={onMenuClick}
+              sx={{ display: { xs: 'inline-flex', md: 'none' }, color: 'white', mr: 0.5 }}
+            >
+              <MenuRoundedIcon />
+            </IconButton>
+          )}
           <Box
             sx={{
               width: 36,
@@ -84,10 +94,10 @@ function Navbar() {
           </Box>
           <Box>
             <Typography variant="subtitle1" fontWeight={700} lineHeight={1.2}>
-              Smart Campus
+              {strings.brand.name}
             </Typography>
             <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.78)' }}>
-              Öğrenci İşleri Paneli
+              {strings.brand.tagline}
             </Typography>
           </Box>
         </Stack>
@@ -110,7 +120,7 @@ function Navbar() {
             >
               <Box textAlign="right">
                 <Typography variant="body2" fontWeight={700} lineHeight={1.2}>
-                  {userName || 'Kullanıcı'}
+                  {userName || strings.common.userFallback}
                 </Typography>
                 <Chip
                   label={roleLabel}
@@ -128,7 +138,12 @@ function Navbar() {
               <Avatar sx={{ width: 36, height: 36, bgcolor: 'rgba(255,255,255,0.18)' }}>
                 {(user.first_name || user.firstName || 'U')[0]}
               </Avatar>
-              <IconButton size="small" sx={{ color: 'white', p: 0 }} aria-label="Menü" onClick={handleMenuOpen}>
+              <IconButton
+                size="small"
+                sx={{ color: 'white', p: 0 }}
+                aria-label={strings.common.menuAriaLabel}
+                onClick={handleMenuOpen}
+              >
                 <KeyboardArrowDownIcon />
               </IconButton>
             </Box>
@@ -142,22 +157,22 @@ function Navbar() {
             >
               <MenuItem component={RouterLink} to="/profile" onClick={handleMenuClose}>
                 <PersonOutlineIcon fontSize="small" style={{ marginRight: 8 }} />
-                Profil
+                {strings.navbar.profile}
               </MenuItem>
               <Divider />
               <MenuItem onClick={handleLogout}>
                 <LogoutIcon fontSize="small" style={{ marginRight: 8 }} />
-                Çıkış Yap
+                {strings.navbar.logout}
               </MenuItem>
             </Menu>
           </Stack>
         ) : (
           <Stack direction="row" spacing={1} alignItems="center">
             <Button component={RouterLink} to="/login" color="inherit" variant="text" size="small">
-              Giriş
+              {strings.navbar.login}
             </Button>
             <Button component={RouterLink} to="/register" color="inherit" variant="outlined" size="small">
-              Kayıt ol
+              {strings.navbar.register}
             </Button>
           </Stack>
         )}

@@ -11,7 +11,7 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   static getDerivedStateFromError(error: Error): State {
-    return { hasError: true, message: error?.message || 'Beklenmeyen bir hata oluYtu.' };
+    return { hasError: true, message: error?.message || 'Beklenmeyen bir hata oluştu.' };
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
@@ -37,7 +37,7 @@ class ErrorBoundary extends Component<Props, State> {
                 Bir şey ters gitti
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {this.state.message || 'Beklenmeyen bir hata nedeni ile sayfa yüklenemedi.'}
+                {this.state.message || 'Beklenmeyen bir hata nedeniyle sayfa yüklenemedi.'}
               </Typography>
               <Button variant="contained" onClick={this.handleReload}>
                 Sayfayı yenile

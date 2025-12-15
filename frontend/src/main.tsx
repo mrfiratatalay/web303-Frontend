@@ -6,8 +6,12 @@ import App from './App';
 import { AuthProvider } from './context/AuthContext';
 import ErrorBoundary from './components/feedback/ErrorBoundary';
 import './index.css';
+import { strings } from './strings';
 
 const rootElement = document.getElementById('root') as HTMLElement;
+
+document.documentElement.lang = strings.meta.lang;
+document.title = strings.meta.title;
 
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>

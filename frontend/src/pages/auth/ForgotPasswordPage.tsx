@@ -1,8 +1,8 @@
-import { yupResolver } from '@hookform/resolvers/yup';
+ï»¿import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { Button, Stack, Typography } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import Alert from '../../components/feedback/Alert';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import TextInput from '../../components/form/TextInput';
@@ -10,6 +10,7 @@ import { forgotPassword } from '../../services/authApi';
 import { getErrorMessage } from '../../utils/error';
 import { forgotPasswordSchema } from '../../utils/validationSchemas';
 import AuthLayout from '../../components/layout/AuthLayout';
+import { strings } from '../../strings';
 
 type ForgotForm = {
   email: string;
@@ -37,10 +38,10 @@ function ForgotPasswordPage() {
       const response = await forgotPassword(email);
       const successMessage =
         (response as { data?: { data?: { message?: string } } })?.data?.data?.message ||
-        'Eðer bu e-posta kayýtlýysa, þifre sýfýrlama linki gönderildi.';
+        strings.auth.forgotPassword.success;
       setMessage(successMessage);
     } catch (err) {
-      setError(getErrorMessage(err, 'Ýþlem sýrasýnda bir hata oluþtu.'));
+      setError(getErrorMessage(err, strings.auth.forgotPassword.error));
     } finally {
       setIsSubmitting(false);
     }
@@ -48,8 +49,8 @@ function ForgotPasswordPage() {
 
   return (
     <AuthLayout
-      title="Þifre Sýfýrlama"
-      subtitle="E-posta adresinizi girin; kayýtlýysa sýfýrlama linki gönderilecektir."
+      title={strings.auth.forgotPassword.title}
+      subtitle={strings.auth.forgotPassword.subtitle}
     >
       <Stack spacing={1.5}>
         {message && <Alert variant="success" message={message} />}
@@ -58,21 +59,21 @@ function ForgotPasswordPage() {
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <TextInput
-          label="E-posta"
+          label={strings.auth.login.emailLabel}
           name="email"
           type="email"
           register={register}
           error={errors.email?.message}
-          placeholder="ornek@kampus.com"
+          placeholder={strings.auth.forgotPassword.emailPlaceholder}
         />
         <Button type="submit" fullWidth variant="contained" disabled={isSubmitting} sx={{ mt: 3 }}>
-          {isSubmitting ? <LoadingSpinner label="Gönderiliyor..." /> : 'Sýfýrlama linki gönder'}
+          {isSubmitting ? <LoadingSpinner label={strings.auth.forgotPassword.submitting} /> : strings.auth.forgotPassword.submit}
         </Button>
       </form>
 
       <Stack direction="row" justifyContent="flex-start" sx={{ mt: 2 }}>
         <Link to="/login" className="text-blue-600 hover:underline text-sm">
-          Giriþ sayfasýna dön
+          {strings.auth.forgotPassword.backToLogin}
         </Link>
       </Stack>
     </AuthLayout>
@@ -80,4 +81,3 @@ function ForgotPasswordPage() {
 }
 
 export default ForgotPasswordPage;
-

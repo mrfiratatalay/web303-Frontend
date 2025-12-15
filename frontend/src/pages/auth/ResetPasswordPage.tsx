@@ -1,8 +1,8 @@
-import { yupResolver } from '@hookform/resolvers/yup';
+ï»¿import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Stack, Typography } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import Alert from '../../components/feedback/Alert';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import PasswordInput from '../../components/form/PasswordInput';
@@ -10,6 +10,7 @@ import { resetPassword } from '../../services/authApi';
 import { getErrorMessage } from '../../utils/error';
 import { resetPasswordSchema } from '../../utils/validationSchemas';
 import AuthLayout from '../../components/layout/AuthLayout';
+import { strings } from '../../strings';
 
 type ResetForm = {
   password: string;
@@ -38,17 +39,17 @@ function ResetPasswordPage() {
     setIsSubmitting(true);
     try {
       await resetPassword({ token: token || '', password, confirmPassword });
-      setMessage('Þifreniz güncellendi. Giriþ sayfasýna yönlendiriliyorsunuz...');
+      setMessage(strings.auth.resetPassword.success);
       setTimeout(() => navigate('/login'), 1500);
     } catch (err) {
-      setError(getErrorMessage(err, 'Þifre güncellenemedi.'));
+      setError(getErrorMessage(err, strings.auth.resetPassword.error));
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <AuthLayout title="Yeni Þifre Belirle" subtitle="Güçlü bir þifre oluþturun.">
+    <AuthLayout title={strings.auth.resetPassword.title} subtitle={strings.auth.resetPassword.subtitle}>
       <Stack spacing={1.5}>
         {message && <Alert variant="success" message={message} />}
         {error && <Alert variant="error" message={error} />}
@@ -56,28 +57,28 @@ function ResetPasswordPage() {
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <PasswordInput
-          label="Yeni Þifre"
+          label={strings.auth.resetPassword.passwordLabel}
           name="password"
           register={register}
           error={errors.password?.message}
-          placeholder="********"
+          placeholder={strings.auth.login.passwordPlaceholder}
         />
         <PasswordInput
-          label="Yeni Þifre Tekrar"
+          label={strings.auth.resetPassword.confirmLabel}
           name="confirmPassword"
           register={register}
           error={errors.confirmPassword?.message}
-          placeholder="********"
+          placeholder={strings.auth.login.passwordPlaceholder}
         />
 
         <Button type="submit" fullWidth variant="contained" disabled={isSubmitting} sx={{ mt: 3 }}>
-          {isSubmitting ? <LoadingSpinner label="Güncelleniyor..." /> : 'Þifreyi Güncelle'}
+          {isSubmitting ? <LoadingSpinner label={strings.auth.resetPassword.submitting} /> : strings.auth.resetPassword.submit}
         </Button>
       </form>
 
       <Stack direction="row" justifyContent="flex-start" sx={{ mt: 2 }}>
         <Link to="/login" className="text-blue-600 hover:underline text-sm">
-          Giriþ sayfasýna dön
+          {strings.auth.resetPassword.backToLogin}
         </Link>
       </Stack>
     </AuthLayout>
@@ -85,4 +86,3 @@ function ResetPasswordPage() {
 }
 
 export default ResetPasswordPage;
-

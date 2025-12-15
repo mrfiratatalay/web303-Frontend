@@ -28,66 +28,45 @@ import LibraryAddCheckOutlinedIcon from '@mui/icons-material/LibraryAddCheckOutl
 import ViewAgendaOutlinedIcon from '@mui/icons-material/ViewAgendaOutlined';
 import SupervisorAccountOutlinedIcon from '@mui/icons-material/SupervisorAccountOutlined';
 import { useAuth } from '../../hooks/useAuth';
+import { AppRole, strings } from '../../strings';
 
 type NavItem = {
   to: string;
   label: string;
-  roles?: Array<'student' | 'faculty' | 'admin'>;
+  roles?: AppRole[];
   icon: JSX.Element;
 };
 
-const navSections: Array<{ title: string; items: NavItem[] }> = [
-  {
-    title: 'Genel',
-    items: [
-      { to: '/dashboard', label: 'Panel', icon: <SpaceDashboardOutlinedIcon fontSize="small" /> },
-      { to: '/profile', label: 'Profil', icon: <PersonOutlineIcon fontSize="small" /> },
-    ],
-  },
-  {
-    title: 'Akademik',
-    items: [
-      { to: '/courses', label: 'Dersler', icon: <MenuBookOutlinedIcon fontSize="small" /> },
-      { to: '/sections', label: 'Şubeler', icon: <LayersOutlinedIcon fontSize="small" /> },
-      { to: '/enrollments/my', label: 'Kayıtlarım', roles: ['student'], icon: <SchoolOutlinedIcon fontSize="small" /> },
-      { to: '/enrollments/schedule', label: 'Programım', roles: ['student'], icon: <ScheduleOutlinedIcon fontSize="small" /> },
-      {
-        to: '/faculty/sections/students',
-        label: 'Şube Öğrencileri',
-        roles: ['faculty', 'admin'],
-        icon: <GroupOutlinedIcon fontSize="small" />,
-      },
-    ],
-  },
-  {
-    title: 'Notlar',
-    items: [
-      { to: '/grades/my', label: 'Notlarım', roles: ['student'], icon: <AssignmentTurnedInOutlinedIcon fontSize="small" /> },
-      { to: '/grades/transcript', label: 'Transkript', roles: ['student'], icon: <ReceiptLongOutlinedIcon fontSize="small" /> },
-      { to: '/faculty/grades/entry', label: 'Not Girişi', roles: ['faculty', 'admin'], icon: <BorderColorOutlinedIcon fontSize="small" /> },
-      { to: '/faculty/grades/bulk', label: 'Toplu Not Girişi', roles: ['faculty', 'admin'], icon: <PlaylistAddCheckOutlinedIcon fontSize="small" /> },
-    ],
-  },
-  {
-    title: 'Yoklama',
-    items: [
-      { to: '/attendance/checkin', label: 'Yoklama Ver', roles: ['student'], icon: <HowToRegOutlinedIcon fontSize="small" /> },
-      { to: '/attendance/my', label: 'Yoklama Özeti', roles: ['student'], icon: <FactCheckOutlinedIcon fontSize="small" /> },
-      { to: '/attendance/excuse', label: 'Mazeret Gönder', roles: ['student'], icon: <MarkChatReadOutlinedIcon fontSize="small" /> },
-      { to: '/attendance/sessions', label: 'Oturumlar', roles: ['faculty', 'admin'], icon: <EventNoteOutlinedIcon fontSize="small" /> },
-      { to: '/attendance/report', label: 'Yoklama Raporu', roles: ['faculty', 'admin'], icon: <AssessmentOutlinedIcon fontSize="small" /> },
-      { to: '/attendance/excuse/review', label: 'Mazeret İncele', roles: ['faculty', 'admin'], icon: <RuleFolderOutlinedIcon fontSize="small" /> },
-    ],
-  },
-  {
-    title: 'Yönetim',
-    items: [
-      { to: '/admin/courses/new', label: 'Ders Yönetimi', roles: ['admin'], icon: <LibraryAddCheckOutlinedIcon fontSize="small" /> },
-      { to: '/admin/sections/new', label: 'Şube Yönetimi', roles: ['admin'], icon: <ViewAgendaOutlinedIcon fontSize="small" /> },
-      { to: '/admin/users', label: 'Kullanıcılar', roles: ['admin'], icon: <SupervisorAccountOutlinedIcon fontSize="small" /> },
-    ],
-  },
-];
+const iconMap: Record<string, JSX.Element> = {
+  '/dashboard': <SpaceDashboardOutlinedIcon fontSize="small" />,
+  '/profile': <PersonOutlineIcon fontSize="small" />,
+  '/courses': <MenuBookOutlinedIcon fontSize="small" />,
+  '/sections': <LayersOutlinedIcon fontSize="small" />,
+  '/enrollments/my': <SchoolOutlinedIcon fontSize="small" />,
+  '/enrollments/schedule': <ScheduleOutlinedIcon fontSize="small" />,
+  '/faculty/sections/students': <GroupOutlinedIcon fontSize="small" />,
+  '/grades/my': <AssignmentTurnedInOutlinedIcon fontSize="small" />,
+  '/grades/transcript': <ReceiptLongOutlinedIcon fontSize="small" />,
+  '/faculty/grades/entry': <BorderColorOutlinedIcon fontSize="small" />,
+  '/faculty/grades/bulk': <PlaylistAddCheckOutlinedIcon fontSize="small" />,
+  '/attendance/checkin': <HowToRegOutlinedIcon fontSize="small" />,
+  '/attendance/my': <FactCheckOutlinedIcon fontSize="small" />,
+  '/attendance/excuse': <MarkChatReadOutlinedIcon fontSize="small" />,
+  '/attendance/sessions': <EventNoteOutlinedIcon fontSize="small" />,
+  '/attendance/report': <AssessmentOutlinedIcon fontSize="small" />,
+  '/attendance/excuse/review': <RuleFolderOutlinedIcon fontSize="small" />,
+  '/admin/courses/new': <LibraryAddCheckOutlinedIcon fontSize="small" />,
+  '/admin/sections/new': <ViewAgendaOutlinedIcon fontSize="small" />,
+  '/admin/users': <SupervisorAccountOutlinedIcon fontSize="small" />,
+};
+
+export const navSections: Array<{ title: string; items: NavItem[] }> = strings.sidebar.sections.map((section) => ({
+  title: section.title,
+  items: section.items.map((item) => ({
+    ...item,
+    icon: iconMap[item.to] || <SpaceDashboardOutlinedIcon fontSize="small" />,
+  })),
+}));
 
 function Sidebar() {
   const { user } = useAuth();

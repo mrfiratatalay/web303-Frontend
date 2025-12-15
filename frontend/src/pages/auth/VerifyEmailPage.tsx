@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+ï»¿import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Alert from '../../components/feedback/Alert';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import { verifyEmail } from '../../services/authApi';
 import { getErrorMessage } from '../../utils/error';
 import AuthLayout from '../../components/layout/AuthLayout';
+import { strings } from '../../strings';
 
 type VerifyState = {
   loading: boolean;
@@ -23,7 +24,7 @@ function VerifyEmailPage() {
         const response = await verifyEmail(token || '');
         const message =
           (response as { data?: { data?: { message?: string } } })?.data?.data?.message ||
-          'E-posta doðrulandý, birkaç saniye içinde giriþ sayfasýna yönlendirileceksiniz.';
+          strings.auth.verifyEmail.success;
         setStatus({
           loading: false,
           success: true,
@@ -34,7 +35,7 @@ function VerifyEmailPage() {
         setStatus({
           loading: false,
           success: false,
-          message: getErrorMessage(err, 'Geçersiz veya süresi dolmuþ doðrulama linki.'),
+          message: getErrorMessage(err, strings.auth.verifyEmail.error),
         });
       }
     };
@@ -42,10 +43,10 @@ function VerifyEmailPage() {
   }, [navigate, token]);
 
   return (
-    <AuthLayout title="E-posta Doðrulama" subtitle="Hesabýnýzý doðruluyoruz.">
+    <AuthLayout title={strings.auth.verifyEmail.title} subtitle={strings.auth.verifyEmail.subtitle}>
       {status.loading ? (
         <div className="flex items-center justify-center py-6">
-          <LoadingSpinner label="Doðrulanýyor..." />
+          <LoadingSpinner label={strings.auth.verifyEmail.loading} />
         </div>
       ) : (
         <Alert variant={status.success ? 'success' : 'error'} message={status.message} />
@@ -55,4 +56,3 @@ function VerifyEmailPage() {
 }
 
 export default VerifyEmailPage;
-

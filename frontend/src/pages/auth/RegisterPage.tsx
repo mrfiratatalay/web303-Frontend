@@ -1,4 +1,4 @@
-import { yupResolver } from '@hookform/resolvers/yup';
+ï»¿import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
@@ -22,6 +22,7 @@ import apiClient from '../../services/apiClient';
 import { getErrorMessage } from '../../utils/error';
 import { registerSchema } from '../../utils/validationSchemas';
 import AuthLayout from '../../components/layout/AuthLayout';
+import { strings } from '../../strings';
 
 type RegisterForm = {
   firstName: string;
@@ -76,9 +77,7 @@ function RegisterPage() {
     const fetchDepartments = async () => {
       setDepartmentsError('');
       try {
-        const response = await apiClient.get<{ data?: DepartmentOption[] } | DepartmentOption[]>(
-          '/departments',
-        );
+        const response = await apiClient.get<{ data?: DepartmentOption[] } | DepartmentOption[]>('/departments');
         const list =
           (response.data as { data?: DepartmentOption[] })?.data ||
           (response.data as DepartmentOption[]);
@@ -86,13 +85,11 @@ function RegisterPage() {
           setDepartments(list);
         } else {
           setDepartments([]);
-          setDepartmentsError('Bölümler yüklenemedi. Lütfen daha sonra tekrar deneyin.');
+          setDepartmentsError(strings.auth.register.departments.loadError);
         }
       } catch (error) {
         setDepartments([]);
-        setDepartmentsError(
-          getErrorMessage(error, 'Bölümler yüklenemedi. Lütfen sayfayý yenileyin.'),
-        );
+        setDepartmentsError(getErrorMessage(error, strings.auth.register.departments.loadError));
       }
     };
 
@@ -123,20 +120,16 @@ function RegisterPage() {
       const response = await registerRequest(payload);
       const message =
         (response as { data?: { data?: { message?: string } } })?.data?.data?.message ||
-        'Kayýt baþarýlý. Lütfen e-postanýzý doðrulama için kontrol edin.';
+        strings.auth.register.success;
       setSuccessMessage(message);
 
-      // Redirect to login after a short pause so the user can see the message
       setTimeout(() => navigate('/login'), 3000);
     } catch (error) {
-      const message = getErrorMessage(error, 'Kayýt baþarýsýz.');
+      const message = getErrorMessage(error, strings.auth.register.error);
       setServerError(message);
-      if (message.toLowerCase().includes('bölüm')) {
-        // Refresh departments in case the list changed
+      if (message.toLowerCase().includes('bÃ¶lÃ¼m')) {
         try {
-          const response = await apiClient.get<{ data?: DepartmentOption[] } | DepartmentOption[]>(
-            '/departments',
-          );
+          const response = await apiClient.get<{ data?: DepartmentOption[] } | DepartmentOption[]>('/departments');
           const list =
             (response.data as { data?: DepartmentOption[] })?.data ||
             (response.data as DepartmentOption[]);
@@ -144,9 +137,7 @@ function RegisterPage() {
             setDepartments(list);
           }
         } catch (err) {
-          setDepartmentsError(
-            getErrorMessage(err, 'Bölümler güncellenemedi. Lütfen tekrar deneyin.'),
-          );
+          setDepartmentsError(getErrorMessage(err, strings.auth.register.departments.reloadError));
         }
       }
     }
@@ -154,17 +145,17 @@ function RegisterPage() {
 
   return (
     <AuthLayout
-      title="Yeni hesap oluþtur"
-      subtitle="Öðrenci veya akademisyen olarak kayýt olun"
+      title={strings.auth.register.title}
+      subtitle={strings.auth.register.subtitle}
       maxWidth="64rem"
       action={
         <Link to="/login" className="text-sm text-blue-600 hover:underline">
-          Zaten hesabýnýz var mý?
+          {strings.auth.register.cta}
         </Link>
       }
     >
       <Stack spacing={1.5} sx={{ mb: 2 }}>
-        {serverError && <Alert variant="error" message={serverError} />}
+        {serverError && <Alert variant="error" message={serverError} />} 
         {successMessage && <Alert variant="success" message={successMessage} />}
       </Stack>
 
@@ -172,35 +163,34 @@ function RegisterPage() {
         <Grid container spacing={2}>
           <Grid item xs={12} md={4}>
             <TextInput
-              label="Ýsim"
+              label={strings.auth.register.labels.firstName}
               name="firstName"
-              placeholder="Adýnýzý girin"
+              placeholder={strings.auth.register.placeholders.firstName}
               register={register}
               error={errors.firstName?.message}
             />
           </Grid>
           <Grid item xs={12} md={4}>
             <TextInput
-              label="Soyisim"
+              label={strings.auth.register.labels.lastName}
               name="lastName"
-              placeholder="Soyadýnýzý girin"
+              placeholder={strings.auth.register.placeholders.lastName}
               register={register}
               error={errors.lastName?.message}
             />
           </Grid>
           <Grid item xs={12} md={4}>
             <TextInput
-              label="E-posta"
+              label={strings.auth.register.labels.email}
               type="email"
               name="email"
-              placeholder="ornek@universite.edu.tr"
+              placeholder={strings.auth.register.placeholders.email}
               register={register}
               error={errors.email?.message}
             />
           </Grid>
         </Grid>
 
-        {/* SECOND ROW: Rol / Bölüm / Þifre / Þifre Tekrar */}
         <Grid container spacing={3} alignItems="flex-start" sx={{ mt: 3 }}>
           <Grid item xs={12} md={3}>
             <FormControl
@@ -209,21 +199,21 @@ function RegisterPage() {
               margin="normal"
               error={!!errors.role}
             >
-              <InputLabel id="role-label">Rol</InputLabel>
+              <InputLabel id="role-label">{strings.auth.register.labels.role}</InputLabel>
               <Select
                 labelId="role-label"
                 id="role"
-                label="Rol"
+                label={strings.auth.register.labels.role}
                 value={watch('role') || ''}
                 onChange={(e) =>
                   setValue('role', e.target.value as RegisterForm['role'], { shouldValidate: true })
                 }
               >
                 <MenuItem value="">
-                  <em>Seçiniz</em>
+                  <em>{strings.auth.register.labels.select}</em>
                 </MenuItem>
-                <MenuItem value="student">Öðrenci</MenuItem>
-                <MenuItem value="faculty">Akademisyen</MenuItem>
+                <MenuItem value="student">{strings.roles.student}</MenuItem>
+                <MenuItem value="faculty">{strings.roles.faculty}</MenuItem>
               </Select>
               <FormHelperText>{errors.role?.message}</FormHelperText>
             </FormControl>
@@ -236,11 +226,11 @@ function RegisterPage() {
               margin="normal"
               error={!!errors.departmentId || !!departmentsError}
             >
-              <InputLabel id="department-label">Bölüm</InputLabel>
+              <InputLabel id="department-label">{strings.auth.register.labels.department}</InputLabel>
               <Select
                 labelId="department-label"
                 id="department"
-                label="Bölüm"
+                label={strings.auth.register.labels.department}
                 value={departmentValue || ''}
                 onChange={(e) =>
                   setValue('departmentId', e.target.value as string, { shouldValidate: true })
@@ -248,7 +238,7 @@ function RegisterPage() {
                 disabled={departments.length === 0}
               >
                 <MenuItem value="">
-                  <em>Seçiniz</em>
+                  <em>{strings.auth.register.labels.select}</em>
                 </MenuItem>
                 {departments.map((option) => (
                   <MenuItem key={option.id} value={option.id}>
@@ -264,9 +254,9 @@ function RegisterPage() {
 
           <Grid item xs={12} md={3}>
             <PasswordInput
-              label="Þifre"
+              label={strings.auth.register.labels.password}
               name="password"
-              placeholder="********"
+              placeholder={strings.auth.register.placeholders.password}
               register={register}
               error={errors.password?.message}
             />
@@ -274,9 +264,9 @@ function RegisterPage() {
 
           <Grid item xs={12} md={3}>
             <PasswordInput
-              label="Þifre Tekrar"
+              label={strings.auth.register.labels.confirmPassword}
               name="confirmPassword"
-              placeholder="********"
+              placeholder={strings.auth.register.placeholders.confirmPassword}
               register={register}
               error={errors.confirmPassword?.message}
             />
@@ -286,9 +276,9 @@ function RegisterPage() {
         <Grid container spacing={2} sx={{ mt: 1 }}>
           <Grid item xs={12} md={4}>
             <TextInput
-              label={selectedRole === 'student' ? 'Öðrenci Numarasý' : 'Personel Numarasý'}
+              label={selectedRole === 'student' ? strings.auth.register.labels.studentNumber : strings.auth.register.labels.employeeNumber}
               name={selectedRole === 'student' ? 'studentNumber' : 'employeeNumber'}
-              placeholder={selectedRole === 'student' ? 'Öðrenci numaranýz' : 'Personel numaranýz'}
+              placeholder={selectedRole === 'student' ? strings.auth.register.placeholders.studentNumber : strings.auth.register.placeholders.employeeNumber}
               register={register}
               error={
                 selectedRole === 'student'
@@ -300,9 +290,9 @@ function RegisterPage() {
           {selectedRole === 'faculty' && (
             <Grid item xs={12} md={4}>
               <TextInput
-                label="Unvan"
+                label={strings.auth.register.labels.title}
                 name="title"
-                placeholder="Dr. Öðr. Üyesi"
+                placeholder={strings.auth.register.placeholders.title}
                 register={register}
                 error={errors.title?.message}
               />
@@ -318,13 +308,13 @@ function RegisterPage() {
           sx={{ mt: 2 }}
         >
           <CheckboxInput
-            label="Kullaným þartlarýný kabul ediyorum"
+            label={strings.auth.register.labels.terms}
             name="acceptTerms"
             register={register}
             error={errors.acceptTerms?.message}
           />
           <Button type="submit" variant="contained" disabled={isSubmitting || departments.length === 0}>
-            {isSubmitting ? <LoadingSpinner label="Kayýt oluyor..." /> : 'Hesap Oluþtur'}
+            {isSubmitting ? <LoadingSpinner label={strings.auth.register.submitting} /> : strings.auth.register.submit}
           </Button>
         </Stack>
       </form>
@@ -333,4 +323,3 @@ function RegisterPage() {
 }
 
 export default RegisterPage;
-

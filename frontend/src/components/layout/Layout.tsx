@@ -1,10 +1,14 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { Outlet } from 'react-router-dom';
+import { useState } from 'react';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
+import MobileNav from './MobileNav';
 
 function Layout() {
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
   return (
     <Box
       display="flex"
@@ -12,7 +16,8 @@ function Layout() {
       minHeight="100vh"
       sx={{ bgcolor: '#f8fafc' }}
     >
-      <Navbar />
+      <Navbar onMenuClick={() => setMobileNavOpen(true)} />
+      <MobileNav open={mobileNavOpen} onClose={() => setMobileNavOpen(false)} />
       <Box display="flex" flex={1}>
         <Sidebar />
         <Container maxWidth="lg" sx={{ py: 4 }}>

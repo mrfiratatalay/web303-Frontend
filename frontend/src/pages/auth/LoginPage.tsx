@@ -1,8 +1,8 @@
-import { yupResolver } from '@hookform/resolvers/yup';
+ï»¿import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Stack, Typography } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import Alert from '../../components/feedback/Alert';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import PasswordInput from '../../components/form/PasswordInput';
@@ -11,6 +11,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { loginSchema } from '../../utils/validationSchemas';
 import { getErrorMessage } from '../../utils/error';
 import AuthLayout from '../../components/layout/AuthLayout';
+import { strings } from '../../strings';
 
 type LoginForm = {
   email: string;
@@ -39,7 +40,7 @@ function LoginPage() {
       await login(values);
       navigate('/dashboard');
     } catch (error) {
-      setServerError(getErrorMessage(error, 'Giriþ baþarýsýz.'));
+      setServerError(getErrorMessage(error, strings.auth.login.error));
     } finally {
       setIsSubmitting(false);
     }
@@ -47,11 +48,11 @@ function LoginPage() {
 
   return (
     <AuthLayout
-      title="Tekrar hoþ geldiniz"
-      subtitle="Hesabýnýza giriþ yapýn"
+      title={strings.auth.login.title}
+      subtitle={strings.auth.login.subtitle}
       action={
         <Link to="/register" className="text-sm text-blue-600 hover:underline">
-          Hesabýn yok mu?
+          {strings.auth.login.cta}
         </Link>
       }
     >
@@ -59,17 +60,17 @@ function LoginPage() {
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <TextInput
-          label="E-posta"
+          label={strings.auth.login.emailLabel}
           type="email"
-          placeholder="ornek@kampus.com"
+          placeholder={strings.auth.login.emailPlaceholder}
           register={register}
           name="email"
           error={errors.email?.message}
         />
 
         <PasswordInput
-          label="Þifre"
-          placeholder="********"
+          label={strings.auth.login.passwordLabel}
+          placeholder={strings.auth.login.passwordPlaceholder}
           register={register}
           name="password"
           error={errors.password?.message}
@@ -77,7 +78,7 @@ function LoginPage() {
 
         <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mt: 1 }}>
           <Link to="/forgot-password" className="text-blue-600 hover:underline text-sm">
-            Þifremi unuttum
+            {strings.auth.login.forgot}
           </Link>
         </Stack>
 
@@ -88,7 +89,7 @@ function LoginPage() {
           disabled={isSubmitting}
           sx={{ mt: 3 }}
         >
-          {isSubmitting ? <LoadingSpinner label="Giriþ yapýlýyor..." /> : 'Giriþ yap'}
+          {isSubmitting ? <LoadingSpinner label={strings.auth.login.submitting} /> : strings.auth.login.submit}
         </Button>
       </form>
     </AuthLayout>
@@ -96,4 +97,3 @@ function LoginPage() {
 }
 
 export default LoginPage;
-
