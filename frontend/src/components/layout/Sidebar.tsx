@@ -37,36 +37,133 @@ type NavItem = {
   icon: JSX.Element;
 };
 
-const iconMap: Record<string, JSX.Element> = {
-  '/dashboard': <SpaceDashboardOutlinedIcon fontSize="small" />,
-  '/profile': <PersonOutlineIcon fontSize="small" />,
-  '/courses': <MenuBookOutlinedIcon fontSize="small" />,
-  '/sections': <LayersOutlinedIcon fontSize="small" />,
-  '/enrollments/my': <SchoolOutlinedIcon fontSize="small" />,
-  '/enrollments/schedule': <ScheduleOutlinedIcon fontSize="small" />,
-  '/faculty/sections/students': <GroupOutlinedIcon fontSize="small" />,
-  '/grades/my': <AssignmentTurnedInOutlinedIcon fontSize="small" />,
-  '/grades/transcript': <ReceiptLongOutlinedIcon fontSize="small" />,
-  '/faculty/grades/entry': <BorderColorOutlinedIcon fontSize="small" />,
-  '/faculty/grades/bulk': <PlaylistAddCheckOutlinedIcon fontSize="small" />,
-  '/attendance/checkin': <HowToRegOutlinedIcon fontSize="small" />,
-  '/attendance/my': <FactCheckOutlinedIcon fontSize="small" />,
-  '/attendance/excuse': <MarkChatReadOutlinedIcon fontSize="small" />,
-  '/attendance/sessions': <EventNoteOutlinedIcon fontSize="small" />,
-  '/attendance/report': <AssessmentOutlinedIcon fontSize="small" />,
-  '/attendance/excuse/review': <RuleFolderOutlinedIcon fontSize="small" />,
-  '/admin/courses/new': <LibraryAddCheckOutlinedIcon fontSize="small" />,
-  '/admin/sections/new': <ViewAgendaOutlinedIcon fontSize="small" />,
-  '/admin/users': <SupervisorAccountOutlinedIcon fontSize="small" />,
-};
-
-export const navSections: Array<{ title: string; items: NavItem[] }> = strings.sidebar.sections.map((section) => ({
-  title: section.title,
-  items: section.items.map((item) => ({
-    ...item,
-    icon: iconMap[item.to] || <SpaceDashboardOutlinedIcon fontSize="small" />,
-  })),
-}));
+export const navSections: Array<{ title: string; items: NavItem[] }> = [
+  {
+    title: strings.sidebar.sections.general,
+    items: [
+      { to: '/dashboard', label: strings.sidebar.items.dashboard, icon: <SpaceDashboardOutlinedIcon fontSize="small" /> },
+      { to: '/profile', label: strings.sidebar.items.profile, icon: <PersonOutlineIcon fontSize="small" /> },
+    ],
+  },
+  {
+    title: strings.sidebar.sections.academic,
+    items: [
+      { to: '/courses', label: strings.sidebar.items.courses, icon: <MenuBookOutlinedIcon fontSize="small" /> },
+      { to: '/sections', label: strings.sidebar.items.sections, icon: <LayersOutlinedIcon fontSize="small" /> },
+      {
+        to: '/enrollments/my',
+        label: strings.sidebar.items.myEnrollments,
+        roles: ['student'],
+        icon: <SchoolOutlinedIcon fontSize="small" />,
+      },
+      {
+        to: '/enrollments/schedule',
+        label: strings.sidebar.items.mySchedule,
+        roles: ['student'],
+        icon: <ScheduleOutlinedIcon fontSize="small" />,
+      },
+      {
+        to: '/faculty/sections/students',
+        label: strings.sidebar.items.sectionStudents,
+        roles: ['faculty', 'admin'],
+        icon: <GroupOutlinedIcon fontSize="small" />,
+      },
+    ],
+  },
+  {
+    title: strings.sidebar.sections.grades,
+    items: [
+      {
+        to: '/grades/my',
+        label: strings.sidebar.items.myGrades,
+        roles: ['student'],
+        icon: <AssignmentTurnedInOutlinedIcon fontSize="small" />,
+      },
+      {
+        to: '/grades/transcript',
+        label: strings.sidebar.items.transcript,
+        roles: ['student'],
+        icon: <ReceiptLongOutlinedIcon fontSize="small" />,
+      },
+      {
+        to: '/faculty/grades/entry',
+        label: strings.sidebar.items.gradeEntry,
+        roles: ['faculty', 'admin'],
+        icon: <BorderColorOutlinedIcon fontSize="small" />,
+      },
+      {
+        to: '/faculty/grades/bulk',
+        label: strings.sidebar.items.gradeBulk,
+        roles: ['faculty', 'admin'],
+        icon: <PlaylistAddCheckOutlinedIcon fontSize="small" />,
+      },
+    ],
+  },
+  {
+    title: strings.sidebar.sections.attendance,
+    items: [
+      {
+        to: '/attendance/checkin',
+        label: strings.sidebar.items.attendanceCheckIn,
+        roles: ['student'],
+        icon: <HowToRegOutlinedIcon fontSize="small" />,
+      },
+      {
+        to: '/attendance/my',
+        label: strings.sidebar.items.attendanceSummary,
+        roles: ['student'],
+        icon: <FactCheckOutlinedIcon fontSize="small" />,
+      },
+      {
+        to: '/attendance/excuse',
+        label: strings.sidebar.items.attendanceExcuse,
+        roles: ['student'],
+        icon: <MarkChatReadOutlinedIcon fontSize="small" />,
+      },
+      {
+        to: '/attendance/sessions',
+        label: strings.sidebar.items.attendanceSessions,
+        roles: ['faculty', 'admin'],
+        icon: <EventNoteOutlinedIcon fontSize="small" />,
+      },
+      {
+        to: '/attendance/report',
+        label: strings.sidebar.items.attendanceReport,
+        roles: ['faculty', 'admin'],
+        icon: <AssessmentOutlinedIcon fontSize="small" />,
+      },
+      {
+        to: '/attendance/excuse/review',
+        label: strings.sidebar.items.attendanceReview,
+        roles: ['faculty', 'admin'],
+        icon: <RuleFolderOutlinedIcon fontSize="small" />,
+      },
+    ],
+  },
+  {
+    title: strings.sidebar.sections.admin,
+    items: [
+      {
+        to: '/admin/courses/new',
+        label: strings.sidebar.items.courseAdmin,
+        roles: ['admin'],
+        icon: <LibraryAddCheckOutlinedIcon fontSize="small" />,
+      },
+      {
+        to: '/admin/sections/new',
+        label: strings.sidebar.items.sectionAdmin,
+        roles: ['admin'],
+        icon: <ViewAgendaOutlinedIcon fontSize="small" />,
+      },
+      {
+        to: '/admin/users',
+        label: strings.sidebar.items.users,
+        roles: ['admin'],
+        icon: <SupervisorAccountOutlinedIcon fontSize="small" />,
+      },
+    ],
+  },
+];
 
 function Sidebar() {
   const { user } = useAuth();
