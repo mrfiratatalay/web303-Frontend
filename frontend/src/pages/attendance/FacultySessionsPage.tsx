@@ -4,7 +4,6 @@ import {
   Button,
   Card,
   CardContent,
-  Grid,
   Stack,
   Table,
   TableBody,
@@ -15,12 +14,19 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import Grid from '@mui/material/GridLegacy';
 import Alert from '../../components/feedback/Alert';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import { AttendanceSession } from '../../types/academics';
 import { closeSession, createSession, extractData, getMySessions } from '../../services/attendanceApi';
 import { getErrorMessage } from '../../utils/error';
 import { useNavigate } from 'react-router-dom';
+
+const SESSION_STATUS_LABELS: Record<string, string> = {
+  active: 'Aktif',
+  closed: 'Kapalı',
+  upcoming: 'Planlandı',
+};
 
 function FacultySessionsPage() {
   const navigate = useNavigate();
@@ -99,7 +105,7 @@ function FacultySessionsPage() {
             <Grid item xs={12} md={3}>
               <TextField
                 fullWidth
-                label="Section ID"
+                label="Şube ID"
                 value={form.section_id}
                 onChange={(e) => setForm((prev) => ({ ...prev, section_id: e.target.value }))}
               />
@@ -108,7 +114,7 @@ function FacultySessionsPage() {
               <TextField
                 fullWidth
                 type="number"
-                label="Geofence (m)"
+                label="Konum Çapı (m)"
                 value={form.geofence_radius}
                 onChange={(e) => setForm((prev) => ({ ...prev, geofence_radius: Number(e.target.value) }))}
               />
@@ -116,7 +122,7 @@ function FacultySessionsPage() {
             <Grid item xs={6} md={2}>
               <TextField
                 fullWidth
-                label="Latitude"
+                label="Enlem"
                 value={form.latitude}
                 onChange={(e) => setForm((prev) => ({ ...prev, latitude: e.target.value }))}
               />
@@ -124,7 +130,7 @@ function FacultySessionsPage() {
             <Grid item xs={6} md={2}>
               <TextField
                 fullWidth
-                label="Longitude"
+                label="Boylam"
                 value={form.longitude}
                 onChange={(e) => setForm((prev) => ({ ...prev, longitude: e.target.value }))}
               />
@@ -149,7 +155,7 @@ function FacultySessionsPage() {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Section</TableCell>
+                    <TableCell>Şube</TableCell>
                     <TableCell>Durum</TableCell>
                     <TableCell>Tarih</TableCell>
                     <TableCell>QR</TableCell>
@@ -159,13 +165,19 @@ function FacultySessionsPage() {
                 <TableBody>
                   {sessions.map((s) => (
                     <TableRow key={s.id}>
-                      <TableCell>{s.section?.course?.code} / {s.section?.section_number}</TableCell>
-                      <TableCell>{s.status}</TableCell>
-                      <TableCell>{s.date} {s.start_time}</TableCell>
+                      <TableCell>
+                        {s.section?.course?.code} / {s.section?.section_number}
+                      </TableCell>
+                      <TableCell>{SESSION_STATUS_LABELS[s.status] || s.status}</TableCell>
+                      <TableCell>
+                        {s.date} {s.start_time}
+                      </TableCell>
                       <TableCell>{s.qr_code}</TableCell>
                       <TableCell align="right">
                         <Stack direction="row" spacing={1} justifyContent="flex-end">
-                          <Button size="small" onClick={() => navigate(`/attendance/sessions/${s.id}`)}>Detay</Button>
+                          <Button size="small" onClick={() => navigate(`/attendance/sessions/${s.id}`)}>
+                            Detay
+                          </Button>
                           {s.status === 'active' && (
                             <Button size="small" color="error" onClick={() => handleClose(s.id)}>
                               Kapat
@@ -193,3 +205,4 @@ function FacultySessionsPage() {
 }
 
 export default FacultySessionsPage;
+

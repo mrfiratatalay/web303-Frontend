@@ -1,4 +1,4 @@
-ï»¿import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
@@ -37,10 +37,10 @@ function ForgotPasswordPage() {
       const response = await forgotPassword(email);
       const successMessage =
         (response as { data?: { data?: { message?: string } } })?.data?.data?.message ||
-        'EÄŸer bu e-posta kayÄ±tlÄ±ysa, ÅŸifre sÄ±fÄ±rlama linki gÃ¶nderildi.';
+        'Eğer bu e-posta kayıtlıysa, şifre sıfırlama linki gönderildi.';
       setMessage(successMessage);
     } catch (err) {
-      setError(getErrorMessage(err, 'Ä°ÅŸlem sÄ±rasÄ±nda bir hata oluÅŸtu.'));
+      setError(getErrorMessage(err, 'İşlem sırasında bir hata oluştu.'));
     } finally {
       setIsSubmitting(false);
     }
@@ -48,8 +48,8 @@ function ForgotPasswordPage() {
 
   return (
     <AuthLayout
-      title="Åifre SÄ±fÄ±rlama"
-      subtitle="E-posta adresinizi girin; kayÄ±tlÄ±ysa sÄ±fÄ±rlama linki gÃ¶nderilecektir."
+      title="Şifre Sıfırlama"
+      subtitle="E-posta adresinizi girin; kayıtlıysa sıfırlama linki gönderilecektir."
     >
       <Stack spacing={1.5}>
         {message && <Alert variant="success" message={message} />}
@@ -66,13 +66,13 @@ function ForgotPasswordPage() {
           placeholder="ornek@kampus.com"
         />
         <Button type="submit" fullWidth variant="contained" disabled={isSubmitting} sx={{ mt: 3 }}>
-          {isSubmitting ? <LoadingSpinner label="GÃ¶nderiliyor..." /> : 'SÄ±fÄ±rlama linki gÃ¶nder'}
+          {isSubmitting ? <LoadingSpinner label="Gönderiliyor..." /> : 'Sıfırlama linki gönder'}
         </Button>
       </form>
 
       <Stack direction="row" justifyContent="flex-start" sx={{ mt: 2 }}>
         <Link to="/login" className="text-blue-600 hover:underline text-sm">
-          GiriÅŸ sayfasÄ±na dÃ¶n
+          Giriş sayfasına dön
         </Link>
       </Stack>
     </AuthLayout>
@@ -80,3 +80,4 @@ function ForgotPasswordPage() {
 }
 
 export default ForgotPasswordPage;
+

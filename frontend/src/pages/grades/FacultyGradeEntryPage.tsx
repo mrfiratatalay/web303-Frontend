@@ -42,7 +42,7 @@ function FacultyGradeEntryPage() {
       <Card>
         <CardContent>
           <Stack spacing={2}>
-            <TextField label="Enrollment ID" value={enrollmentId} onChange={(e) => setEnrollmentId(e.target.value)} />
+            <TextField label="Kayıt ID" value={enrollmentId} onChange={(e) => setEnrollmentId(e.target.value)} />
             <TextField
               label="Vize (0-100)"
               value={midterm}
@@ -68,3 +68,4 @@ function FacultyGradeEntryPage() {
 }
 
 export default FacultyGradeEntryPage;
+

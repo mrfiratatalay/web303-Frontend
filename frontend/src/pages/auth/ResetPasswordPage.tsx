@@ -1,4 +1,4 @@
-ï»¿import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -38,17 +38,17 @@ function ResetPasswordPage() {
     setIsSubmitting(true);
     try {
       await resetPassword({ token: token || '', password, confirmPassword });
-      setMessage('Åžifreniz gÃ¼ncellendi. GiriÅŸ sayfasÄ±na yÃ¶nlendiriliyorsunuz...');
+      setMessage('Þifreniz güncellendi. Giriþ sayfasýna yönlendiriliyorsunuz...');
       setTimeout(() => navigate('/login'), 1500);
     } catch (err) {
-      setError(getErrorMessage(err, 'Åžifre gÃ¼ncellenemedi.'));
+      setError(getErrorMessage(err, 'Þifre güncellenemedi.'));
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <AuthLayout title="Yeni Åžifre Belirle" subtitle="GÃ¼Ã§lÃ¼ bir ÅŸifre oluÅŸturun.">
+    <AuthLayout title="Yeni Þifre Belirle" subtitle="Güçlü bir þifre oluþturun.">
       <Stack spacing={1.5}>
         {message && <Alert variant="success" message={message} />}
         {error && <Alert variant="error" message={error} />}
@@ -56,14 +56,14 @@ function ResetPasswordPage() {
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <PasswordInput
-          label="Yeni Åžifre"
+          label="Yeni Þifre"
           name="password"
           register={register}
           error={errors.password?.message}
           placeholder="********"
         />
         <PasswordInput
-          label="Yeni Åžifre Tekrar"
+          label="Yeni Þifre Tekrar"
           name="confirmPassword"
           register={register}
           error={errors.confirmPassword?.message}
@@ -71,13 +71,13 @@ function ResetPasswordPage() {
         />
 
         <Button type="submit" fullWidth variant="contained" disabled={isSubmitting} sx={{ mt: 3 }}>
-          {isSubmitting ? <LoadingSpinner label="GÃ¼ncelleniyor..." /> : 'Åžifreyi GÃ¼ncelle'}
+          {isSubmitting ? <LoadingSpinner label="Güncelleniyor..." /> : 'Þifreyi Güncelle'}
         </Button>
       </form>
 
       <Stack direction="row" justifyContent="flex-start" sx={{ mt: 2 }}>
         <Link to="/login" className="text-blue-600 hover:underline text-sm">
-          GiriÅŸ sayfasÄ±na dÃ¶n
+          Giriþ sayfasýna dön
         </Link>
       </Stack>
     </AuthLayout>
@@ -85,3 +85,4 @@ function ResetPasswordPage() {
 }
 
 export default ResetPasswordPage;
+

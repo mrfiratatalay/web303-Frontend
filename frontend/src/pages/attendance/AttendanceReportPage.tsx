@@ -51,12 +51,7 @@ function AttendanceReportPage() {
       <Card>
         <CardContent>
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} alignItems="center">
-            <TextField
-              label="Section ID"
-              value={sectionId}
-              onChange={(e) => setSectionId(e.target.value)}
-              fullWidth
-            />
+            <TextField label="Şube ID" value={sectionId} onChange={(e) => setSectionId(e.target.value)} fullWidth />
             <Button variant="contained" onClick={handleFetch} disabled={!sectionId || loading}>
               Getir
             </Button>
@@ -112,3 +107,4 @@ function AttendanceReportPage() {
 }
 
 export default AttendanceReportPage;
+

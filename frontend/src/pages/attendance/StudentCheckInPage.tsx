@@ -61,15 +61,19 @@ function StudentCheckInPage() {
       <Card>
         <CardContent>
           <Stack spacing={2}>
-            <TextField label="Session ID" value={sessionId} onChange={(e) => setSessionId(e.target.value)} />
-            <TextField label="QR Kod (isteğe bağlı)" value={qrCode} onChange={(e) => setQrCode(e.target.value)} />
+            <TextField label="Oturum ID" value={sessionId} onChange={(e) => setSessionId(e.target.value)} />
+            <TextField
+              label="QR Kod (isteğe bağlı)"
+              value={qrCode}
+              onChange={(e) => setQrCode(e.target.value)}
+            />
             <Stack direction="row" spacing={2} alignItems="center">
               <Button variant="outlined" onClick={fetchLocation}>
                 Konum Al
               </Button>
               <Typography variant="body2" color="text.secondary">
                 {location.latitude
-                  ? `Lat: ${location.latitude.toFixed(5)}, Lon: ${location.longitude?.toFixed(5)}, Acc: ${
+                  ? `Enlem: ${location.latitude.toFixed(5)}, Boylam: ${location.longitude?.toFixed(5)}, Doğruluk: ${
                       location.accuracy ?? '-'
                     }`
                   : 'Konum alınmadı'}
@@ -86,3 +90,4 @@ function StudentCheckInPage() {
 }
 
 export default StudentCheckInPage;
+

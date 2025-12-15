@@ -1,10 +1,9 @@
-ï»¿import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Button,
-  Grid,
   Stack,
   FormControl,
   InputLabel,
@@ -12,6 +11,7 @@ import {
   MenuItem,
   FormHelperText,
 } from '@mui/material';
+import Grid from '@mui/material/GridLegacy';
 import Alert from '../../components/feedback/Alert';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import CheckboxInput from '../../components/form/CheckboxInput';
@@ -86,12 +86,12 @@ function RegisterPage() {
           setDepartments(list);
         } else {
           setDepartments([]);
-          setDepartmentsError('BÃ¶lÃ¼mler yÃ¼klenemedi. LÃ¼tfen daha sonra tekrar deneyin.');
+          setDepartmentsError('Bölümler yüklenemedi. Lütfen daha sonra tekrar deneyin.');
         }
       } catch (error) {
         setDepartments([]);
         setDepartmentsError(
-          getErrorMessage(error, 'BÃ¶lÃ¼mler yÃ¼klenemedi. LÃ¼tfen sayfayÄ± yenileyin.'),
+          getErrorMessage(error, 'Bölümler yüklenemedi. Lütfen sayfayý yenileyin.'),
         );
       }
     };
@@ -123,15 +123,15 @@ function RegisterPage() {
       const response = await registerRequest(payload);
       const message =
         (response as { data?: { data?: { message?: string } } })?.data?.data?.message ||
-        'KayÄ±t baÅŸarÄ±lÄ±. LÃ¼tfen e-postanÄ±zÄ± doÄŸrulama iÃ§in kontrol edin.';
+        'Kayýt baþarýlý. Lütfen e-postanýzý doðrulama için kontrol edin.';
       setSuccessMessage(message);
 
       // Redirect to login after a short pause so the user can see the message
       setTimeout(() => navigate('/login'), 3000);
     } catch (error) {
-      const message = getErrorMessage(error, 'KayÄ±t baÅŸarÄ±sÄ±z.');
+      const message = getErrorMessage(error, 'Kayýt baþarýsýz.');
       setServerError(message);
-      if (message.toLowerCase().includes('bÃ¶lÃ¼m')) {
+      if (message.toLowerCase().includes('bölüm')) {
         // Refresh departments in case the list changed
         try {
           const response = await apiClient.get<{ data?: DepartmentOption[] } | DepartmentOption[]>(
@@ -145,7 +145,7 @@ function RegisterPage() {
           }
         } catch (err) {
           setDepartmentsError(
-            getErrorMessage(err, 'BÃ¶lÃ¼mler gÃ¼ncellenemedi. LÃ¼tfen tekrar deneyin.'),
+            getErrorMessage(err, 'Bölümler güncellenemedi. Lütfen tekrar deneyin.'),
           );
         }
       }
@@ -154,12 +154,12 @@ function RegisterPage() {
 
   return (
     <AuthLayout
-      title="Yeni hesap oluÅŸtur"
-      subtitle="Ã–ÄŸrenci veya akademisyen olarak kayÄ±t olun"
+      title="Yeni hesap oluþtur"
+      subtitle="Öðrenci veya akademisyen olarak kayýt olun"
       maxWidth="64rem"
       action={
         <Link to="/login" className="text-sm text-blue-600 hover:underline">
-          Zaten hesabÄ±nÄ±z var mÄ±?
+          Zaten hesabýnýz var mý?
         </Link>
       }
     >
@@ -172,9 +172,9 @@ function RegisterPage() {
         <Grid container spacing={2}>
           <Grid item xs={12} md={4}>
             <TextInput
-              label="Ä°sim"
+              label="Ýsim"
               name="firstName"
-              placeholder="AdÄ±nÄ±zÄ± girin"
+              placeholder="Adýnýzý girin"
               register={register}
               error={errors.firstName?.message}
             />
@@ -183,7 +183,7 @@ function RegisterPage() {
             <TextInput
               label="Soyisim"
               name="lastName"
-              placeholder="SoyadÄ±nÄ±zÄ± girin"
+              placeholder="Soyadýnýzý girin"
               register={register}
               error={errors.lastName?.message}
             />
@@ -200,7 +200,7 @@ function RegisterPage() {
           </Grid>
         </Grid>
 
-        {/* SECOND ROW: Rol / BÃ¶lÃ¼m / Åžifre / Åžifre Tekrar */}
+        {/* SECOND ROW: Rol / Bölüm / Þifre / Þifre Tekrar */}
         <Grid container spacing={3} alignItems="flex-start" sx={{ mt: 3 }}>
           <Grid item xs={12} md={3}>
             <FormControl
@@ -220,9 +220,9 @@ function RegisterPage() {
                 }
               >
                 <MenuItem value="">
-                  <em>SeÃ§iniz</em>
+                  <em>Seçiniz</em>
                 </MenuItem>
-                <MenuItem value="student">Ã–ÄŸrenci</MenuItem>
+                <MenuItem value="student">Öðrenci</MenuItem>
                 <MenuItem value="faculty">Akademisyen</MenuItem>
               </Select>
               <FormHelperText>{errors.role?.message}</FormHelperText>
@@ -236,11 +236,11 @@ function RegisterPage() {
               margin="normal"
               error={!!errors.departmentId || !!departmentsError}
             >
-              <InputLabel id="department-label">BÃ¶lÃ¼m</InputLabel>
+              <InputLabel id="department-label">Bölüm</InputLabel>
               <Select
                 labelId="department-label"
                 id="department"
-                label="BÃ¶lÃ¼m"
+                label="Bölüm"
                 value={departmentValue || ''}
                 onChange={(e) =>
                   setValue('departmentId', e.target.value as string, { shouldValidate: true })
@@ -248,7 +248,7 @@ function RegisterPage() {
                 disabled={departments.length === 0}
               >
                 <MenuItem value="">
-                  <em>SeÃ§iniz</em>
+                  <em>Seçiniz</em>
                 </MenuItem>
                 {departments.map((option) => (
                   <MenuItem key={option.id} value={option.id}>
@@ -264,7 +264,7 @@ function RegisterPage() {
 
           <Grid item xs={12} md={3}>
             <PasswordInput
-              label="Åžifre"
+              label="Þifre"
               name="password"
               placeholder="********"
               register={register}
@@ -274,7 +274,7 @@ function RegisterPage() {
 
           <Grid item xs={12} md={3}>
             <PasswordInput
-              label="Åžifre Tekrar"
+              label="Þifre Tekrar"
               name="confirmPassword"
               placeholder="********"
               register={register}
@@ -286,9 +286,9 @@ function RegisterPage() {
         <Grid container spacing={2} sx={{ mt: 1 }}>
           <Grid item xs={12} md={4}>
             <TextInput
-              label={selectedRole === 'student' ? 'Ã–ÄŸrenci NumarasÄ±' : 'Personel NumarasÄ±'}
+              label={selectedRole === 'student' ? 'Öðrenci Numarasý' : 'Personel Numarasý'}
               name={selectedRole === 'student' ? 'studentNumber' : 'employeeNumber'}
-              placeholder={selectedRole === 'student' ? 'Ã–ÄŸrenci numaranÄ±z' : 'Personel numaranÄ±z'}
+              placeholder={selectedRole === 'student' ? 'Öðrenci numaranýz' : 'Personel numaranýz'}
               register={register}
               error={
                 selectedRole === 'student'
@@ -302,7 +302,7 @@ function RegisterPage() {
               <TextInput
                 label="Unvan"
                 name="title"
-                placeholder="Dr. Ã–ÄŸr. Ãœyesi"
+                placeholder="Dr. Öðr. Üyesi"
                 register={register}
                 error={errors.title?.message}
               />
@@ -318,13 +318,13 @@ function RegisterPage() {
           sx={{ mt: 2 }}
         >
           <CheckboxInput
-            label="KullanÄ±m ÅŸartlarÄ±nÄ± kabul ediyorum"
+            label="Kullaným þartlarýný kabul ediyorum"
             name="acceptTerms"
             register={register}
             error={errors.acceptTerms?.message}
           />
           <Button type="submit" variant="contained" disabled={isSubmitting || departments.length === 0}>
-            {isSubmitting ? <LoadingSpinner label="KayÄ±t oluyor..." /> : 'Hesap OluÅŸtur'}
+            {isSubmitting ? <LoadingSpinner label="Kayýt oluyor..." /> : 'Hesap Oluþtur'}
           </Button>
         </Stack>
       </form>
@@ -333,3 +333,4 @@ function RegisterPage() {
 }
 
 export default RegisterPage;
+

@@ -9,7 +9,6 @@ import {
   DialogTitle,
   Divider,
   FormControl,
-  Grid,
   InputLabel,
   MenuItem,
   Paper,
@@ -25,6 +24,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import Grid from '@mui/material/GridLegacy';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import Alert from '../../components/feedback/Alert';
 import { getUserById, getUsers } from '../../services/userApi';
@@ -495,3 +495,4 @@ function UserManagementPage() {
 }
 
 export default UserManagementPage;
+

@@ -20,6 +20,12 @@ import { AttendanceSession } from '../../types/academics';
 import { extractData, getSession } from '../../services/attendanceApi';
 import { getErrorMessage } from '../../utils/error';
 
+const SESSION_STATUS_LABELS: Record<string, string> = {
+  active: 'Aktif',
+  closed: 'Kapalı',
+  upcoming: 'Planlandı',
+};
+
 function SessionDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -61,7 +67,7 @@ function SessionDetailPage() {
     <Stack spacing={2}>
       <Stack direction="row" alignItems="center" justifyContent="space-between">
         <Typography variant="h5" fontWeight={800}>
-          Oturum Detay
+          Oturum Detayı
         </Typography>
         <Button variant="outlined" onClick={() => navigate(-1)}>
           Geri
@@ -69,9 +75,13 @@ function SessionDetailPage() {
       </Stack>
       <Card>
         <CardContent>
-          <Typography>Section: {session.section?.course?.code} / {session.section?.section_number}</Typography>
-          <Typography>Durum: {session.status}</Typography>
-          <Typography>Tarih: {session.date} {session.start_time}</Typography>
+          <Typography>
+            Şube: {session.section?.course?.code} / {session.section?.section_number}
+          </Typography>
+          <Typography>Durum: {SESSION_STATUS_LABELS[session.status] || session.status}</Typography>
+          <Typography>
+            Tarih: {session.date} {session.start_time}
+          </Typography>
           <Typography>QR: {session.qr_code}</Typography>
         </CardContent>
       </Card>
@@ -86,9 +96,9 @@ function SessionDetailPage() {
               <TableHead>
                 <TableRow>
                   <TableCell>Öğrenci</TableCell>
-                  <TableCell>Check-in</TableCell>
+                  <TableCell>Yoklama</TableCell>
                   <TableCell>Mesafe (m)</TableCell>
-                  <TableCell>Flag</TableCell>
+                  <TableCell>Durum</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -97,7 +107,7 @@ function SessionDetailPage() {
                     <TableCell>{r.student_id}</TableCell>
                     <TableCell>{r.check_in_time}</TableCell>
                     <TableCell>{r.distance_from_center?.toFixed(2)}</TableCell>
-                    <TableCell>{r.is_flagged ? r.flag_reason || 'Şüpheli' : '—'}</TableCell>
+                    <TableCell>{r.is_flagged ? r.flag_reason || 'Şüpheli' : 'Onaylı'}</TableCell>
                   </TableRow>
                 ))}
                 {!session.records?.length && (
@@ -117,3 +127,4 @@ function SessionDetailPage() {
 }
 
 export default SessionDetailPage;
+

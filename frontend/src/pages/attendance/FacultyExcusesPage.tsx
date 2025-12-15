@@ -13,12 +13,19 @@ import {
   TableRow,
   TextField,
   Typography,
+  MenuItem,
 } from '@mui/material';
 import Alert from '../../components/feedback/Alert';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import { ExcuseRequest } from '../../types/academics';
 import { approveExcuse, extractData, getExcuseRequests, rejectExcuse } from '../../services/attendanceApi';
 import { getErrorMessage } from '../../utils/error';
+
+const STATUS_LABELS: Record<string, string> = {
+  pending: 'Beklemede',
+  approved: 'Onaylandı',
+  rejected: 'Reddedildi',
+};
 
 function FacultyExcusesPage() {
   const [status, setStatus] = useState('');
@@ -75,13 +82,19 @@ function FacultyExcusesPage() {
         <CardContent>
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} alignItems="center">
             <TextField
-              label="Durum (pending/approved/rejected)"
+              select
+              label="Durum"
               value={status}
               onChange={(e) => setStatus(e.target.value)}
               fullWidth
-            />
+            >
+              <MenuItem value="">Tümü</MenuItem>
+              <MenuItem value="pending">Beklemede</MenuItem>
+              <MenuItem value="approved">Onaylandı</MenuItem>
+              <MenuItem value="rejected">Reddedildi</MenuItem>
+            </TextField>
             <TextField
-              label="Section ID (isteğe bağlı)"
+              label="Şube ID (isteğe bağlı)"
               value={sectionId}
               onChange={(e) => setSectionId(e.target.value)}
               fullWidth
@@ -105,7 +118,7 @@ function FacultyExcusesPage() {
                 <TableHead>
                   <TableRow>
                     <TableCell>Öğrenci</TableCell>
-                    <TableCell>Ders/Section</TableCell>
+                    <TableCell>Ders/Şube</TableCell>
                     <TableCell>Durum</TableCell>
                     <TableCell>Belge</TableCell>
                     <TableCell align="right">İşlem</TableCell>
@@ -118,14 +131,14 @@ function FacultyExcusesPage() {
                         {item.student?.user?.first_name} {item.student?.user?.last_name}
                       </TableCell>
                       <TableCell>{item.session?.section?.course?.code}</TableCell>
-                      <TableCell>{item.status}</TableCell>
+                      <TableCell>{STATUS_LABELS[item.status] || item.status}</TableCell>
                       <TableCell>
                         {item.document_url ? (
                           <Button component="a" href={item.document_url} target="_blank" rel="noreferrer" size="small">
                             Görüntüle
                           </Button>
                         ) : (
-                          '—'
+                          '-'
                         )}
                       </TableCell>
                       <TableCell align="right">
@@ -169,3 +182,4 @@ function FacultyExcusesPage() {
 }
 
 export default FacultyExcusesPage;
+

@@ -1,4 +1,4 @@
-ï»¿import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
@@ -39,7 +39,7 @@ function LoginPage() {
       await login(values);
       navigate('/dashboard');
     } catch (error) {
-      setServerError(getErrorMessage(error, 'GiriÅŸ baÅŸarÄ±sÄ±z.'));
+      setServerError(getErrorMessage(error, 'Giriþ baþarýsýz.'));
     } finally {
       setIsSubmitting(false);
     }
@@ -47,11 +47,11 @@ function LoginPage() {
 
   return (
     <AuthLayout
-      title="Tekrar hoÅŸ geldiniz"
-      subtitle="HesabÄ±nÄ±za giriÅŸ yapÄ±n"
+      title="Tekrar hoþ geldiniz"
+      subtitle="Hesabýnýza giriþ yapýn"
       action={
         <Link to="/register" className="text-sm text-blue-600 hover:underline">
-          HesabÄ±n yok mu?
+          Hesabýn yok mu?
         </Link>
       }
     >
@@ -68,7 +68,7 @@ function LoginPage() {
         />
 
         <PasswordInput
-          label="Åžifre"
+          label="Þifre"
           placeholder="********"
           register={register}
           name="password"
@@ -77,7 +77,7 @@ function LoginPage() {
 
         <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mt: 1 }}>
           <Link to="/forgot-password" className="text-blue-600 hover:underline text-sm">
-            Åžifremi unuttum
+            Þifremi unuttum
           </Link>
         </Stack>
 
@@ -88,7 +88,7 @@ function LoginPage() {
           disabled={isSubmitting}
           sx={{ mt: 3 }}
         >
-          {isSubmitting ? <LoadingSpinner label="GiriÅŸ yapÄ±lÄ±yor..." /> : 'GiriÅŸ yap'}
+          {isSubmitting ? <LoadingSpinner label="Giriþ yapýlýyor..." /> : 'Giriþ yap'}
         </Button>
       </form>
     </AuthLayout>
@@ -96,3 +96,4 @@ function LoginPage() {
 }
 
 export default LoginPage;
+

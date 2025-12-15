@@ -1,5 +1,17 @@
 import { useEffect, useState } from 'react';
-import { Card, CardContent, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Box } from '@mui/material';
+import {
+  Card,
+  CardContent,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  Box,
+} from '@mui/material';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import Alert from '../../components/feedback/Alert';
 import { ScheduleEntry } from '../../types/academics';
@@ -18,7 +30,6 @@ function StudentSchedulePage() {
       try {
         const response = await getMySchedule();
         const raw = extractData<any>(response);
-        // Backend returns array of {day, slots:[]}; flatten to entries
         if (Array.isArray(raw)) {
           const flattened: ScheduleEntry[] = [];
           raw.forEach((day: any) => {
@@ -68,7 +79,7 @@ function StudentSchedulePage() {
                 <TableHead>
                   <TableRow>
                     <TableCell>Ders</TableCell>
-                    <TableCell>Section</TableCell>
+                    <TableCell>Şube</TableCell>
                     <TableCell>Gün</TableCell>
                     <TableCell>Saat</TableCell>
                     <TableCell>Sınıf</TableCell>
@@ -104,3 +115,4 @@ function StudentSchedulePage() {
 }
 
 export default StudentSchedulePage;
+

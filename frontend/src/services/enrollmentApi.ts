@@ -22,4 +22,10 @@ export const getSectionStudents = (sectionId: string) =>
     `/enrollments/students/${sectionId}`,
   );
 
+export const addSectionStudent = (sectionId: string, student_id: string) =>
+  apiClient.post(`/enrollments/sections/${sectionId}/students`, { student_id });
+
+export const removeSectionStudent = (sectionId: string, studentId: string) =>
+  apiClient.delete<{ message?: string }>(`/enrollments/sections/${sectionId}/students/${studentId}`);
+
 export const extractData = unwrap;

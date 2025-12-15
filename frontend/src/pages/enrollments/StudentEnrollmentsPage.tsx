@@ -16,11 +16,19 @@ import {
 } from '@mui/material';
 import Alert from '../../components/feedback/Alert';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
-import { Enrollment, EnrollmentQuery } from '../../types/academics';
+import { Enrollment, EnrollmentQuery, EnrollmentStatus } from '../../types/academics';
 import { dropCourse, getMyCourses, extractData } from '../../services/enrollmentApi';
 import { getErrorMessage } from '../../utils/error';
 
 const DEFAULT_QUERY: EnrollmentQuery = {};
+const STATUS_LABELS: Record<EnrollmentStatus, string> = {
+  enrolled: 'Kayıtlı',
+  dropped: 'Bırakıldı',
+  completed: 'Tamamlandı',
+  failed: 'Kaldı',
+  withdrawn: 'Çekildi',
+};
+const formatStatus = (status: EnrollmentStatus) => STATUS_LABELS[status] || status;
 
 function StudentEnrollmentsPage() {
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
@@ -79,7 +87,7 @@ function StudentEnrollmentsPage() {
                 <TableHead>
                   <TableRow>
                     <TableCell>Ders</TableCell>
-                    <TableCell>Section</TableCell>
+                    <TableCell>Şube</TableCell>
                     <TableCell>Dönem</TableCell>
                     <TableCell>Durum</TableCell>
                     <TableCell align="right">İşlem</TableCell>
@@ -94,7 +102,7 @@ function StudentEnrollmentsPage() {
                         {enroll.section?.semester} {enroll.section?.year}
                       </TableCell>
                       <TableCell>
-                        <Chip label={enroll.status} size="small" />
+                        <Chip label={formatStatus(enroll.status)} size="small" />
                       </TableCell>
                       <TableCell align="right">
                         {enroll.status === 'enrolled' && (
@@ -123,3 +131,4 @@ function StudentEnrollmentsPage() {
 }
 
 export default StudentEnrollmentsPage;
+

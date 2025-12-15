@@ -1,32 +1,32 @@
-import { useEffect, useState } from 'react';
 import {
-  Box,
-  Card,
-  CardContent,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TablePagination,
-  TableRow,
-  TextField,
-  Typography,
-  Button,
+    Box,
+    Button,
+    Card,
+    CardContent,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    Stack,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TablePagination,
+    TableRow,
+    TextField,
+    Typography,
 } from '@mui/material';
+import Grid from '@mui/material/GridLegacy';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import Alert from '../../components/feedback/Alert';
-import { Section, SectionListQuery, SectionListResult } from '../../types/academics';
-import { getSections, extractData } from '../../services/sectionApi';
-import { getErrorMessage } from '../../utils/error';
+import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import { useAuth } from '../../hooks/useAuth';
+import { extractData, getSections } from '../../services/sectionApi';
+import { Section, SectionListQuery, SectionListResult } from '../../types/academics';
+import { getErrorMessage } from '../../utils/error';
 
 const DEFAULT_QUERY: SectionListQuery = {
   page: 1,
@@ -60,7 +60,7 @@ function SectionListPage() {
         setSections(data.sections || []);
         setPagination(data.pagination || null);
       } catch (err) {
-        setError(getErrorMessage(err, 'Section listesi yüklenemedi.'));
+        setError(getErrorMessage(err, 'Şube listesi yüklenemedi.'));
         setSections([]);
         setPagination(null);
       } finally {
@@ -91,11 +91,11 @@ function SectionListPage() {
     <Stack spacing={2}>
       <Stack direction="row" alignItems="center" justifyContent="space-between">
         <Typography variant="h5" fontWeight={800}>
-          Sectionlar
+          Şubeler
         </Typography>
         {user?.role === 'admin' && (
           <Button variant="contained" size="small" onClick={() => navigate('/admin/sections/new')}>
-            Yeni Section
+            Yeni Şube
           </Button>
         )}
       </Stack>
@@ -107,7 +107,7 @@ function SectionListPage() {
               <TextField
                 fullWidth
                 size="small"
-                label="Course ID filtresi"
+                label="Ders ID filtresi"
                 value={courseFilter}
                 onChange={(e) => setCourseFilter(e.target.value)}
               />
@@ -122,9 +122,9 @@ function SectionListPage() {
                   onChange={(e) => setSemesterFilter(e.target.value as string)}
                 >
                   <MenuItem value="">Tümü</MenuItem>
-                  <MenuItem value="fall">Fall</MenuItem>
-                  <MenuItem value="spring">Spring</MenuItem>
-                  <MenuItem value="summer">Summer</MenuItem>
+                  <MenuItem value="fall">Güz</MenuItem>
+                  <MenuItem value="spring">Bahar</MenuItem>
+                  <MenuItem value="summer">Yaz</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -137,8 +137,8 @@ function SectionListPage() {
                   value={query.sort_by}
                   onChange={handleSortChange}
                 >
-                  <MenuItem value="course_id">Course</MenuItem>
-                  <MenuItem value="section_number">Section</MenuItem>
+                  <MenuItem value="course_id">Ders</MenuItem>
+                  <MenuItem value="section_number">Şube</MenuItem>
                   <MenuItem value="year">Yıl</MenuItem>
                   <MenuItem value="created_at">Oluşturulma</MenuItem>
                 </Select>
@@ -171,7 +171,7 @@ function SectionListPage() {
 
       {loading ? (
         <Box py={4}>
-          <LoadingSpinner label="Sectionlar yükleniyor..." />
+          <LoadingSpinner label="Şubeler yükleniyor..." />
         </Box>
       ) : (
         <Card>
@@ -180,8 +180,8 @@ function SectionListPage() {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Course</TableCell>
-                    <TableCell>Section</TableCell>
+                    <TableCell>Ders</TableCell>
+                    <TableCell>Şube</TableCell>
                     <TableCell>Dönem</TableCell>
                     <TableCell>Yıl</TableCell>
                     <TableCell>Kontenjan</TableCell>
@@ -231,3 +231,4 @@ function SectionListPage() {
 }
 
 export default SectionListPage;
+

@@ -123,3 +123,4 @@ function TranscriptPage() {
 }
 
 export default TranscriptPage;
+

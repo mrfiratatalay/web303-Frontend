@@ -1,4 +1,4 @@
-ï»¿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Alert from '../../components/feedback/Alert';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
@@ -23,7 +23,7 @@ function VerifyEmailPage() {
         const response = await verifyEmail(token || '');
         const message =
           (response as { data?: { data?: { message?: string } } })?.data?.data?.message ||
-          'E-posta doÄŸrulandÄ±, birkaÃ§ saniye iÃ§inde giriÅŸ sayfasÄ±na yÃ¶nlendirileceksiniz.';
+          'E-posta doğrulandı, birkaç saniye içinde giriş sayfasına yönlendirileceksiniz.';
         setStatus({
           loading: false,
           success: true,
@@ -34,7 +34,7 @@ function VerifyEmailPage() {
         setStatus({
           loading: false,
           success: false,
-          message: getErrorMessage(err, 'GeÃ§ersiz veya sÃ¼resi dolmuÅŸ doÄŸrulama linki.'),
+          message: getErrorMessage(err, 'Geçersiz veya süresi dolmuş doğrulama linki.'),
         });
       }
     };
@@ -42,10 +42,10 @@ function VerifyEmailPage() {
   }, [navigate, token]);
 
   return (
-    <AuthLayout title="E-posta DoÄŸrulama" subtitle="HesabÄ±nÄ±zÄ± doÄŸruluyoruz.">
+    <AuthLayout title="E-posta Doğrulama" subtitle="Hesabınızı doğruluyoruz.">
       {status.loading ? (
         <div className="flex items-center justify-center py-6">
-          <LoadingSpinner label="DoÄŸrulanÄ±yor..." />
+          <LoadingSpinner label="Doğrulanıyor..." />
         </div>
       ) : (
         <Alert variant={status.success ? 'success' : 'error'} message={status.message} />
@@ -55,3 +55,4 @@ function VerifyEmailPage() {
 }
 
 export default VerifyEmailPage;
+

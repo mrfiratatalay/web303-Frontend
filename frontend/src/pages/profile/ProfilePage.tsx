@@ -1,31 +1,30 @@
-import { useEffect, useMemo, useState } from 'react';
-import {
-  Avatar,
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  Chip,
-  Divider,
-  Grid,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
+import {
+    Avatar,
+    Box,
+    Button,
+    Card,
+    CardContent,
+    CardHeader,
+    Chip,
+    Stack,
+    TextField,
+    Typography
+} from '@mui/material';
+import Grid from '@mui/material/GridLegacy';
+import { useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Alert from '../../components/feedback/Alert';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import { useAuth } from '../../hooks/useAuth';
 import {
-  updateProfile,
-  uploadProfilePicture,
-  changePassword as changePasswordRequest,
+    changePassword as changePasswordRequest,
+    updateProfile,
+    uploadProfilePicture,
 } from '../../services/authApi';
+import { User } from '../../types/auth';
 import { getErrorMessage } from '../../utils/error';
 import { changePasswordSchema, profileSchema } from '../../utils/validationSchemas';
-import { User } from '../../types/auth';
 
 type ProfileForm = {
   firstName: string;
@@ -358,3 +357,4 @@ function ProfilePage() {
 }
 
 export default ProfilePage;
+

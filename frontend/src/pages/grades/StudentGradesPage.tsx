@@ -59,7 +59,7 @@ function StudentGradesPage() {
                 <TableHead>
                   <TableRow>
                     <TableCell>Ders</TableCell>
-                    <TableCell>Section</TableCell>
+                    <TableCell>Şube</TableCell>
                     <TableCell>Vize</TableCell>
                     <TableCell>Final</TableCell>
                     <TableCell>Harf</TableCell>
@@ -93,3 +93,4 @@ function StudentGradesPage() {
 }
 
 export default StudentGradesPage;
+

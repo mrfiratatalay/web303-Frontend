@@ -1,22 +1,14 @@
+import { Box, Button, Card, CardContent, Chip, Stack, Typography } from '@mui/material';
+import Grid from '@mui/material/GridLegacy';
 import { useEffect, useMemo, useState } from 'react';
-import { useNavigate, useParams, Link as RouterLink } from 'react-router-dom';
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Grid,
-  Stack,
-  Typography,
-  Chip,
-} from '@mui/material';
-import LoadingSpinner from '../../components/feedback/LoadingSpinner';
+import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import Alert from '../../components/feedback/Alert';
-import { Section } from '../../types/academics';
-import { extractData, getSectionById } from '../../services/sectionApi';
-import { getErrorMessage } from '../../utils/error';
+import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import { useAuth } from '../../hooks/useAuth';
 import { enrollInSection } from '../../services/enrollmentApi';
+import { extractData, getSectionById } from '../../services/sectionApi';
+import { Section } from '../../types/academics';
+import { getErrorMessage } from '../../utils/error';
 
 function SectionDetailPage() {
   const { id } = useParams();
@@ -38,7 +30,7 @@ function SectionDetailPage() {
         const data = extractData<Section>(response);
         setSection(data);
       } catch (err) {
-        setError(getErrorMessage(err, 'Section yüklenemedi.'));
+        setError(getErrorMessage(err, 'Şube yüklenemedi.'));
       } finally {
         setLoading(false);
       }
@@ -66,13 +58,13 @@ function SectionDetailPage() {
   if (loading) {
     return (
       <Box py={4}>
-        <LoadingSpinner label="Section yükleniyor..." />
+        <LoadingSpinner label="Şube yükleniyor..." />
       </Box>
     );
   }
 
   if (error || !section) {
-    return <Alert variant="error" message={error || 'Section bulunamadı.'} />;
+    return <Alert variant="error" message={error || 'Şube bulunamadı.'} />;
   }
 
   return (
@@ -83,17 +75,12 @@ function SectionDetailPage() {
         <Stack direction="row" spacing={1} alignItems="center">
           <Chip label={section.course?.code || section.course_id} color="primary" />
           <Typography variant="h5" fontWeight={800}>
-            Section {section.section_number} ({section.semester} {section.year})
+            Şube {section.section_number} ({section.semester} {section.year})
           </Typography>
         </Stack>
         <Stack direction="row" spacing={1}>
           {user?.role === 'admin' && (
-            <Button
-              variant="outlined"
-              size="small"
-              component={RouterLink}
-              to={`/admin/sections/${section.id}/edit`}
-            >
+            <Button variant="outlined" size="small" component={RouterLink} to={`/admin/sections/${section.id}/edit`}>
               Düzenle
             </Button>
           )}
@@ -128,7 +115,7 @@ function SectionDetailPage() {
               </Typography>
               <Typography>
                 {section.instructor
-                  ? `${section.instructor.first_name || ''} ${section.instructor.last_name || ''}`
+                  ? `${section.instructor.first_name || ''} ${section.instructor.last_name || ''}`.trim()
                   : '-'}
               </Typography>
             </Grid>
@@ -177,3 +164,4 @@ function SectionDetailPage() {
 }
 
 export default SectionDetailPage;
+

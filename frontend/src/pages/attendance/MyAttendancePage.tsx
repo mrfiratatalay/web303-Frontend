@@ -6,6 +6,17 @@ import { AttendanceSummary } from '../../types/academics';
 import { extractData, getMyAttendance } from '../../services/attendanceApi';
 import { getErrorMessage } from '../../utils/error';
 
+const STATUS_LABELS: Record<string, string> = {
+  good: 'İyi',
+  warning: 'Uyarı',
+  poor: 'Düşük',
+  excellent: 'Mükemmel',
+  satisfactory: 'Yeterli',
+  unsatisfactory: 'Yetersiz',
+  at_risk: 'Riskli',
+  absent: 'Devamsız',
+};
+
 function MyAttendancePage() {
   const [data, setData] = useState<AttendanceSummary[]>([]);
   const [loading, setLoading] = useState(true);
@@ -47,7 +58,7 @@ function MyAttendancePage() {
                 <TableHead>
                   <TableRow>
                     <TableCell>Ders</TableCell>
-                    <TableCell>Section</TableCell>
+                    <TableCell>Şube</TableCell>
                     <TableCell>Katılım %</TableCell>
                     <TableCell>Durum</TableCell>
                   </TableRow>
@@ -58,7 +69,7 @@ function MyAttendancePage() {
                       <TableCell>{item.courseCode}</TableCell>
                       <TableCell>{item.sectionNumber}</TableCell>
                       <TableCell>{item.attendanceRate}%</TableCell>
-                      <TableCell>{item.status}</TableCell>
+                      <TableCell>{STATUS_LABELS[item.status] || item.status}</TableCell>
                     </TableRow>
                   ))}
                   {!data.length && (
@@ -79,3 +90,4 @@ function MyAttendancePage() {
 }
 
 export default MyAttendancePage;
+

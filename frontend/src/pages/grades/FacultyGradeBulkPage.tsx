@@ -1,16 +1,16 @@
-import { useState } from 'react';
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Grid,
-  IconButton,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
 import { Add, Delete } from '@mui/icons-material';
+import {
+    Box,
+    Button,
+    Card,
+    CardContent,
+    IconButton,
+    Stack,
+    TextField,
+    Typography,
+} from '@mui/material';
+import Grid from '@mui/material/GridLegacy';
+import { useState } from 'react';
 import Alert from '../../components/feedback/Alert';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import { bulkEnterGrades } from '../../services/gradeApi';
@@ -69,7 +69,7 @@ function FacultyGradeBulkPage() {
                 <Grid item xs={12} md={4}>
                   <TextField
                     fullWidth
-                    label="Enrollment ID"
+                    label="Kayıt ID"
                     value={row.enrollment_id}
                     onChange={(e) => handleChange(idx, 'enrollment_id', e.target.value)}
                   />
@@ -93,7 +93,7 @@ function FacultyGradeBulkPage() {
                   />
                 </Grid>
                 <Grid item xs={1} md={1}>
-                  <IconButton aria-label="sil" onClick={() => removeRow(idx)} disabled={rows.length === 1}>
+                  <IconButton aria-label="Sil" onClick={() => removeRow(idx)} disabled={rows.length === 1}>
                     <Delete />
                   </IconButton>
                 </Grid>
@@ -117,3 +117,4 @@ function FacultyGradeBulkPage() {
 }
 
 export default FacultyGradeBulkPage;
+

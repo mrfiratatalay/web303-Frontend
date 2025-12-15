@@ -70,7 +70,7 @@ export interface Section {
   classroom_id?: string | null;
   course?: Course;
   instructor?: { id: string; first_name?: string; last_name?: string; email?: string };
-  classroom?: { id: string; building?: string; room_number?: string; latitude?: number; longitude?: number };
+  classroom?: Classroom;
 }
 
 export interface SectionListQuery {
@@ -128,6 +128,15 @@ export interface GradeEntry {
   letter_grade?: string | null;
   grade_point?: number | null;
   section?: Section;
+}
+
+export interface Classroom {
+  id: string;
+  building?: string;
+  room_number?: string;
+  capacity?: number;
+  latitude?: number;
+  longitude?: number;
 }
 
 export interface TranscriptCourse {

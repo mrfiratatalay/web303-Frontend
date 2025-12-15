@@ -17,7 +17,7 @@ export type CoursePayload = {
 };
 
 export const getCourses = (params?: CourseListQuery) =>
-  apiClient.get<CourseListResult | Course[]>('/courses', { params });
+  apiClient.get<CourseListResult | Course[]>('/courses', { params: { ...params, limit: params?.limit || 100 } });
 
 export const getCourseById = (id: string) => apiClient.get<Course>(`/courses/${id}`);
 

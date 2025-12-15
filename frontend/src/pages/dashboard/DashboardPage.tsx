@@ -1,43 +1,43 @@
-import { ElementType, ReactNode, useEffect, useMemo, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import {
-  Alert,
-  Avatar,
-  Box,
-  Button,
-  Chip,
-  Grid,
-  LinearProgress,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Paper,
-  Stack,
-  Typography,
-} from '@mui/material';
-import { alpha } from '@mui/material/styles';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
+import ChecklistIcon from '@mui/icons-material/Checklist';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import EventBusyRoundedIcon from '@mui/icons-material/EventBusyRounded';
+import FactCheckRoundedIcon from '@mui/icons-material/FactCheckRounded';
 import SchoolRoundedIcon from '@mui/icons-material/SchoolRounded';
 import ShowChartRoundedIcon from '@mui/icons-material/ShowChartRounded';
-import FactCheckRoundedIcon from '@mui/icons-material/FactCheckRounded';
-import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
-import TrendingUpRoundedIcon from '@mui/icons-material/TrendingUpRounded';
-import EventBusyRoundedIcon from '@mui/icons-material/EventBusyRounded';
-import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-import ChecklistIcon from '@mui/icons-material/Checklist';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import TrendingUpRoundedIcon from '@mui/icons-material/TrendingUpRounded';
+import {
+    Alert,
+    Avatar,
+    Box,
+    Button,
+    Chip,
+    LinearProgress,
+    List,
+    ListItem,
+    ListItemAvatar,
+    ListItemText,
+    Paper,
+    Stack,
+    Typography,
+} from '@mui/material';
+import Grid from '@mui/material/GridLegacy';
+import { alpha } from '@mui/material/styles';
+import { ElementType, ReactNode, useEffect, useMemo, useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { extractDashboard, getDashboard } from '../../services/dashboardApi';
 import {
-  AdminDashboard,
-  DashboardActivity,
-  DashboardClass,
-  DashboardData,
-  DashboardGrade,
-  FacultyDashboard,
-  StudentDashboard,
+    AdminDashboard,
+    DashboardActivity,
+    DashboardClass,
+    DashboardData,
+    DashboardGrade,
+    FacultyDashboard,
+    StudentDashboard,
 } from '../../types/dashboard';
 
 type StatCardProps = {
@@ -794,3 +794,4 @@ function DashboardPage() {
 }
 
 export default DashboardPage;
+

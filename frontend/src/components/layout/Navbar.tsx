@@ -17,6 +17,12 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { useAuth } from '../../hooks/useAuth';
 
+const ROLE_LABELS: Record<string, string> = {
+  student: 'Öğrenci',
+  faculty: 'Akademisyen',
+  admin: 'Yönetici',
+};
+
 function Navbar() {
   const { user, logout } = useAuth();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -38,6 +44,7 @@ function Navbar() {
     () => (user ? `${user.first_name || user.firstName || ''} ${user.last_name || user.lastName || ''}`.trim() : ''),
     [user],
   );
+  const roleLabel = useMemo(() => (user?.role ? ROLE_LABELS[user.role] || user.role : ''), [user?.role]);
 
   return (
     <AppBar
@@ -106,7 +113,7 @@ function Navbar() {
                   {userName || 'Kullanıcı'}
                 </Typography>
                 <Chip
-                  label={user.role}
+                  label={roleLabel}
                   size="small"
                   color="default"
                   variant="filled"
