@@ -4,6 +4,8 @@ export const strings = {
   meta: {
     title: 'Smart Campus | \u00d6\u011frenci \u0130\u015fleri Paneli',
     lang: 'tr',
+    description: 'Smart Campus ile ders, yoklama ve not i\u015flerinizi tek panelden y\u00f6netin.',
+    themeColor: '#1f3d7a',
   },
   brand: {
     name: 'Smart Campus',
@@ -18,6 +20,17 @@ export const strings = {
     userFallback: 'Kullan\u0131c\u0131',
     menuAriaLabel: 'Men\u00fc',
     loading: 'Y\u00fckleniyor...',
+    format: {
+      timeFallback: '--:--',
+      dateTimeFallback: '-',
+    },
+  },
+  errors: {
+    missingApiBase: {
+      title: 'Sunucu ayar\u0131 eksik',
+      message: 'VITE_API_BASE_URL tan\u0131ml\u0131 de\u011fil. L\u00fctfen ortam de\u011fi\u015fkenini g\u00fcncelleyip sayfay\u0131 yenileyin.',
+      action: 'Sayfay\u0131 yenile',
+    },
   },
   navbar: {
     profile: 'Profil',
@@ -205,7 +218,7 @@ export const strings = {
       stats: {
         sections: { label: 'Verdi\u011fin \u015eube', helper: 'Aktif ve planl\u0131' },
         students: { label: 'Toplam \u00d6\u011frenci', helper: '\u015eube bazl\u0131 toplam' },
-        pending: { label: 'Bekleyen \u0130\u015flem' },
+        pending: { label: 'Bekleyen \u0130\u015flem', helperTemplate: 'Not: {grades} - Mazeret: {excuses}' },
       },
       sections: {
         upcoming: {
@@ -231,7 +244,14 @@ export const strings = {
         sections: { label: 'Aktif \u015eube', helper: 'A\u00e7\u0131k \u015fube say\u0131s\u0131' },
       },
       sections: {
-        systemStatus: { title: 'Sistem durumu', lastCheck: 'Son kontrol', uptime: 'Uptime' },
+        systemStatus: {
+          title: 'Sistem durumu',
+          lastCheck: 'Son kontrol',
+          uptime: 'Uptime',
+          apiLabel: 'API',
+          dbLabel: 'Database',
+          uptimeUnit: 'sn',
+        },
         activities: {
           title: 'Son aktiviteler',
           emptyTitle: 'Aktivite bulunmuyor',

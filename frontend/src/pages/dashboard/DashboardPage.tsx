@@ -201,9 +201,9 @@ const EmptyState = ({ icon: Icon, title, description, actionLabel, actionTo }: E
   </Stack>
 );
 
-const formatTime = (time?: string | null) => (time ? time.slice(0, 5) : '--:--');
+const formatTime = (time?: string | null) => (time ? time.slice(0, 5) : strings.common.format.timeFallback);
 const formatDateTime = (value?: string) =>
-  value ? new Date(value).toLocaleString('tr-TR', { hour12: false }) : '-';
+  value ? new Date(value).toLocaleString('tr-TR') : strings.common.format.dateTimeFallback;
 
 const getInitial = (text?: string | null) => (text ? text.charAt(0).toUpperCase() : '?');
 
@@ -534,7 +534,9 @@ function DashboardPage() {
           <StatCard
             label={strings.dashboard.faculty.stats.pending.label}
             value={data.summary.pendingGrades + data.summary.pendingExcuses}
-            helper={`Not: ${data.summary.pendingGrades} - Mazeret: ${data.summary.pendingExcuses}`}
+            helper={strings.dashboard.faculty.stats.pending.helperTemplate
+              .replace('{grades}', String(data.summary.pendingGrades))
+              .replace('{excuses}', String(data.summary.pendingExcuses))}
             icon={<TrendingUpRoundedIcon fontSize="small" />}
             tone="warning"
           />
@@ -660,20 +662,21 @@ function DashboardPage() {
               <Stack direction="row" spacing={1} alignItems="center">
                 <TrendingUpIcon color="success" />
                 <Typography variant="body1" fontWeight={700}>
-                  API: {data.systemStatus.api}
+                  {strings.dashboard.admin.sections.systemStatus.apiLabel}: {data.systemStatus.api}
                 </Typography>
               </Stack>
               <Stack direction="row" spacing={1} alignItems="center">
                 <EventAvailableIcon color="info" />
                 <Typography variant="body1" fontWeight={700}>
-                  Database: {data.systemStatus.database}
+                  {strings.dashboard.admin.sections.systemStatus.dbLabel}: {data.systemStatus.database}
                 </Typography>
               </Stack>
               <Typography variant="body2" color="text.secondary">
                 {strings.dashboard.admin.sections.systemStatus.lastCheck}: {formatDateTime(data.systemStatus.checkedAt)}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {strings.dashboard.admin.sections.systemStatus.uptime}: {data.systemStatus.uptimeSeconds ?? 0} sn
+                {strings.dashboard.admin.sections.systemStatus.uptime}: {data.systemStatus.uptimeSeconds ?? 0}{' '}
+                {strings.dashboard.admin.sections.systemStatus.uptimeUnit}
               </Typography>
             </Stack>
           </SectionCard>
