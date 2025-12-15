@@ -59,7 +59,7 @@ function ForgotPasswordPage() {
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <TextInput
-          label={strings.auth.login.emailLabel}
+          label={strings.auth.register.labels.email}
           name="email"
           type="email"
           register={register}
