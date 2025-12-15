@@ -16,7 +16,7 @@ document.title = strings.meta.title;
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <ErrorBoundary>
-      <BrowserRouter>
+      <BrowserRouter future={{ v7_relativeSplatPath: true }}>
         <AuthProvider>
           <CssBaseline />
           <App />
