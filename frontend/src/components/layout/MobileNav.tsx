@@ -43,6 +43,7 @@ function MobileNav({ open, onClose }: MobileNavProps) {
       anchor="left"
       open={open}
       onClose={onClose}
+      ModalProps={{ keepMounted: true }}
       PaperProps={{
         sx: {
           width: 300,
@@ -99,16 +100,23 @@ function MobileNav({ open, onClose }: MobileNavProps) {
                     component={NavLink}
                     to={item.to}
                     onClick={onClose}
+                    aria-label={item.label}
                     sx={{
                       borderRadius: 2,
                       px: 1.5,
                       py: 1,
                       mb: 0.5,
+                      transition: 'background-color 0.2s ease, box-shadow 0.2s ease',
                       '&.active': {
                         bgcolor: 'primary.light',
                         color: 'primary.dark',
                         fontWeight: 700,
                         '& .MuiListItemIcon-root': { color: 'primary.main' },
+                      },
+                      '&:focus-visible': {
+                        outline: '2px solid',
+                        outlineColor: 'primary.main',
+                        boxShadow: '0 0 0 3px rgba(59,130,246,0.25)',
                       },
                       '& .MuiListItemIcon-root': {
                         minWidth: 32,

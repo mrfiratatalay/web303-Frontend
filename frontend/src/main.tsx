@@ -6,9 +6,11 @@ import { ThemeProvider } from '@mui/material/styles';
 import App from './App';
 import { AuthProvider } from './context/AuthContext';
 import ErrorBoundary from './components/feedback/ErrorBoundary';
+import ConfigError from './components/feedback/ConfigError';
 import './index.css';
 import { strings } from './strings';
 import { theme } from './theme';
+import { apiBaseUrlMissing } from './services/apiClient';
 
 const rootElement = document.getElementById('root') as HTMLElement;
 
@@ -19,17 +21,26 @@ const themeColorTag = document.querySelector('meta[name="theme-color"]');
 if (descriptionTag) descriptionTag.setAttribute('content', strings.meta.description);
 if (themeColorTag) themeColorTag.setAttribute('content', strings.meta.themeColor);
 
-ReactDOM.createRoot(rootElement).render(
-  <React.StrictMode>
+const renderRoot = (node: React.ReactNode) =>
+  ReactDOM.createRoot(rootElement).render(
+    <React.StrictMode>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {node}
+      </ThemeProvider>
+    </React.StrictMode>,
+  );
+
+if (apiBaseUrlMissing) {
+  renderRoot(<ConfigError />);
+} else {
+  renderRoot(
     <ErrorBoundary>
       <BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
         <AuthProvider>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <App />
-          </ThemeProvider>
+          <App />
         </AuthProvider>
       </BrowserRouter>
-    </ErrorBoundary>
-  </React.StrictMode>,
-);
+    </ErrorBoundary>,
+  );
+}

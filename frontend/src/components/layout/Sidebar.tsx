@@ -204,6 +204,7 @@ function Sidebar() {
                   key={item.to}
                   component={NavLink}
                   to={item.to}
+                  aria-label={item.label}
                   sx={{
                     position: 'relative',
                     borderRadius: 2,
@@ -214,6 +215,11 @@ function Sidebar() {
                     transition: 'background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease',
                     '&:hover': {
                       bgcolor: 'action.hover',
+                    },
+                    '&:focus-visible': {
+                      outline: '2px solid',
+                      outlineColor: 'primary.main',
+                      boxShadow: '0 0 0 3px rgba(59,130,246,0.25)',
                     },
                     '&.active': {
                       bgcolor: 'primary.light',

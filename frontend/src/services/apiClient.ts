@@ -1,10 +1,13 @@
 import axios from 'axios';
 import { AUTH_TOKEN_KEY, clearAuth } from '../utils/storage';
+import { strings } from '../strings';
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+export const apiBaseUrlMissing = !apiBaseUrl;
 
-if (!apiBaseUrl) {
-  throw new Error('VITE_API_BASE_URL is not defined. Set it in your environment configuration.');
+if (apiBaseUrlMissing) {
+  console.warn('VITE_API_BASE_URL is not defined. Falling back to relative API calls.');
+  window.dispatchEvent(new CustomEvent('app:config-error', { detail: strings.errors.missingApiBase }));
 }
 
 const apiClient = axios.create({
