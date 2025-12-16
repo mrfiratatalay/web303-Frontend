@@ -11,7 +11,7 @@ import {
   MenuItem,
   FormHelperText,
 } from '@mui/material';
-import Grid from '@mui/material/GridLegacy';
+import Grid from '@mui/material/Grid';
 import Alert from '../../components/feedback/Alert';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import CheckboxInput from '../../components/form/CheckboxInput';

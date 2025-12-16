@@ -9,7 +9,7 @@ import {
     Stack,
     Typography,
 } from '@mui/material';
-import Grid from '@mui/material/GridLegacy';
+import Grid from '@mui/material/Grid';
 import { useEffect, useState } from 'react';
 import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import Alert from '../../components/feedback/Alert';

@@ -24,7 +24,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import Grid from '@mui/material/GridLegacy';
+import Grid from '@mui/material/Grid';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import Alert from '../../components/feedback/Alert';
 import { getUserById, getUsers } from '../../services/userApi';

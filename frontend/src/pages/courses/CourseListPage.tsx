@@ -20,7 +20,7 @@ import {
     TextField,
     Typography,
 } from '@mui/material';
-import Grid from '@mui/material/GridLegacy';
+import Grid from '@mui/material/Grid';
 import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Alert from '../../components/feedback/Alert';

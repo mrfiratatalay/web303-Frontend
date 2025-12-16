@@ -24,7 +24,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import Grid from '@mui/material/GridLegacy';
+import Grid from '@mui/material/Grid';
 import { alpha } from '@mui/material/styles';
 import { ElementType, ReactNode, useEffect, useMemo, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
