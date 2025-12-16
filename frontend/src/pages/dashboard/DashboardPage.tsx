@@ -433,7 +433,7 @@ function DashboardPage() {
     return (
       <Stack spacing={2.25}>
         <Grid container spacing={2.25} alignItems="stretch">
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} sm={6} lg={3}>
             <StatCard
               label={strings.dashboard.student.stats.courses.label}
               value={data.summary.registeredCourses}
@@ -442,7 +442,7 @@ function DashboardPage() {
               tone="primary"
             />
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} sm={6} lg={3}>
             <StatCard
               label={strings.dashboard.student.stats.gpa.label}
               value={data.summary.gpa.toFixed(2)}
@@ -452,7 +452,7 @@ function DashboardPage() {
               trend={gpaTrend}
             />
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} sm={6} lg={3}>
             <StatCard
               label={strings.dashboard.student.stats.attendance.label}
               value={`${data.summary.attendanceRate}%`}
@@ -462,7 +462,7 @@ function DashboardPage() {
               progress={data.summary.attendanceRate}
             />
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} sm={6} lg={3}>
             <StatCard
               label={strings.dashboard.student.stats.today.label}
               value={data.summary.todayCourseCount}
@@ -474,7 +474,7 @@ function DashboardPage() {
         </Grid>
 
         <Grid container spacing={2.25} alignItems="stretch">
-          <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
+          <Grid item xs={12} lg={6} sx={{ display: 'flex' }}>
             <SectionCard
               title={strings.dashboard.student.sections.todayClasses.title}
               action={
@@ -492,7 +492,7 @@ function DashboardPage() {
               )}
             </SectionCard>
           </Grid>
-          <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
+          <Grid item xs={12} lg={6} sx={{ display: 'flex' }}>
             <SectionCard
               title={strings.dashboard.student.sections.recentGrades.title}
               action={
@@ -512,7 +512,7 @@ function DashboardPage() {
   const renderFaculty = (data: FacultyDashboard) => (
     <Stack spacing={2.25}>
       <Grid container spacing={2.25} alignItems="stretch">
-        <Grid item xs={12} md={4} sx={{ display: 'flex' }}>
+        <Grid item xs={12} sm={6} lg={4} sx={{ display: 'flex' }}>
           <StatCard
             label={strings.dashboard.faculty.stats.sections.label}
             value={data.summary.sectionCount}
@@ -521,7 +521,7 @@ function DashboardPage() {
             tone="primary"
           />
         </Grid>
-        <Grid item xs={12} md={4} sx={{ display: 'flex' }}>
+        <Grid item xs={12} sm={6} lg={4} sx={{ display: 'flex' }}>
           <StatCard
             label={strings.dashboard.faculty.stats.students.label}
             value={data.summary.studentCount}
@@ -530,7 +530,7 @@ function DashboardPage() {
             tone="info"
           />
         </Grid>
-        <Grid item xs={12} md={4} sx={{ display: 'flex' }}>
+        <Grid item xs={12} sm={12} lg={4} sx={{ display: 'flex' }}>
           <StatCard
             label={strings.dashboard.faculty.stats.pending.label}
             value={data.summary.pendingGrades + data.summary.pendingExcuses}
@@ -544,7 +544,7 @@ function DashboardPage() {
       </Grid>
 
       <Grid container spacing={2.25} alignItems="stretch">
-        <Grid item xs={12} md={8} sx={{ display: 'flex' }}>
+        <Grid item xs={12} lg={8} sx={{ display: 'flex' }}>
           <SectionCard
             title={strings.dashboard.faculty.sections.upcoming.title}
             action={
@@ -562,7 +562,7 @@ function DashboardPage() {
             )}
           </SectionCard>
         </Grid>
-        <Grid item xs={12} md={4} sx={{ display: 'flex' }}>
+        <Grid item xs={12} lg={4} sx={{ display: 'flex' }}>
           <SectionCard title={strings.dashboard.faculty.sections.pending.title} minHeight={320}>
             {data.pendingActions.length === 0 ? (
               <EmptyState
@@ -617,7 +617,7 @@ function DashboardPage() {
   const renderAdmin = (data: AdminDashboard) => (
     <Stack spacing={2.25}>
       <Grid container spacing={2.25} alignItems="stretch">
-        <Grid item xs={12} md={3} sx={{ display: 'flex' }}>
+        <Grid item xs={12} sm={6} lg={3} sx={{ display: 'flex' }}>
           <StatCard
             label={strings.dashboard.admin.stats.students.label}
             value={data.summary.totalStudents}
@@ -626,7 +626,7 @@ function DashboardPage() {
             helper={strings.dashboard.admin.stats.students.helper}
           />
         </Grid>
-        <Grid item xs={12} md={3} sx={{ display: 'flex' }}>
+        <Grid item xs={12} sm={6} lg={3} sx={{ display: 'flex' }}>
           <StatCard
             label={strings.dashboard.admin.stats.faculty.label}
             value={data.summary.facultyCount}
@@ -635,7 +635,7 @@ function DashboardPage() {
             helper={strings.dashboard.admin.stats.faculty.helper}
           />
         </Grid>
-        <Grid item xs={12} md={3} sx={{ display: 'flex' }}>
+        <Grid item xs={12} sm={6} lg={3} sx={{ display: 'flex' }}>
           <StatCard
             label={strings.dashboard.admin.stats.courses.label}
             value={data.summary.activeCourses}
@@ -644,7 +644,7 @@ function DashboardPage() {
             helper={strings.dashboard.admin.stats.courses.helper}
           />
         </Grid>
-        <Grid item xs={12} md={3} sx={{ display: 'flex' }}>
+        <Grid item xs={12} sm={6} lg={3} sx={{ display: 'flex' }}>
           <StatCard
             label={strings.dashboard.admin.stats.sections.label}
             value={data.summary.activeSections}
@@ -656,7 +656,7 @@ function DashboardPage() {
       </Grid>
 
       <Grid container spacing={2.25} alignItems="stretch">
-        <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
+        <Grid item xs={12} lg={6} sx={{ display: 'flex' }}>
           <SectionCard title={strings.dashboard.admin.sections.systemStatus.title} minHeight={320}>
             <Stack spacing={1.5}>
               <Stack direction="row" spacing={1} alignItems="center">
@@ -681,7 +681,7 @@ function DashboardPage() {
             </Stack>
           </SectionCard>
         </Grid>
-        <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
+        <Grid item xs={12} lg={6} sx={{ display: 'flex' }}>
           <SectionCard title={strings.dashboard.admin.sections.activities.title} minHeight={320}>
             {data.recentActivities.length === 0 ? (
               <EmptyState
