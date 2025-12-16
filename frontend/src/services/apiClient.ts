@@ -7,7 +7,6 @@ export const apiBaseUrlMissing = !apiBaseUrl;
 
 if (apiBaseUrlMissing) {
   console.warn('VITE_API_BASE_URL is not defined. Falling back to relative API calls.');
-  window.dispatchEvent(new CustomEvent('app:config-error', { detail: strings.errors.missingApiBase }));
 }
 
 const apiClient = axios.create({

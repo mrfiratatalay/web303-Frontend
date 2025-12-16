@@ -71,7 +71,7 @@ function Navbar({ onMenuClick }: NavbarProps) {
         <Stack direction="row" spacing={1.25} alignItems="center" sx={{ flex: 1 }}>
           {user && (
             <IconButton
-              aria-label={strings.common.menuAriaLabel}
+              aria-label={strings.common.openMenuLabel}
               onClick={onMenuClick}
               sx={{ display: { xs: 'inline-flex', md: 'none' }, color: 'white', mr: 0.5 }}
             >
@@ -141,7 +141,7 @@ function Navbar({ onMenuClick }: NavbarProps) {
               <IconButton
                 size="small"
                 sx={{ color: 'white', p: 0 }}
-                aria-label={strings.common.menuAriaLabel}
+                aria-label={strings.common.userMenuLabel}
                 onClick={handleMenuOpen}
               >
                 <KeyboardArrowDownIcon />

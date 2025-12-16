@@ -54,6 +54,7 @@ function MobileNav({ open, onClose }: MobileNavProps) {
           display: 'flex',
           flexDirection: 'column',
         },
+        'aria-label': strings.common.menuAriaLabel,
       }}
     >
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1 }}>
@@ -71,7 +72,7 @@ function MobileNav({ open, onClose }: MobileNavProps) {
             />
           </Box>
         </Stack>
-        <IconButton aria-label={strings.common.menuAriaLabel} onClick={onClose} size="small">
+        <IconButton aria-label={strings.common.closeMenuLabel} onClick={onClose} size="small">
           <CloseRoundedIcon />
         </IconButton>
       </Stack>
@@ -100,7 +101,6 @@ function MobileNav({ open, onClose }: MobileNavProps) {
                     component={NavLink}
                     to={item.to}
                     onClick={onClose}
-                    aria-label={item.label}
                     sx={{
                       borderRadius: 2,
                       px: 1.5,
