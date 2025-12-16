@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
+  Autocomplete,
   Box,
   Button,
   Card,
@@ -17,10 +18,12 @@ import {
 import Grid from '@mui/material/Grid';
 import Alert from '../../components/feedback/Alert';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
-import { AttendanceSession } from '../../types/academics';
+import { AttendanceSession, Section } from '../../types/academics';
 import { closeSession, createSession, extractData, getMySessions } from '../../services/attendanceApi';
 import { getErrorMessage } from '../../utils/error';
 import { useNavigate } from 'react-router-dom';
+import { getSections } from '../../services/sectionApi';
+import { useAuth } from '../../hooks/useAuth';
 
 const SESSION_STATUS_LABELS: Record<string, string> = {
   active: 'Aktif',
@@ -28,14 +31,24 @@ const SESSION_STATUS_LABELS: Record<string, string> = {
   upcoming: 'Planlandı',
 };
 
+const LAST_SECTION_KEY = 'facultySessions:lastSection';
+
 function FacultySessionsPage() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [sessions, setSessions] = useState<AttendanceSession[]>([]);
+  const [sections, setSections] = useState<Section[]>([]);
   const [loading, setLoading] = useState(true);
+  const [sectionsLoading, setSectionsLoading] = useState(false);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
-  const [form, setForm] = useState({ section_id: '', geofence_radius: 15, latitude: '', longitude: '' });
+  const [form, setForm] = useState({ section_id: '', geofence_radius: 25, latitude: '', longitude: '' });
   const [creating, setCreating] = useState(false);
+
+  const selectedSection = useMemo(
+    () => sections.find((s) => s.id === form.section_id) || null,
+    [sections, form.section_id],
+  );
 
   const loadSessions = async () => {
     setLoading(true);
@@ -52,8 +65,27 @@ function FacultySessionsPage() {
     }
   };
 
+  const loadSections = async () => {
+    setSectionsLoading(true);
+    try {
+      const response = await getSections({ instructor_id: user?.id, limit: 50 });
+      const data = extractData<{ sections: Section[] }>(response);
+      setSections(data?.sections || []);
+    } catch (err) {
+      console.warn('Şubeler getirilemedi:', err);
+    } finally {
+      setSectionsLoading(false);
+    }
+  };
+
   useEffect(() => {
+    const lastSection = localStorage.getItem(LAST_SECTION_KEY) || '';
+    if (lastSection) {
+      setForm((prev) => ({ ...prev, section_id: lastSection }));
+    }
     loadSessions();
+    loadSections();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCreate = async () => {
@@ -68,6 +100,7 @@ function FacultySessionsPage() {
         longitude: form.longitude ? Number(form.longitude) : undefined,
       });
       setMessage('Oturum oluşturuldu.');
+      localStorage.setItem(LAST_SECTION_KEY, form.section_id);
       loadSessions();
     } catch (err) {
       setError(getErrorMessage(err, 'Oturum oluşturulamadı.'));
@@ -88,6 +121,24 @@ function FacultySessionsPage() {
     }
   };
 
+  const handleUseLocation = () => {
+    if (!navigator.geolocation) {
+      setError('Tarayıcı konum desteği bulunamadı.');
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setForm((prev) => ({
+          ...prev,
+          latitude: String(pos.coords.latitude),
+          longitude: String(pos.coords.longitude),
+        }));
+      },
+      () => setError('Konum alınamadı. Lütfen izin verdiğinizden emin olun.'),
+      { enableHighAccuracy: true, timeout: 8000 },
+    );
+  };
+
   return (
     <Stack spacing={2}>
       <Typography variant="h5" fontWeight={800}>
@@ -102,19 +153,33 @@ function FacultySessionsPage() {
             Yeni Oturum
           </Typography>
           <Grid container spacing={2}>
-            <Grid item xs={12} md={3}>
-              <TextField
+            <Grid item xs={12} md={4}>
+              <Autocomplete
                 fullWidth
-                label="Şube ID"
-                value={form.section_id}
-                onChange={(e) => setForm((prev) => ({ ...prev, section_id: e.target.value }))}
+                options={sections}
+                loading={sectionsLoading}
+                getOptionLabel={(option) =>
+                  `${option.course?.code || option.course_id} / ${option.section_number} — ${
+                    option.course?.name || 'Şube'
+                  }`
+                }
+                value={selectedSection}
+                onChange={(_, value) => setForm((prev) => ({ ...prev, section_id: value?.id || '' }))}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Şube"
+                    placeholder={sectionsLoading ? 'Şubeler yükleniyor...' : 'Şube seçin'}
+                    helperText={!sectionsLoading && !sections.length ? 'Şubeleriniz yüklenemedi, ID girmeniz gerekebilir.' : ''}
+                  />
+                )}
               />
             </Grid>
             <Grid item xs={6} md={2}>
               <TextField
                 fullWidth
                 type="number"
-                label="Konum Çapı (m)"
+                label="Konum çapı (m)"
                 value={form.geofence_radius}
                 onChange={(e) => setForm((prev) => ({ ...prev, geofence_radius: Number(e.target.value) }))}
               />
@@ -135,10 +200,15 @@ function FacultySessionsPage() {
                 onChange={(e) => setForm((prev) => ({ ...prev, longitude: e.target.value }))}
               />
             </Grid>
-            <Grid item xs={12} md={3} display="flex" alignItems="center">
-              <Button variant="contained" onClick={handleCreate} disabled={creating || !form.section_id}>
-                {creating ? <LoadingSpinner label="Oluşturuluyor..." /> : 'Oluştur'}
-              </Button>
+            <Grid item xs={12} md={2} display="flex" alignItems="center">
+              <Stack direction="row" spacing={1} alignItems="center" width="100%">
+                <Button variant="outlined" onClick={handleUseLocation} fullWidth>
+                  Konumu doldur
+                </Button>
+                <Button variant="contained" onClick={handleCreate} disabled={creating || !form.section_id} fullWidth>
+                  {creating ? <LoadingSpinner label="Oluşturuluyor..." /> : 'Şimdi başlat'}
+                </Button>
+              </Stack>
             </Grid>
           </Grid>
         </CardContent>
@@ -205,4 +275,3 @@ function FacultySessionsPage() {
 }
 
 export default FacultySessionsPage;
-
