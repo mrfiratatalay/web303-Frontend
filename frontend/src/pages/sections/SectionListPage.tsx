@@ -18,7 +18,6 @@ import {
     TextField,
     Typography,
 } from '@mui/material';
-import Grid from '@mui/material/Grid';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Alert from '../../components/feedback/Alert';
@@ -102,68 +101,70 @@ function SectionListPage() {
 
       <Card>
         <CardContent>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} md={4}>
-              <TextField
-                fullWidth
-                size="small"
-                label="Ders ID filtresi"
-                value={courseFilter}
-                onChange={(e) => setCourseFilter(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={6} md={2}>
-              <FormControl fullWidth size="small">
-                <InputLabel id="semester-label">Dönem</InputLabel>
-                <Select
-                  labelId="semester-label"
-                  label="Dönem"
-                  value={semesterFilter}
-                  onChange={(e) => setSemesterFilter(e.target.value as string)}
-                >
-                  <MenuItem value="">Tümü</MenuItem>
-                  <MenuItem value="fall">Güz</MenuItem>
-                  <MenuItem value="spring">Bahar</MenuItem>
-                  <MenuItem value="summer">Yaz</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={6} md={2}>
-              <FormControl fullWidth size="small">
-                <InputLabel id="sort-by-label">Sırala</InputLabel>
-                <Select
-                  labelId="sort-by-label"
-                  label="Sırala"
-                  value={query.sort_by}
-                  onChange={handleSortChange}
-                >
-                  <MenuItem value="course_id">Ders</MenuItem>
-                  <MenuItem value="section_number">Şube</MenuItem>
-                  <MenuItem value="year">Yıl</MenuItem>
-                  <MenuItem value="created_at">Oluşturulma</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={6} md={2}>
-              <FormControl fullWidth size="small">
-                <InputLabel id="sort-order-label">Sıra</InputLabel>
-                <Select
-                  labelId="sort-order-label"
-                  label="Sıra"
-                  value={query.sort_order}
-                  onChange={handleOrderChange}
-                >
-                  <MenuItem value="ASC">Artan</MenuItem>
-                  <MenuItem value="DESC">Azalan</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} md={2}>
+          <Box
+            sx={{
+              display: 'grid',
+              gap: 2,
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            }}
+          >
+            <TextField
+              fullWidth
+              size="small"
+              label="Ders ID filtresi"
+              value={courseFilter}
+              onChange={(e) => setCourseFilter(e.target.value)}
+            />
+
+            <FormControl fullWidth size="small" sx={{ minWidth: { sm: 180 } }}>
+              <InputLabel id="semester-label">Dönem</InputLabel>
+              <Select
+                labelId="semester-label"
+                label="Dönem"
+                value={semesterFilter}
+                onChange={(e) => setSemesterFilter(e.target.value as string)}
+              >
+                <MenuItem value="">Tümü</MenuItem>
+                <MenuItem value="fall">Güz</MenuItem>
+                <MenuItem value="spring">Bahar</MenuItem>
+                <MenuItem value="summer">Yaz</MenuItem>
+              </Select>
+            </FormControl>
+
+            <FormControl fullWidth size="small" sx={{ minWidth: { sm: 180 } }}>
+              <InputLabel id="sort-by-label">Sırala</InputLabel>
+              <Select
+                labelId="sort-by-label"
+                label="Sırala"
+                value={query.sort_by}
+                onChange={handleSortChange}
+              >
+                <MenuItem value="course_id">Ders</MenuItem>
+                <MenuItem value="section_number">Şube</MenuItem>
+                <MenuItem value="year">Yıl</MenuItem>
+                <MenuItem value="created_at">Oluşturulma</MenuItem>
+              </Select>
+            </FormControl>
+
+            <FormControl fullWidth size="small" sx={{ minWidth: { sm: 160 } }}>
+              <InputLabel id="sort-order-label">Sıra</InputLabel>
+              <Select
+                labelId="sort-order-label"
+                label="Sıra"
+                value={query.sort_order}
+                onChange={handleOrderChange}
+              >
+                <MenuItem value="ASC">Artan</MenuItem>
+                <MenuItem value="DESC">Azalan</MenuItem>
+              </Select>
+            </FormControl>
+
+            <Box display="flex" alignItems="center">
               <Button variant="outlined" size="small" onClick={() => setQuery(DEFAULT_QUERY)}>
                 Sıfırla
               </Button>
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
         </CardContent>
       </Card>
 
