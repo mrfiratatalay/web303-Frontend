@@ -544,7 +544,7 @@ function DashboardPage() {
       </Grid>
 
       <Grid container spacing={2.25} alignItems="stretch">
-        <Grid item xs={12} md={7} sx={{ display: 'flex' }}>
+        <Grid item xs={12} md={8} sx={{ display: 'flex' }}>
           <SectionCard
             title={strings.dashboard.faculty.sections.upcoming.title}
             action={
@@ -562,7 +562,7 @@ function DashboardPage() {
             )}
           </SectionCard>
         </Grid>
-        <Grid item xs={12} md={5} sx={{ display: 'flex' }}>
+        <Grid item xs={12} md={4} sx={{ display: 'flex' }}>
           <SectionCard title={strings.dashboard.faculty.sections.pending.title} minHeight={320}>
             {data.pendingActions.length === 0 ? (
               <EmptyState
@@ -656,7 +656,7 @@ function DashboardPage() {
       </Grid>
 
       <Grid container spacing={2.25} alignItems="stretch">
-        <Grid item xs={12} md={5} sx={{ display: 'flex' }}>
+        <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
           <SectionCard title={strings.dashboard.admin.sections.systemStatus.title} minHeight={320}>
             <Stack spacing={1.5}>
               <Stack direction="row" spacing={1} alignItems="center">
@@ -681,7 +681,7 @@ function DashboardPage() {
             </Stack>
           </SectionCard>
         </Grid>
-        <Grid item xs={12} md={7} sx={{ display: 'flex' }}>
+        <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
           <SectionCard title={strings.dashboard.admin.sections.activities.title} minHeight={320}>
             {data.recentActivities.length === 0 ? (
               <EmptyState
