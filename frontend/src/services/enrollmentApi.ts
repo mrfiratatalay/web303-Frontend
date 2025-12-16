@@ -17,10 +17,17 @@ export const getMyCourses = (params?: EnrollmentQuery) =>
 export const getMySchedule = (params?: { semester?: string; year?: number }) =>
   apiClient.get<ScheduleEntry[]>('/enrollments/my-schedule', { params });
 
+export type SectionStudent = {
+  enrollmentId?: string;
+  studentId?: string;
+  studentNumber?: string;
+  name?: string;
+  email?: string;
+  status?: Enrollment['status'];
+};
+
 export const getSectionStudents = (sectionId: string) =>
-  apiClient.get<Array<{ studentId?: string; studentNumber?: string; name?: string; email?: string }>>(
-    `/enrollments/students/${sectionId}`,
-  );
+  apiClient.get<SectionStudent[]>(`/enrollments/students/${sectionId}`);
 
 export const addSectionStudent = (sectionId: string, student_id: string) =>
   apiClient.post(`/enrollments/sections/${sectionId}/students`, { student_id });
