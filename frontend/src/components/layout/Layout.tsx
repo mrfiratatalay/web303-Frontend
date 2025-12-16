@@ -5,8 +5,6 @@ import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import MobileNav from './MobileNav';
 
-const drawerWidth = 236;
-
 function Layout() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
@@ -26,11 +24,10 @@ function Layout() {
           sx={{
             flexGrow: 1,
             minWidth: 0,
-            width: { md: `calc(100% - ${drawerWidth}px)` },
-            ml: { md: `${drawerWidth}px` },
+            width: '100%',
+            maxWidth: 1440,
             px: { xs: 2, md: 3 },
             py: 4,
-            maxWidth: 1440,
             mx: 'auto',
           }}
         >
