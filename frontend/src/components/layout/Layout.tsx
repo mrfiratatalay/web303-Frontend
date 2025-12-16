@@ -20,7 +20,17 @@ function Layout() {
       <MobileNav open={mobileNavOpen} onClose={() => setMobileNavOpen(false)} />
       <Box display="flex" flex={1}>
         <Sidebar />
-        <Container maxWidth="xl" sx={{ py: 4, px: { xs: 2, lg: 3 } }}>
+        <Container
+          disableGutters
+          maxWidth={false}
+          sx={{
+            width: '100%',
+            maxWidth: 1440,
+            py: 4,
+            px: { xs: 2, lg: 3 },
+            ml: 0,
+          }}
+        >
           <Outlet />
         </Container>
       </Box>

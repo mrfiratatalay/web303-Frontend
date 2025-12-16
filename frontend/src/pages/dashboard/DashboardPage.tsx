@@ -160,7 +160,7 @@ const StatCard = ({ label, value, helper, tone = 'primary', icon, progress, tren
   );
 };
 
-const SectionCard = ({ title, children, action, minHeight = 320 }: SectionCardProps) => (
+const SectionCard = ({ title, children, action, minHeight = 260 }: SectionCardProps) => (
   <Paper elevation={0} sx={{ ...cardBaseSx, p: 2.5, minHeight, height: '100%' }}>
     <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1.5 }}>
       <Typography variant="subtitle1" fontWeight={700}>
@@ -563,7 +563,7 @@ function DashboardPage() {
           </SectionCard>
         </Grid>
         <Grid item xs={12} lg={4} sx={{ display: 'flex' }}>
-          <SectionCard title={strings.dashboard.faculty.sections.pending.title} minHeight={320}>
+          <SectionCard title={strings.dashboard.faculty.sections.pending.title} minHeight={260}>
             {data.pendingActions.length === 0 ? (
               <EmptyState
                 icon={TrendingUpRoundedIcon}
@@ -657,7 +657,7 @@ function DashboardPage() {
 
       <Grid container spacing={2.25} alignItems="stretch">
         <Grid item xs={12} lg={6} sx={{ display: 'flex' }}>
-          <SectionCard title={strings.dashboard.admin.sections.systemStatus.title} minHeight={320}>
+          <SectionCard title={strings.dashboard.admin.sections.systemStatus.title} minHeight={220}>
             <Stack spacing={1.5}>
               <Stack direction="row" spacing={1} alignItems="center">
                 <TrendingUpIcon color="success" />
@@ -682,7 +682,7 @@ function DashboardPage() {
           </SectionCard>
         </Grid>
         <Grid item xs={12} lg={6} sx={{ display: 'flex' }}>
-          <SectionCard title={strings.dashboard.admin.sections.activities.title} minHeight={320}>
+          <SectionCard title={strings.dashboard.admin.sections.activities.title} minHeight={260}>
             {data.recentActivities.length === 0 ? (
               <EmptyState
                 icon={TrendingUpRoundedIcon}
