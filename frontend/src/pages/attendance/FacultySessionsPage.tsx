@@ -84,9 +84,14 @@ function FacultySessionsPage() {
       setForm((prev) => ({ ...prev, section_id: lastSection }));
     }
     loadSessions();
-    loadSections();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (user?.id) {
+      loadSections();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id]);
 
   const handleCreate = async () => {
     setCreating(true);
@@ -164,7 +169,11 @@ function FacultySessionsPage() {
                   }`
                 }
                 value={selectedSection}
-                onChange={(_, value) => setForm((prev) => ({ ...prev, section_id: value?.id || '' }))}
+                freeSolo
+                onChange={(_, value) =>
+                  setForm((prev) => ({ ...prev, section_id: typeof value === 'string' ? value : value?.id || '' }))
+                }
+                onInputChange={(_, value) => setForm((prev) => ({ ...prev, section_id: value }))}
                 renderInput={(params) => (
                   <TextField
                     {...params}
