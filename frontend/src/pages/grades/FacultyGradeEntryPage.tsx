@@ -34,6 +34,8 @@ function FacultyGradeEntryPage() {
 
   const [selectedSection, setSelectedSection] = useState<Section | null>(null);
   const [selectedStudent, setSelectedStudent] = useState<SectionStudent | null>(null);
+  const [manualEnrollmentId, setManualEnrollmentId] = useState('');
+  const [manualMode, setManualMode] = useState(false);
 
   const [midterm, setMidterm] = useState<GradeFieldState>({ value: '' });
   const [finalGrade, setFinalGrade] = useState<GradeFieldState>({ value: '' });
@@ -64,6 +66,7 @@ function FacultyGradeEntryPage() {
       if (!selectedSection) return;
       setStudents([]);
       setSelectedStudent(null);
+      setManualEnrollmentId('');
       setStudentsLoading(true);
       try {
         const response = await getSectionStudents(selectedSection.id);
@@ -71,6 +74,7 @@ function FacultyGradeEntryPage() {
         setStudents(data || []);
       } catch (err) {
         setError(getErrorMessage(err, 'Öğrenciler alınamadı.'));
+        setManualMode(true);
       } finally {
         setStudentsLoading(false);
       }
@@ -111,8 +115,10 @@ function FacultyGradeEntryPage() {
 
   const handleSubmit = async () => {
     if (!selectedSection || !selectedStudent?.enrollmentId) {
-      setFormError('Şube ve öğrenci seçin.');
-      return;
+      if (!manualMode || !manualEnrollmentId.trim()) {
+        setFormError('Şube ve öğrenci seçin veya kayıt ID girin.');
+        return;
+      }
     }
 
     const parsedMidterm = parseGrade(midterm.value);
@@ -133,7 +139,7 @@ function FacultyGradeEntryPage() {
     setError('');
     try {
       await enterGrade({
-        enrollment_id: selectedStudent.enrollmentId,
+        enrollment_id: selectedStudent?.enrollmentId || manualEnrollmentId.trim(),
         midterm_grade: parsedMidterm,
         final_grade: parsedFinal,
       });
@@ -141,6 +147,7 @@ function FacultyGradeEntryPage() {
       setMidterm({ value: '' });
       setFinalGrade({ value: '' });
       setSelectedStudent(null);
+      setManualEnrollmentId('');
     } catch (err) {
       setError(getErrorMessage(err, 'Not girilemedi.'));
     } finally {
@@ -211,6 +218,17 @@ function FacultyGradeEntryPage() {
                   }}
                 />
               )}
+            />
+
+            <TextField
+              label="Kayıt ID (opsiyonel)"
+              placeholder="Örn: enrollment UUID"
+              value={manualEnrollmentId}
+              onChange={(e) => {
+                setManualEnrollmentId(e.target.value);
+                if (e.target.value) setManualMode(true);
+              }}
+              helperText="Öğrenci listesi yüklenmezse manuel girebilirsiniz"
             />
 
             <TextField
