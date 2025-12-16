@@ -1,10 +1,11 @@
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 import { Outlet } from 'react-router-dom';
 import { useState } from 'react';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import MobileNav from './MobileNav';
+
+const drawerWidth = 236;
 
 function Layout() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -18,21 +19,23 @@ function Layout() {
     >
       <Navbar onMenuClick={() => setMobileNavOpen(true)} />
       <MobileNav open={mobileNavOpen} onClose={() => setMobileNavOpen(false)} />
-      <Box display="flex" flex={1}>
+      <Box display="flex" flex={1} sx={{ width: '100%', minWidth: 0 }}>
         <Sidebar />
-        <Container
-          disableGutters
-          maxWidth={false}
+        <Box
+          component="main"
           sx={{
-            width: '100%',
-            maxWidth: 1440,
+            flexGrow: 1,
+            minWidth: 0,
+            width: { md: `calc(100% - ${drawerWidth}px)` },
+            ml: { md: `${drawerWidth}px` },
+            px: { xs: 2, md: 3 },
             py: 4,
-            px: { xs: 2, lg: 3 },
-            ml: 0,
+            maxWidth: 1440,
+            mx: 'auto',
           }}
         >
           <Outlet />
-        </Container>
+        </Box>
       </Box>
     </Box>
   );
