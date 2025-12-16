@@ -1,5 +1,6 @@
-import { Component, ErrorInfo, ReactNode } from 'react';
+﻿import { Component, ErrorInfo, ReactNode } from 'react';
 import { Box, Button, Paper, Stack, Typography } from '@mui/material';
+import { strings } from '../../strings';
 
 type Props = { children: ReactNode };
 type State = { hasError: boolean; message?: string };
@@ -11,11 +12,10 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   static getDerivedStateFromError(error: Error): State {
-    return { hasError: true, message: error?.message || 'Beklenmeyen bir hata oluştu.' };
+    return { hasError: true, message: error?.message || strings.errors.boundary.unexpected };
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    // You could plug in logging here if needed
     console.error('UI error caught by ErrorBoundary:', error, info);
   }
 
@@ -34,13 +34,13 @@ class ErrorBoundary extends Component<Props, State> {
           <Paper elevation={4} sx={{ maxWidth: 420, p: 3, borderRadius: 3 }}>
             <Stack spacing={1.5}>
               <Typography variant="h6" fontWeight={800}>
-                Bir şey ters gitti
+                {strings.errors.boundary.title}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {this.state.message || 'Beklenmeyen bir hata nedeniyle sayfa yüklenemedi.'}
+                {this.state.message || strings.errors.boundary.description}
               </Typography>
               <Button variant="contained" onClick={this.handleReload}>
-                Sayfayı yenile
+                {strings.errors.boundary.reload}
               </Button>
             </Stack>
           </Paper>
