@@ -110,12 +110,13 @@ function FacultySectionStudentsPage() {
     loadSections();
   }, [courseId, semester, year]);
 
-  const handleFetchStudents = async (id: string) => {
-    if (!id) return;
+  const handleFetchStudents = async (id: string | number) => {
+    const sectionKey = String(id || '');
+    if (!sectionKey) return;
     setLoading(true);
     setError('');
     try {
-      const response = await getSectionStudents(id);
+      const response = await getSectionStudents(sectionKey);
       const data = extractData<StudentRow[]>(response);
       setStudents(data || []);
     } catch (err) {
@@ -130,10 +131,10 @@ function FacultySectionStudentsPage() {
     if (!sectionId || !selectedStudentId) return;
     setAddLoading(true);
     try {
-      await addSectionStudent(sectionId, selectedStudentId);
+      await addSectionStudent(String(sectionId), selectedStudentId);
       setAddOpen(false);
       setSelectedStudentId('');
-      await handleFetchStudents(sectionId);
+      await handleFetchStudents(String(sectionId));
     } catch (err) {
       setError(getErrorMessage(err, 'Öğrenci eklenemedi.'));
     } finally {
@@ -145,8 +146,8 @@ function FacultySectionStudentsPage() {
     if (!sectionId || !studentId) return;
     setLoading(true);
     try {
-      await removeSectionStudent(sectionId, studentId);
-      await handleFetchStudents(sectionId);
+      await removeSectionStudent(String(sectionId), studentId);
+      await handleFetchStudents(String(sectionId));
     } catch (err) {
       setError(getErrorMessage(err, 'Öğrenci çıkarılamadı.'));
     } finally {
@@ -234,8 +235,9 @@ function FacultySectionStudentsPage() {
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 value={sections.find((s) => s.id === sectionId) || null}
                 onChange={(_, value) => {
-                  setSectionId(value?.id || '');
-                  if (value?.id) handleFetchStudents(value.id);
+                  const nextId = value?.id ? String(value.id) : '';
+                  setSectionId(nextId);
+                  if (nextId) handleFetchStudents(nextId);
                   else setStudents([]);
                 }}
                 renderInput={(params) => <TextField {...params} label="Şube" placeholder="Seçiniz" />}
