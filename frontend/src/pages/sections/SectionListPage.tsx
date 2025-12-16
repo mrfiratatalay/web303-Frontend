@@ -103,9 +103,10 @@ function SectionListPage() {
         <CardContent>
           <Box
             sx={{
-              display: 'grid',
+              display: 'flex',
+              flexWrap: 'wrap',
               gap: 2,
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              alignItems: 'center',
             }}
           >
             <TextField
@@ -114,9 +115,10 @@ function SectionListPage() {
               label="Ders ID filtresi"
               value={courseFilter}
               onChange={(e) => setCourseFilter(e.target.value)}
+              sx={{ flex: '1 1 220px', minWidth: 220 }}
             />
 
-            <FormControl fullWidth size="small" sx={{ minWidth: { sm: 180 } }}>
+            <FormControl fullWidth size="small" sx={{ flex: '1 1 220px', minWidth: 220 }}>
               <InputLabel id="semester-label">Dönem</InputLabel>
               <Select
                 labelId="semester-label"
@@ -131,7 +133,7 @@ function SectionListPage() {
               </Select>
             </FormControl>
 
-            <FormControl fullWidth size="small" sx={{ minWidth: { sm: 180 } }}>
+            <FormControl fullWidth size="small" sx={{ flex: '1 1 220px', minWidth: 220 }}>
               <InputLabel id="sort-by-label">Sırala</InputLabel>
               <Select
                 labelId="sort-by-label"
@@ -146,7 +148,7 @@ function SectionListPage() {
               </Select>
             </FormControl>
 
-            <FormControl fullWidth size="small" sx={{ minWidth: { sm: 160 } }}>
+            <FormControl fullWidth size="small" sx={{ flex: '1 1 220px', minWidth: 220 }}>
               <InputLabel id="sort-order-label">Sıra</InputLabel>
               <Select
                 labelId="sort-order-label"
@@ -159,7 +161,7 @@ function SectionListPage() {
               </Select>
             </FormControl>
 
-            <Box display="flex" alignItems="center">
+            <Box display="flex" alignItems="center" sx={{ flex: '1 1 180px', minWidth: 180 }}>
               <Button variant="outlined" size="small" onClick={() => setQuery(DEFAULT_QUERY)}>
                 Sıfırla
               </Button>

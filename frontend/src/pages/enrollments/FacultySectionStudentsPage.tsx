@@ -207,90 +207,96 @@ function FacultySectionStudentsPage() {
 
       <Card>
         <CardContent>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} md={4}>
-              <TextField
-                select
-                fullWidth
-                label="Ders"
-                value={courseId}
-                onChange={(e) => {
-                  setCourseId(e.target.value);
-                  setSectionId('');
-                  setStudents([]);
-                }}
-                required
-              >
-                <MenuItem value="">
-                  <em>Ders seçin</em>
+          <Box
+            sx={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: 2,
+              alignItems: 'center',
+            }}
+          >
+            <TextField
+              select
+              fullWidth
+              label="Ders"
+              value={courseId}
+              onChange={(e) => {
+                setCourseId(e.target.value);
+                setSectionId('');
+                setStudents([]);
+              }}
+              required
+              sx={{ flex: '1 1 220px', minWidth: 220 }}
+            >
+              <MenuItem value="">
+                <em>Ders seçin</em>
+              </MenuItem>
+              {courses.map((course) => (
+                <MenuItem key={course.id} value={course.id}>
+                  {course.code} - {course.name}
                 </MenuItem>
-                {courses.map((course) => (
-                  <MenuItem key={course.id} value={course.id}>
-                    {course.code} - {course.name}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid item xs={6} md={2}>
-              <TextField
-                select
-                fullWidth
-                label="Dönem"
-                value={semester}
-                onChange={(e) => {
-                  setSemester(e.target.value as Section['semester'] | '');
-                  setSectionId('');
-                  setStudents([]);
-                }}
-              >
-                <MenuItem value="">
-                  <em>Tüm dönemler</em>
-                </MenuItem>
-                <MenuItem value="fall">Güz</MenuItem>
-                <MenuItem value="spring">Bahar</MenuItem>
-                <MenuItem value="summer">Yaz</MenuItem>
-              </TextField>
-            </Grid>
-            <Grid item xs={6} md={2}>
-              <TextField
-                fullWidth
-                type="number"
-                label="Yıl"
-                value={year}
-                onChange={(e) => {
-                  const val = e.target.value;
-                  setYear(val === '' ? '' : Number(val));
-                  setSectionId('');
-                  setStudents([]);
-                }}
-                placeholder="Tümü"
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Autocomplete
-                options={sections}
-                getOptionLabel={(option) => option.label}
-                isOptionEqualToValue={(option, value) => option.id === value.id}
-                loading={sectionsLoading}
-                value={selectedSection}
-                onChange={(_, value) => {
-                  const nextId = value?.id ? String(value.id) : '';
-                  setSectionId(nextId);
-                  setStudents([]);
-                  if (nextId) handleFetchStudents(nextId);
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Şube"
-                    placeholder="Şube seçin"
-                    helperText={courseId ? '' : 'Önce ders seçin'}
-                  />
-                )}
-                disabled={!courseId}
-              />
-            </Grid>
-          </Grid>
+              ))}
+            </TextField>
+
+            <TextField
+              select
+              fullWidth
+              label="Dönem"
+              value={semester}
+              onChange={(e) => {
+                setSemester(e.target.value as Section['semester'] | '');
+                setSectionId('');
+                setStudents([]);
+              }}
+              sx={{ flex: '1 1 220px', minWidth: 220 }}
+            >
+              <MenuItem value="">
+                <em>Tüm dönemler</em>
+              </MenuItem>
+              <MenuItem value="fall">Güz</MenuItem>
+              <MenuItem value="spring">Bahar</MenuItem>
+              <MenuItem value="summer">Yaz</MenuItem>
+            </TextField>
+
+            <TextField
+              fullWidth
+              type="number"
+              label="Yıl"
+              value={year}
+              onChange={(e) => {
+                const val = e.target.value;
+                setYear(val === '' ? '' : Number(val));
+                setSectionId('');
+                setStudents([]);
+              }}
+              placeholder="Tümü"
+              sx={{ flex: '1 1 180px', minWidth: 180 }}
+            />
+
+            <Autocomplete
+              options={sections}
+              getOptionLabel={(option) => option.label}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
+              loading={sectionsLoading}
+              value={selectedSection}
+              onChange={(_, value) => {
+                const nextId = value?.id ? String(value.id) : '';
+                setSectionId(nextId);
+                setStudents([]);
+                if (nextId) handleFetchStudents(nextId);
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Şube"
+                  placeholder="Şube seçin"
+                  helperText={courseId ? '' : 'Önce ders seçin'}
+                />
+              )}
+              disabled={!courseId}
+              sx={{ flex: '1 1 260px', minWidth: 260 }}
+            />
+          </Box>
         </CardContent>
       </Card>
 
