@@ -14,7 +14,8 @@ import Alert from '../../components/feedback/Alert';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import { enterGrade } from '../../services/gradeApi';
 import { getErrorMessage } from '../../utils/error';
-import { extractData, getSectionStudents, getSections, SectionStudent } from '../../services/enrollmentApi';
+import { getSectionStudents, extractData as extractEnrollmentData, SectionStudent } from '../../services/enrollmentApi';
+import { getSections, extractData as extractSectionData } from '../../services/sectionApi';
 import { Section } from '../../types/academics';
 
 type GradeFieldState = {
@@ -46,7 +47,7 @@ function FacultyGradeEntryPage() {
       setSectionsLoading(true);
       try {
         const response = await getSections({ page: 1, limit: 100 });
-        const data = extractData(response);
+        const data = extractSectionData(response);
         setSections(data.sections || []);
       } catch (err) {
         setError(getErrorMessage(err, 'Şubeler yüklenemedi.'));
@@ -66,7 +67,7 @@ function FacultyGradeEntryPage() {
       setStudentsLoading(true);
       try {
         const response = await getSectionStudents(selectedSection.id);
-        const data = extractData(response);
+        const data = extractEnrollmentData(response);
         setStudents(data || []);
       } catch (err) {
         setError(getErrorMessage(err, 'Öğrenciler alınamadı.'));
