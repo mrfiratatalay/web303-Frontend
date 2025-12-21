@@ -158,22 +158,20 @@ function FacultySessionsPage() {
             Yeni Oturum
           </Typography>
           <Grid container spacing={2}>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={6}>
               <Autocomplete
                 fullWidth
                 options={sections}
                 loading={sectionsLoading}
                 getOptionLabel={(option) =>
-                  `${option.course?.code || option.course_id} / ${option.section_number} — ${
-                    option.course?.name || 'Şube'
+                  `${option.course?.code || option.course_id} / ${option.section_number} — ${option.course?.name || 'Şube'
                   }`
                 }
                 value={selectedSection}
-                freeSolo
                 onChange={(_, value) =>
-                  setForm((prev) => ({ ...prev, section_id: typeof value === 'string' ? value : value?.id || '' }))
+                  setForm((prev) => ({ ...prev, section_id: value?.id || '' }))
                 }
-                onInputChange={(_, value) => setForm((prev) => ({ ...prev, section_id: value }))}
+                isOptionEqualToValue={(option, value) => option.id === value?.id}
                 renderInput={(params) => (
                   <TextField
                     {...params}
