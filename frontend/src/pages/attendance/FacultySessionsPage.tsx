@@ -158,7 +158,7 @@ function FacultySessionsPage() {
             Yeni Oturum
           </Typography>
           <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12}>
               <Autocomplete
                 fullWidth
                 options={sections}
@@ -191,7 +191,7 @@ function FacultySessionsPage() {
                 onChange={(e) => setForm((prev) => ({ ...prev, geofence_radius: Number(e.target.value) }))}
               />
             </Grid>
-            <Grid item xs={6} md={2}>
+            <Grid item xs={6} md={3}>
               <TextField
                 fullWidth
                 label="Enlem"
@@ -199,7 +199,7 @@ function FacultySessionsPage() {
                 onChange={(e) => setForm((prev) => ({ ...prev, latitude: e.target.value }))}
               />
             </Grid>
-            <Grid item xs={6} md={2}>
+            <Grid item xs={6} md={3}>
               <TextField
                 fullWidth
                 label="Boylam"
@@ -207,12 +207,12 @@ function FacultySessionsPage() {
                 onChange={(e) => setForm((prev) => ({ ...prev, longitude: e.target.value }))}
               />
             </Grid>
-            <Grid item xs={12} md={2} display="flex" alignItems="center">
+            <Grid item xs={6} md={4} display="flex" alignItems="center">
               <Stack direction="row" spacing={1} alignItems="center" width="100%">
-                <Button variant="outlined" onClick={handleUseLocation} fullWidth>
+                <Button variant="outlined" onClick={handleUseLocation}>
                   Konumu doldur
                 </Button>
-                <Button variant="contained" onClick={handleCreate} disabled={creating || !form.section_id} fullWidth>
+                <Button variant="contained" onClick={handleCreate} disabled={creating || !form.section_id}>
                   {creating ? <LoadingSpinner label="Oluşturuluyor..." /> : 'Şimdi başlat'}
                 </Button>
               </Stack>
