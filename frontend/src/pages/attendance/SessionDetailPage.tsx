@@ -104,7 +104,14 @@ function SessionDetailPage() {
               <TableBody>
                 {session.records?.map((r) => (
                   <TableRow key={r.id}>
-                    <TableCell>{r.student_id}</TableCell>
+                    <TableCell>
+                      <Typography fontWeight={600}>
+                        {r.student?.student_number || r.student_id}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {r.student?.user ? `${r.student.user.first_name} ${r.student.user.last_name}` : '-'}
+                      </Typography>
+                    </TableCell>
                     <TableCell>{r.check_in_time}</TableCell>
                     <TableCell>{r.distance_from_center != null ? Number(r.distance_from_center).toFixed(2) : '-'}</TableCell>
                     <TableCell>{r.is_flagged ? r.flag_reason || 'Şüpheli' : 'Onaylı'}</TableCell>
