@@ -1,53 +1,159 @@
-import { Add, Delete } from '@mui/icons-material';
+import { useEffect, useState } from 'react';
 import {
-    Box,
-    Button,
-    Card,
-    CardContent,
-    IconButton,
-    Stack,
-    TextField,
-    Typography,
+  Autocomplete,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Chip,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
 } from '@mui/material';
-import Grid from '@mui/material/Grid';
-import { useState } from 'react';
 import Alert from '../../components/feedback/Alert';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import { bulkEnterGrades } from '../../services/gradeApi';
+import { getSectionStudents, extractData as extractEnrollmentData, SectionStudent } from '../../services/enrollmentApi';
+import { getSections, extractData as extractSectionData } from '../../services/sectionApi';
+import { Section } from '../../types/academics';
+import { useAuth } from '../../hooks/useAuth';
 import { getErrorMessage } from '../../utils/error';
 
-type GradeRow = { enrollment_id: string; midterm_grade?: string; final_grade?: string };
+// Weight constants
+const MIDTERM_WEIGHT = 0.4; // 40%
+const FINAL_WEIGHT = 0.6; // 60%
+
+type StudentGrade = {
+  enrollmentId: string;
+  studentNumber: string;
+  name: string;
+  email: string;
+  midterm: string;
+  final: string;
+};
+
+const calculateOverall = (midterm: string, final: string): string => {
+  const mid = parseFloat(midterm);
+  const fin = parseFloat(final);
+  if (isNaN(mid) || isNaN(fin)) return '-';
+  const overall = mid * MIDTERM_WEIGHT + fin * FINAL_WEIGHT;
+  return overall.toFixed(1);
+};
+
+const getLetterGrade = (overall: string): string => {
+  const score = parseFloat(overall);
+  if (isNaN(score)) return '-';
+  if (score >= 90) return 'AA';
+  if (score >= 85) return 'BA';
+  if (score >= 80) return 'BB';
+  if (score >= 75) return 'CB';
+  if (score >= 70) return 'CC';
+  if (score >= 65) return 'DC';
+  if (score >= 60) return 'DD';
+  if (score >= 50) return 'FD';
+  return 'FF';
+};
 
 function FacultyGradeBulkPage() {
-  const [rows, setRows] = useState<GradeRow[]>([{ enrollment_id: '', midterm_grade: '', final_grade: '' }]);
+  const { user } = useAuth();
+  const [sections, setSections] = useState<Section[]>([]);
+  const [selectedSection, setSelectedSection] = useState<Section | null>(null);
+  const [students, setStudents] = useState<StudentGrade[]>([]);
+  const [sectionsLoading, setSectionsLoading] = useState(false);
+  const [studentsLoading, setStudentsLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
-  const handleChange = (index: number, field: keyof GradeRow, value: string) => {
-    setRows((prev) => prev.map((row, i) => (i === index ? { ...row, [field]: value } : row)));
+  // Load instructor's sections
+  useEffect(() => {
+    const loadSections = async () => {
+      if (!user?.id) return;
+      setSectionsLoading(true);
+      try {
+        const response = await getSections({ instructor_id: user.id, limit: 50 });
+        const data = extractSectionData(response);
+        setSections(data?.sections || []);
+      } catch (err) {
+        console.warn('Şubeler yüklenemedi:', err);
+      } finally {
+        setSectionsLoading(false);
+      }
+    };
+    loadSections();
+  }, [user?.id]);
+
+  // Load students when section selected
+  useEffect(() => {
+    const loadStudents = async () => {
+      if (!selectedSection) {
+        setStudents([]);
+        return;
+      }
+      setStudentsLoading(true);
+      setError('');
+      try {
+        const response = await getSectionStudents(selectedSection.id);
+        const data = extractEnrollmentData<SectionStudent[]>(response);
+        setStudents(
+          (data || []).map((s) => ({
+            enrollmentId: s.enrollmentId || '',
+            studentNumber: s.studentNumber || '',
+            name: s.name || '',
+            email: s.email || '',
+            midterm: '',
+            final: '',
+          }))
+        );
+      } catch (err) {
+        setError(getErrorMessage(err, 'Öğrenciler yüklenemedi.'));
+        setStudents([]);
+      } finally {
+        setStudentsLoading(false);
+      }
+    };
+    loadStudents();
+  }, [selectedSection]);
+
+  const handleGradeChange = (enrollmentId: string, field: 'midterm' | 'final', value: string) => {
+    // Validate 0-100
+    if (value !== '' && (isNaN(Number(value)) || Number(value) < 0 || Number(value) > 100)) {
+      return;
+    }
+    setStudents((prev) =>
+      prev.map((s) => (s.enrollmentId === enrollmentId ? { ...s, [field]: value } : s))
+    );
   };
 
-  const addRow = () => setRows((prev) => [...prev, { enrollment_id: '', midterm_grade: '', final_grade: '' }]);
-  const removeRow = (index: number) => setRows((prev) => prev.filter((_, i) => i !== index));
-
   const handleSubmit = async () => {
+    // Filter students with at least one grade
+    const gradesToSubmit = students
+      .filter((s) => s.midterm !== '' || s.final !== '')
+      .map((s) => ({
+        enrollment_id: s.enrollmentId,
+        midterm_grade: s.midterm === '' ? null : Number(s.midterm),
+        final_grade: s.final === '' ? null : Number(s.final),
+      }));
+
+    if (gradesToSubmit.length === 0) {
+      setError('En az bir öğrenci için not girin.');
+      return;
+    }
+
     setLoading(true);
     setMessage('');
     setError('');
     try {
-      await bulkEnterGrades(
-        rows
-          .filter((r) => r.enrollment_id)
-          .map((r) => ({
-            enrollment_id: r.enrollment_id,
-            midterm_grade: r.midterm_grade === '' ? null : Number(r.midterm_grade),
-            final_grade: r.final_grade === '' ? null : Number(r.final_grade),
-          })),
-      );
-      setMessage('Toplu not girişi tamamlandı.');
+      await bulkEnterGrades(gradesToSubmit);
+      setMessage(`${gradesToSubmit.length} öğrenci için notlar kaydedildi.`);
     } catch (err) {
-      setError(getErrorMessage(err, 'Toplu not girilemedi.'));
+      setError(getErrorMessage(err, 'Notlar kaydedilemedi.'));
     } finally {
       setLoading(false);
     }
@@ -63,58 +169,119 @@ function FacultyGradeBulkPage() {
 
       <Card>
         <CardContent>
-          <Stack spacing={2}>
-            {rows.map((row, idx) => (
-              <Grid container spacing={1} alignItems="center" key={idx}>
-                <Grid item xs={12} md={4}>
-                  <TextField
-                    fullWidth
-                    label="Kayıt ID"
-                    value={row.enrollment_id}
-                    onChange={(e) => handleChange(idx, 'enrollment_id', e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={5.5} md={3}>
-                  <TextField
-                    fullWidth
-                    label="Vize"
-                    type="number"
-                    value={row.midterm_grade}
-                    onChange={(e) => handleChange(idx, 'midterm_grade', e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={5.5} md={3}>
-                  <TextField
-                    fullWidth
-                    label="Final"
-                    type="number"
-                    value={row.final_grade}
-                    onChange={(e) => handleChange(idx, 'final_grade', e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={1} md={1}>
-                  <IconButton aria-label="Sil" onClick={() => removeRow(idx)} disabled={rows.length === 1}>
-                    <Delete />
-                  </IconButton>
-                </Grid>
-              </Grid>
-            ))}
-            <Box>
-              <Button startIcon={<Add />} variant="outlined" size="small" onClick={addRow}>
-                Satır ekle
-              </Button>
-            </Box>
-            <Box>
-              <Button variant="contained" onClick={handleSubmit} disabled={loading}>
-                {loading ? <LoadingSpinner label="Gönderiliyor..." /> : 'Gönder'}
-              </Button>
-            </Box>
-          </Stack>
+          <Typography variant="subtitle1" fontWeight={700} mb={2}>
+            Ders Seçin
+          </Typography>
+          <Autocomplete
+            fullWidth
+            options={sections}
+            loading={sectionsLoading}
+            getOptionLabel={(option) =>
+              `${option.course?.code || option.course_id} / ${option.section_number} — ${option.course?.name || 'Şube'}`
+            }
+            value={selectedSection}
+            onChange={(_, value) => setSelectedSection(value)}
+            isOptionEqualToValue={(option, value) => option.id === value?.id}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Şube"
+                placeholder={sectionsLoading ? 'Şubeler yükleniyor...' : 'Şube seçin'}
+              />
+            )}
+          />
         </CardContent>
       </Card>
+
+      {selectedSection && (
+        <Card>
+          <CardContent>
+            <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
+              <Typography variant="subtitle1" fontWeight={700}>
+                {selectedSection.course?.code} - {selectedSection.course?.name} / Şube {selectedSection.section_number}
+              </Typography>
+              <Stack direction="row" spacing={1}>
+                <Chip label="Vize: %40" size="small" color="info" />
+                <Chip label="Final: %60" size="small" color="info" />
+              </Stack>
+            </Stack>
+
+            {studentsLoading ? (
+              <Box py={4} textAlign="center">
+                <LoadingSpinner label="Öğrenciler yükleniyor..." />
+              </Box>
+            ) : students.length === 0 ? (
+              <Typography color="text.secondary">Bu derse kayıtlı öğrenci yok.</Typography>
+            ) : (
+              <>
+                <TableContainer>
+                  <Table size="small">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Öğrenci No</TableCell>
+                        <TableCell>Ad Soyad</TableCell>
+                        <TableCell width={100}>Vize (0-100)</TableCell>
+                        <TableCell width={100}>Final (0-100)</TableCell>
+                        <TableCell width={80}>Genel Not</TableCell>
+                        <TableCell width={60}>Harf</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {students.map((student) => {
+                        const overall = calculateOverall(student.midterm, student.final);
+                        const letter = getLetterGrade(overall);
+                        return (
+                          <TableRow key={student.enrollmentId}>
+                            <TableCell>{student.studentNumber}</TableCell>
+                            <TableCell>{student.name}</TableCell>
+                            <TableCell>
+                              <TextField
+                                size="small"
+                                type="number"
+                                inputProps={{ min: 0, max: 100 }}
+                                value={student.midterm}
+                                onChange={(e) => handleGradeChange(student.enrollmentId, 'midterm', e.target.value)}
+                                sx={{ width: 80 }}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <TextField
+                                size="small"
+                                type="number"
+                                inputProps={{ min: 0, max: 100 }}
+                                value={student.final}
+                                onChange={(e) => handleGradeChange(student.enrollmentId, 'final', e.target.value)}
+                                sx={{ width: 80 }}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <Typography fontWeight={600}>{overall}</Typography>
+                            </TableCell>
+                            <TableCell>
+                              <Chip
+                                label={letter}
+                                size="small"
+                                color={letter === 'FF' || letter === 'FD' ? 'error' : letter.startsWith('A') || letter.startsWith('B') ? 'success' : 'warning'}
+                              />
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+                <Box mt={2}>
+                  <Button variant="contained" onClick={handleSubmit} disabled={loading}>
+                    {loading ? <LoadingSpinner label="Kaydediliyor..." /> : 'Notları Kaydet'}
+                  </Button>
+                </Box>
+              </>
+            )}
+          </CardContent>
+        </Card>
+      )}
     </Stack>
   );
 }
 
 export default FacultyGradeBulkPage;
-

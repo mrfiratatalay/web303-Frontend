@@ -17,6 +17,7 @@ import { getErrorMessage } from '../../utils/error';
 import { getSectionStudents, extractData as extractEnrollmentData, SectionStudent } from '../../services/enrollmentApi';
 import { getSections, extractData as extractSectionData } from '../../services/sectionApi';
 import { Section } from '../../types/academics';
+import { useAuth } from '../../hooks/useAuth';
 
 type GradeFieldState = {
   value: string;
@@ -26,6 +27,7 @@ type GradeFieldState = {
 const gradeError = 'Notlar 0-100 aralığında olmalı.';
 
 function FacultyGradeEntryPage() {
+  const { user } = useAuth();
   const [sections, setSections] = useState<Section[]>([]);
   const [sectionsLoading, setSectionsLoading] = useState(false);
 
@@ -46,9 +48,10 @@ function FacultyGradeEntryPage() {
 
   useEffect(() => {
     const fetchSections = async () => {
+      if (!user?.id) return;
       setSectionsLoading(true);
       try {
-        const response = await getSections({ page: 1, limit: 100 });
+        const response = await getSections({ instructor_id: user.id, limit: 100 });
         const data = extractSectionData(response);
         setSections(data.sections || []);
       } catch (err) {
@@ -59,7 +62,7 @@ function FacultyGradeEntryPage() {
     };
 
     fetchSections();
-  }, []);
+  }, [user?.id]);
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -97,9 +100,8 @@ function FacultyGradeEntryPage() {
     () =>
       students.map((student) => ({
         ...student,
-        label: `${student.name || 'Öğrenci'}${student.studentNumber ? ` • ${student.studentNumber}` : ''}${
-          student.email ? ` • ${student.email}` : ''
-        }`,
+        label: `${student.name || 'Öğrenci'}${student.studentNumber ? ` • ${student.studentNumber}` : ''}${student.email ? ` • ${student.email}` : ''
+          }`,
       })),
     [students],
   );
