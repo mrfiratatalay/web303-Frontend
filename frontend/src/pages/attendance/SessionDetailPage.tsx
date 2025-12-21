@@ -106,7 +106,7 @@ function SessionDetailPage() {
                   <TableRow key={r.id}>
                     <TableCell>{r.student_id}</TableCell>
                     <TableCell>{r.check_in_time}</TableCell>
-                    <TableCell>{r.distance_from_center?.toFixed(2)}</TableCell>
+                    <TableCell>{r.distance_from_center != null ? Number(r.distance_from_center).toFixed(2) : '-'}</TableCell>
                     <TableCell>{r.is_flagged ? r.flag_reason || 'Şüpheli' : 'Onaylı'}</TableCell>
                   </TableRow>
                 ))}
