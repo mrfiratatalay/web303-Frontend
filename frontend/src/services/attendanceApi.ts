@@ -30,6 +30,22 @@ export const checkIn = (sessionId: string, payload: { latitude: number; longitud
 
 export const getMyAttendance = () => apiClient.get<AttendanceSummary[]>('/attendance/my-attendance');
 
+export type ActiveSession = {
+  id: string;
+  course: { code: string; name: string };
+  section_number: string;
+  instructor: string | null;
+  date: string;
+  start_time: string;
+  qr_code: string;
+  latitude: number;
+  longitude: number;
+  geofence_radius: number;
+  already_checked_in: boolean;
+};
+
+export const getMyActiveSessions = () => apiClient.get<ActiveSession[]>('/attendance/my-active-sessions');
+
 export const getAttendanceReport = (sectionId: string) =>
   apiClient.get<AttendanceReport>(`/attendance/report/${sectionId}`);
 
