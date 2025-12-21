@@ -71,13 +71,17 @@ function FacultyGradeBulkPage() {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
-  // Load instructor's sections
+  // Load instructor's sections (admin sees all)
   useEffect(() => {
     const loadSections = async () => {
       if (!user?.id) return;
       setSectionsLoading(true);
       try {
-        const response = await getSections({ instructor_id: user.id, limit: 50 });
+        // Admin tüm dersleri görür, faculty sadece kendi derslerini
+        const params = user.role === 'admin'
+          ? { limit: 50 }
+          : { instructor_id: user.id, limit: 50 };
+        const response = await getSections(params);
         const data = extractSectionData(response);
         setSections(data?.sections || []);
       } catch (err) {
@@ -87,7 +91,7 @@ function FacultyGradeBulkPage() {
       }
     };
     loadSections();
-  }, [user?.id]);
+  }, [user?.id, user?.role]);
 
   // Load students when section selected
   useEffect(() => {

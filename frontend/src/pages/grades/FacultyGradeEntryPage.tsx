@@ -51,7 +51,11 @@ function FacultyGradeEntryPage() {
       if (!user?.id) return;
       setSectionsLoading(true);
       try {
-        const response = await getSections({ instructor_id: user.id, limit: 100 });
+        // Admin tüm dersleri görür, faculty sadece kendi derslerini
+        const params = user.role === 'admin'
+          ? { limit: 100 }
+          : { instructor_id: user.id, limit: 100 };
+        const response = await getSections(params);
         const data = extractSectionData(response);
         setSections(data.sections || []);
       } catch (err) {
@@ -62,7 +66,7 @@ function FacultyGradeEntryPage() {
     };
 
     fetchSections();
-  }, [user?.id]);
+  }, [user?.id, user?.role]);
 
   useEffect(() => {
     const fetchStudents = async () => {
