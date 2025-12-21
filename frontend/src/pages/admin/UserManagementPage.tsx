@@ -27,7 +27,7 @@ import {
 import Grid from '@mui/material/Grid';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import Alert from '../../components/feedback/Alert';
-import { getUserById, getUsers } from '../../services/userApi';
+import { getUserById, getUsers, deleteUser } from '../../services/userApi';
 import apiClient from '../../services/apiClient';
 import { User } from '../../types/auth';
 import { Pagination, UserListQuery, UserListResult } from '../../types/users';
@@ -90,6 +90,12 @@ function UserManagementPage() {
   const [detailUser, setDetailUser] = useState<User | null>(null);
   const [detailError, setDetailError] = useState('');
   const [detailLoading, setDetailLoading] = useState(false);
+
+  // Delete user state
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [userToDelete, setUserToDelete] = useState<User | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteError, setDeleteError] = useState('');
 
   // Debounce search input to limit API calls
   useEffect(() => {
@@ -206,6 +212,34 @@ function UserManagementPage() {
     setDetailOpen(false);
     setDetailUser(null);
     setDetailError('');
+  };
+
+  // Delete user handlers
+  const openDeleteDialog = (user: User) => {
+    setUserToDelete(user);
+    setDeleteDialogOpen(true);
+    setDeleteError('');
+  };
+
+  const closeDeleteDialog = () => {
+    setDeleteDialogOpen(false);
+    setUserToDelete(null);
+    setDeleteError('');
+  };
+
+  const handleDeleteUser = async () => {
+    if (!userToDelete) return;
+    setDeleteLoading(true);
+    setDeleteError('');
+    try {
+      await deleteUser(userToDelete.id);
+      closeDeleteDialog();
+      loadUsers(); // Refresh list
+    } catch (err) {
+      setDeleteError(getErrorMessage(err, 'Kullanici silinemedi.'));
+    } finally {
+      setDeleteLoading(false);
+    }
   };
 
   const sortedByLabel = useMemo(() => {
@@ -378,9 +412,19 @@ function UserManagementPage() {
                       </TableCell>
                       <TableCell>{formatDate(user.createdAt || user.created_at)}</TableCell>
                       <TableCell align="right">
-                        <Button variant="outlined" size="small" onClick={() => openUserDetail(user.id)}>
-                          Detay
-                        </Button>
+                        <Stack direction="row" spacing={1} justifyContent="flex-end">
+                          <Button variant="outlined" size="small" onClick={() => openUserDetail(user.id)}>
+                            Detay
+                          </Button>
+                          <Button
+                            variant="outlined"
+                            size="small"
+                            color="error"
+                            onClick={() => openDeleteDialog(user)}
+                          >
+                            Sil
+                          </Button>
+                        </Stack>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -488,6 +532,35 @@ function UserManagementPage() {
         </DialogContent>
         <DialogActions>
           <Button onClick={closeDetail}>Kapat</Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={deleteDialogOpen} onClose={closeDeleteDialog} maxWidth="xs" fullWidth>
+        <DialogTitle>Kullanici Sil</DialogTitle>
+        <DialogContent>
+          {deleteError && (
+            <Box mb={2}>
+              <Alert variant="error" message={deleteError} />
+            </Box>
+          )}
+          <Typography>
+            <strong>{userToDelete ? getFullName(userToDelete) : ''}</strong> kullanicisini silmek istediginize emin misiniz?
+          </Typography>
+          <Typography variant="body2" color="text.secondary" mt={1}>
+            Bu islem geri alinamaz.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeDeleteDialog} disabled={deleteLoading}>Iptal</Button>
+          <Button
+            onClick={handleDeleteUser}
+            color="error"
+            variant="contained"
+            disabled={deleteLoading}
+          >
+            {deleteLoading ? 'Siliniyor...' : 'Sil'}
+          </Button>
         </DialogActions>
       </Dialog>
     </Stack>
