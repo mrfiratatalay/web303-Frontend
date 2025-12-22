@@ -10,6 +10,8 @@ import DashboardPage from './pages/dashboard/DashboardPage';
 import ProfilePage from './pages/profile/ProfilePage';
 import NotFoundPage from './pages/error/NotFoundPage';
 import UserManagementPage from './pages/admin/UserManagementPage';
+import MenuManagementPage from './pages/admin/MenuManagementPage';
+import EventManagementPage from './pages/admin/EventManagementPage';
 import CourseListPage from './pages/courses/CourseListPage';
 import CourseDetailPage from './pages/courses/CourseDetailPage';
 import CourseFormPage from './pages/courses/CourseFormPage';
@@ -48,6 +50,7 @@ import MySchedulePage from './pages/scheduling/MySchedulePage';
 import ScheduleDetailPage from './pages/scheduling/ScheduleDetailPage';
 import GenerateSchedulePage from './pages/scheduling/GenerateSchedulePage';
 
+
 function App() {
   return (
     <Routes>
@@ -72,6 +75,22 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={['admin']}>
               <UserManagementPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/menus"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <MenuManagementPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/events"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <EventManagementPage />
             </ProtectedRoute>
           }
         />

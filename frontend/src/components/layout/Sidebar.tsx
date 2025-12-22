@@ -221,6 +221,18 @@ export const navSections: Array<{ title: string; items: NavItem[] }> = [
         roles: ['admin'],
         icon: <SupervisorAccountOutlinedIcon fontSize="small" />,
       },
+      {
+        to: '/admin/menus',
+        label: 'Menü Yönetimi',
+        roles: ['admin'],
+        icon: <RestaurantOutlinedIcon fontSize="small" />,
+      },
+      {
+        to: '/admin/events',
+        label: 'Etkinlik Yönetimi',
+        roles: ['admin'],
+        icon: <EventAvailableOutlinedIcon fontSize="small" />,
+      },
     ],
   },
 ];

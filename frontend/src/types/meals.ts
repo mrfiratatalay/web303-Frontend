@@ -22,12 +22,16 @@ export interface MealMenu {
   title?: string;
   name?: string;
   date?: string;
+  meal_type?: 'lunch' | 'dinner';
   start_time?: string;
   end_time?: string;
   price?: number | null;
   items?: MealMenuItem[];
+  items_json?: { name: string; description?: string }[];
+  nutrition_json?: { calories?: number; protein?: number; carbs?: number; fat?: number };
   description?: string | null;
   is_available?: boolean;
+  is_published?: boolean;
   status?: string;
 }
 

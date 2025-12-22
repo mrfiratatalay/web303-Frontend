@@ -4,11 +4,16 @@ export interface Event {
   id: string;
   title: string;
   description?: string | null;
+  category?: 'workshop' | 'conference' | 'social' | 'sports' | 'career' | 'other' | string;
+  date?: string;
   location?: string | null;
   start_time?: string | null;
   end_time?: string | null;
   capacity?: number | null;
   registered_count?: number | null;
+  is_paid?: boolean;
+  price?: number | null;
+  registration_deadline?: string | null;
   status?: 'draft' | 'published' | 'cancelled';
   is_registered?: boolean;
   isRegistered?: boolean;
@@ -21,10 +26,15 @@ export interface Event {
 export interface EventPayload {
   title: string;
   description?: string | null;
+  category?: string;
+  date?: string;
   location?: string | null;
   start_time?: string | null;
   end_time?: string | null;
   capacity?: number | null;
+  is_paid?: boolean;
+  price?: number | null;
+  registration_deadline?: string | null;
   status?: 'draft' | 'published' | 'cancelled';
 }
 
