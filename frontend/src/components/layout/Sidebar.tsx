@@ -27,6 +27,13 @@ import RuleFolderOutlinedIcon from '@mui/icons-material/RuleFolderOutlined';
 import LibraryAddCheckOutlinedIcon from '@mui/icons-material/LibraryAddCheckOutlined';
 import ViewAgendaOutlinedIcon from '@mui/icons-material/ViewAgendaOutlined';
 import SupervisorAccountOutlinedIcon from '@mui/icons-material/SupervisorAccountOutlined';
+import RestaurantOutlinedIcon from '@mui/icons-material/RestaurantOutlined';
+import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
+import EventAvailableOutlinedIcon from '@mui/icons-material/EventAvailableOutlined';
+import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
+import MeetingRoomOutlinedIcon from '@mui/icons-material/MeetingRoomOutlined';
+import QrCodeScannerOutlinedIcon from '@mui/icons-material/QrCodeScannerOutlined';
+import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import { useAuth } from '../../hooks/useAuth';
 import { AppRole, strings } from '../../strings';
 
@@ -137,6 +144,59 @@ export const navSections: Array<{ title: string; items: NavItem[] }> = [
         label: strings.sidebar.items.attendanceReview,
         roles: ['faculty', 'admin'],
         icon: <RuleFolderOutlinedIcon fontSize="small" />,
+      },
+    ],
+  },
+  {
+    title: strings.sidebar.sections.campus,
+    items: [
+      { to: '/meals/cafeterias', label: strings.sidebar.items.cafeterias, icon: <RestaurantOutlinedIcon fontSize="small" /> },
+      { to: '/meals/menus', label: strings.sidebar.items.meals, icon: <RestaurantOutlinedIcon fontSize="small" /> },
+      {
+        to: '/meals/reservations',
+        label: strings.sidebar.items.mealReservations,
+        roles: ['student'],
+        icon: <RestaurantOutlinedIcon fontSize="small" />,
+      },
+      {
+        to: '/meals/qr-use',
+        label: strings.sidebar.items.mealQrUse,
+        roles: ['faculty', 'admin'],
+        icon: <QrCodeScannerOutlinedIcon fontSize="small" />,
+      },
+      { to: '/wallet', label: strings.sidebar.items.wallet, icon: <AccountBalanceWalletOutlinedIcon fontSize="small" /> },
+      { to: '/events', label: strings.sidebar.items.events, icon: <EventAvailableOutlinedIcon fontSize="small" /> },
+      { to: '/events/my-registrations', label: strings.sidebar.items.eventRegistrations, icon: <EventNoteOutlinedIcon fontSize="small" /> },
+      {
+        to: '/events/checkin',
+        label: strings.sidebar.items.eventCheckIn,
+        roles: ['faculty', 'admin'],
+        icon: <QrCodeScannerOutlinedIcon fontSize="small" />,
+      },
+      { to: '/scheduling/my', label: strings.sidebar.items.scheduling, icon: <CalendarMonthOutlinedIcon fontSize="small" /> },
+      {
+        to: '/scheduling/generate',
+        label: strings.sidebar.items.schedulingGenerate,
+        roles: ['admin'],
+        icon: <CalendarMonthOutlinedIcon fontSize="small" />,
+      },
+      {
+        to: '/reservations/new',
+        label: strings.sidebar.items.reservationCreate,
+        roles: ['student'],
+        icon: <MeetingRoomOutlinedIcon fontSize="small" />,
+      },
+      {
+        to: '/reservations/my',
+        label: strings.sidebar.items.reservationMine,
+        roles: ['student'],
+        icon: <MeetingRoomOutlinedIcon fontSize="small" />,
+      },
+      {
+        to: '/admin/reservations',
+        label: strings.sidebar.items.reservationRequests,
+        roles: ['admin'],
+        icon: <AssignmentOutlinedIcon fontSize="small" />,
       },
     ],
   },

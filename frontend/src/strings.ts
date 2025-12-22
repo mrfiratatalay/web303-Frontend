@@ -1,4 +1,4 @@
-﻿export type AppRole = 'student' | 'faculty' | 'admin';
+export type AppRole = 'student' | 'faculty' | 'admin';
 
 export const strings = {
   meta: {
@@ -53,6 +53,7 @@ export const strings = {
       academic: 'Akademik',
       grades: 'Notlar',
       attendance: 'Yoklama',
+      campus: 'Kamp\u00fcs Hizmetleri',
       admin: 'Y\u00f6netim',
     },
     items: {
@@ -73,6 +74,19 @@ export const strings = {
       attendanceSessions: 'Oturumlar',
       attendanceReport: 'Yoklama Raporu',
       attendanceReview: 'Mazeret \u0130ncele',
+      meals: 'Yemek Men\u00fcleri',
+      cafeterias: 'Yemekhaneler',
+      mealReservations: 'Yemek Rezervasyonlar\u0131m',
+      mealQrUse: 'Yemek QR Kullan',
+      events: 'Etkinlikler',
+      eventRegistrations: 'Etkinlik Kay\u0131tlar\u0131m',
+      eventCheckIn: 'Etkinlik Check-in',
+      wallet: 'C\u00fczdan',
+      scheduling: 'Ders Program\u0131m',
+      schedulingGenerate: 'Program Olu\u015ftur',
+      reservationCreate: 'Derslik Rezervasyonu',
+      reservationMine: 'Rezervasyonlar\u0131m',
+      reservationRequests: 'Rezervasyon Talepleri',
       courseAdmin: 'Ders Y\u00f6netimi',
       sectionAdmin: '\u015eube Y\u00f6netimi',
       users: 'Kullan\u0131c\u0131lar',
@@ -271,3 +285,4 @@ export const strings = {
     },
   },
 };
+

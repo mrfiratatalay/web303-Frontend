@@ -1,0 +1,588 @@
+﻿src/components/feedback/LoadingSpinner.tsx(5,27): error TS7031: Binding element 'label' implicitly has an 'any' type.
+src/components/layout/Sidebar.tsx(44,9): error TS2503: Cannot find namespace 'JSX'.
+src/pages/admin/UserManagementPage.tsx(270,12): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/admin/UserManagementPage.tsx(280,12): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/admin/UserManagementPage.tsx(287,17): error TS2322: Type '(event: ChangeEvent<{ value: unknown; }>) => void' is not assignable to type '(event: ChangeEvent<Omit<HTMLInputElement, "value"> & { value: "student"; }> | (Event & { target: { value: "student"; name: string; }; }) | ... 5 more ... | (Event & { ...; }), child: ReactNode) => void'.
+  Types of parameters 'event' and 'event' are incompatible.
+    Type 'ChangeEvent<Omit<HTMLInputElement, "value"> & { value: "student"; }> | (Event & { target: { value: "student"; name: string; }; }) | ChangeEvent<...> | ... 4 more ... | (Event & { ...; })' is not assignable to type 'ChangeEvent<{ value: unknown; }>'.
+      Type 'Event & { target: { value: "student"; name: string; }; }' is missing the following properties from type 'ChangeEvent<{ value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/pages/admin/UserManagementPage.tsx(296,12): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/admin/UserManagementPage.tsx(303,17): error TS2322: Type '(event: ChangeEvent<{ value: unknown; }>) => void' is not assignable to type '(event: ChangeEvent<Omit<HTMLInputElement, "value"> & { value: string; }> | (Event & { target: { value: string; name: string; }; }), child: ReactNode) => void'.
+  Types of parameters 'event' and 'event' are incompatible.
+    Type 'ChangeEvent<Omit<HTMLInputElement, "value"> & { value: string; }> | (Event & { target: { value: string; name: string; }; })' is not assignable to type 'ChangeEvent<{ value: unknown; }>'.
+      Type 'Event & { target: { value: string; name: string; }; }' is missing the following properties from type 'ChangeEvent<{ value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/pages/admin/UserManagementPage.tsx(314,12): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/admin/UserManagementPage.tsx(321,17): error TS2322: Type '(event: ChangeEvent<{ value: unknown; }>) => void' is not assignable to type '(event: ChangeEvent<Omit<HTMLInputElement, "value"> & { value: "email"; }> | (Event & { target: { value: "email"; name: string; }; }) | ChangeEvent<Omit<...> & { ...; }> | ... 4 more ... | (Event & { ...; }), child: ReactNode) => void'.
+  Types of parameters 'event' and 'event' are incompatible.
+    Type 'ChangeEvent<Omit<HTMLInputElement, "value"> & { value: "email"; }> | (Event & { target: { value: "email"; name: string; }; }) | ChangeEvent<Omit<...> & { ...; }> | ... 4 more ... | (Event & { ...; })' is not assignable to type 'ChangeEvent<{ value: unknown; }>'.
+      Type 'Event & { target: { value: "email"; name: string; }; }' is missing the following properties from type 'ChangeEvent<{ value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/pages/admin/UserManagementPage.tsx(330,12): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/admin/UserManagementPage.tsx(337,17): error TS2322: Type '(event: ChangeEvent<{ value: unknown; }>) => void' is not assignable to type '(event: ChangeEvent<Omit<HTMLInputElement, "value"> & { value: "desc"; }> | (Event & { target: { value: "desc"; name: string; }; }) | ChangeEvent<Omit<...> & { ...; }> | (Event & { ...; }), child: ReactNode) => void'.
+  Types of parameters 'event' and 'event' are incompatible.
+    Type 'ChangeEvent<Omit<HTMLInputElement, "value"> & { value: "desc"; }> | (Event & { target: { value: "desc"; name: string; }; }) | ChangeEvent<Omit<HTMLInputElement, "value"> & { ...; }> | (Event & { ...; })' is not assignable to type 'ChangeEvent<{ value: unknown; }>'.
+      Type 'Event & { target: { value: "desc"; name: string; }; }' is missing the following properties from type 'ChangeEvent<{ value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/pages/admin/UserManagementPage.tsx(344,12): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/admin/UserManagementPage.tsx(473,18): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element[]; item: true; xs: number; sm: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element[]; item: true; xs: number; sm: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/admin/UserManagementPage.tsx(479,18): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element[]; item: true; xs: number; sm: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element[]; item: true; xs: number; sm: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/admin/UserManagementPage.tsx(485,18): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element[]; item: true; xs: number; sm: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element[]; item: true; xs: number; sm: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/admin/UserManagementPage.tsx(491,18): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element[]; item: true; xs: number; sm: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element[]; item: true; xs: number; sm: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/admin/UserManagementPage.tsx(497,18): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element[]; item: true; xs: number; sm: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element[]; item: true; xs: number; sm: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/admin/UserManagementPage.tsx(504,20): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element[]; item: true; xs: number; sm: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element[]; item: true; xs: number; sm: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/admin/UserManagementPage.tsx(513,22): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element[]; item: true; xs: number; sm: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element[]; item: true; xs: number; sm: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/admin/UserManagementPage.tsx(519,22): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element[]; item: true; xs: number; sm: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element[]; item: true; xs: number; sm: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/attendance/FacultySessionsPage.tsx(161,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/attendance/FacultySessionsPage.tsx(185,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/attendance/FacultySessionsPage.tsx(194,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/attendance/FacultySessionsPage.tsx(202,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/attendance/FacultySessionsPage.tsx(210,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; display: "flex"; alignItems: "center"; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; display: "flex"; alignItems: "center"; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/attendance/SessionDetailPage.tsx(109,28): error TS2339: Property 'student' does not exist on type 'AttendanceRecord'.
+src/pages/attendance/SessionDetailPage.tsx(112,28): error TS2339: Property 'student' does not exist on type 'AttendanceRecord'.
+src/pages/attendance/SessionDetailPage.tsx(112,49): error TS2339: Property 'student' does not exist on type 'AttendanceRecord'.
+src/pages/attendance/SessionDetailPage.tsx(112,78): error TS2339: Property 'student' does not exist on type 'AttendanceRecord'.
+src/pages/auth/ForgotPasswordPage.tsx(65,11): error TS2322: Type 'UseFormRegister<ForgotForm>' is not assignable to type 'UseFormRegister<FieldValues>'.
+  Types of parameters 'options' and 'options' are incompatible.
+    Type 'RegisterOptions<FieldValues, any> | undefined' is not assignable to type 'RegisterOptions<ForgotForm, any> | undefined'.
+      Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'RegisterOptions<ForgotForm, any> | undefined'.
+        Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type '(Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "email" | "email"[]; }> & { ...; }) | (Partial<...> & { ...; }) | (Partial<...> & { ...; })'.
+          Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "email" | "email"[]; }> & { ...; }'.
+            Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "email" | "email"[]; }>'.
+              Types of property 'deps' are incompatible.
+                Type 'string | string[] | undefined' is not assignable to type '"email" | "email"[] | undefined'.
+                  Type 'string' is not assignable to type '"email" | "email"[] | undefined'.
+src/pages/auth/LoginPage.tsx(33,5): error TS2322: Type 'Resolver<{ email: string; password: string; }, any, { password: string; email: string; }>' is not assignable to type 'Resolver<LoginForm, any, LoginForm>'.
+  Types of parameters 'options' and 'options' are incompatible.
+    Type 'ResolverOptions<LoginForm>' is not assignable to type 'ResolverOptions<{ email: string; password: string; }>'.
+      Types of property 'names' are incompatible.
+        Type '(keyof LoginForm)[] | undefined' is not assignable to type '("password" | "email")[] | undefined'.
+          Type '(keyof LoginForm)[]' is not assignable to type '("password" | "email")[]'.
+            Type 'keyof LoginForm' is not assignable to type '"password" | "email"'.
+              Type '"remember"' is not assignable to type '"password" | "email"'.
+src/pages/auth/LoginPage.tsx(66,54): error TS2345: Argument of type 'SubmitHandler<LoginForm>' is not assignable to parameter of type 'SubmitHandler<TFieldValues>'.
+  Type 'TFieldValues' is not assignable to type 'LoginForm'.
+    Type 'FieldValues' is missing the following properties from type 'LoginForm': email, password, remember
+src/pages/auth/LoginPage.tsx(72,15): error TS2322: Type 'UseFormRegister<LoginForm>' is not assignable to type 'UseFormRegister<FieldValues>'.
+  Types of parameters 'options' and 'options' are incompatible.
+    Type 'RegisterOptions<FieldValues, any> | undefined' is not assignable to type 'RegisterOptions<LoginForm, any> | undefined'.
+      Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'RegisterOptions<LoginForm, any> | undefined'.
+        Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type '(Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 2 more ... | ("password" | ... 1 more ... | "remember")[]; }> & { ...; }) | (Partial<...> & { ...; }) | (Partial<...> & { ...; })'.
+          Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 2 more ... | ("password" | ... 1 more ... | "remember")[]; }> & { ...; }'.
+            Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 2 more ... | ("password" | ... 1 more ... | "remember")[]; }>'.
+              Types of property 'deps' are incompatible.
+                Type 'string | string[] | undefined' is not assignable to type '"password" | "email" | "remember" | ("password" | "email" | "remember")[] | undefined'.
+                  Type 'string' is not assignable to type '"password" | "email" | "remember" | ("password" | "email" | "remember")[] | undefined'.
+src/pages/auth/LoginPage.tsx(81,15): error TS2322: Type 'UseFormRegister<LoginForm>' is not assignable to type 'UseFormRegister<FieldValues>'.
+  Types of parameters 'options' and 'options' are incompatible.
+    Type 'RegisterOptions<FieldValues, any> | undefined' is not assignable to type 'RegisterOptions<LoginForm, any> | undefined'.
+      Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'RegisterOptions<LoginForm, any> | undefined'.
+        Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type '(Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 2 more ... | ("password" | ... 1 more ... | "remember")[]; }> & { ...; }) | (Partial<...> & { ...; }) | (Partial<...> & { ...; })'.
+          Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 2 more ... | ("password" | ... 1 more ... | "remember")[]; }> & { ...; }'.
+            Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 2 more ... | ("password" | ... 1 more ... | "remember")[]; }>'.
+              Types of property 'deps' are incompatible.
+                Type 'string | string[] | undefined' is not assignable to type '"password" | "email" | "remember" | ("password" | "email" | "remember")[] | undefined'.
+                  Type 'string' is not assignable to type '"password" | "email" | "remember" | ("password" | "email" | "remember")[] | undefined'.
+src/pages/auth/RegisterPage.tsx(57,5): error TS2322: Type 'Resolver<{ firstName: string; lastName: string; email: string; role: NonNullable<"student" | "faculty" | undefined>; departmentId: string; studentNumber: string | undefined; ... 4 more ...; acceptTerms: boolean | undefined; }, any, { ...; }>' is not assignable to type 'Resolver<RegisterForm, any, RegisterForm>'.
+  Types of parameters 'values' and 'values' are incompatible.
+    Type 'RegisterForm' is not assignable to type '{ firstName: string; lastName: string; email: string; role: NonNullable<"student" | "faculty" | undefined>; departmentId: string; studentNumber: string | undefined; employeeNumber: string | undefined; title: string | undefined; password: string; confirmPassword: string; acceptTerms: boolean | undefined; }'.
+      Property 'studentNumber' is optional in type 'RegisterForm' but required in type '{ firstName: string; lastName: string; email: string; role: NonNullable<"student" | "faculty" | undefined>; departmentId: string; studentNumber: string | undefined; employeeNumber: string | undefined; title: string | undefined; password: string; confirmPassword: string; acceptTerms: boolean | undefined; }'.
+src/pages/auth/RegisterPage.tsx(162,36): error TS2345: Argument of type 'SubmitHandler<RegisterForm>' is not assignable to parameter of type 'SubmitHandler<TFieldValues>'.
+  Type 'TFieldValues' is not assignable to type 'RegisterForm'.
+    Type 'FieldValues' is missing the following properties from type 'RegisterForm': firstName, lastName, email, role, and 4 more.
+src/pages/auth/RegisterPage.tsx(164,12): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/auth/RegisterPage.tsx(169,15): error TS2322: Type 'UseFormRegister<RegisterForm>' is not assignable to type 'UseFormRegister<FieldValues>'.
+  Types of parameters 'options' and 'options' are incompatible.
+    Type 'RegisterOptions<FieldValues, any> | undefined' is not assignable to type 'RegisterOptions<RegisterForm, any> | undefined'.
+      Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'RegisterOptions<RegisterForm, any> | undefined'.
+        Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type '(Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }> & { ...; }) | (Partial<...> & { ...; }) | (Partial<...> & { ...; })'.
+          Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }> & { ...; }'.
+            Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }>'.
+              Types of property 'deps' are incompatible.
+                Type 'string | string[] | undefined' is not assignable to type '"password" | "confirmPassword" | "title" | "role" | "email" | "firstName" | "lastName" | "departmentId" | "studentNumber" | "employeeNumber" | "acceptTerms" | ("password" | ... 9 more ... | "acceptTerms")[] | undefined'.
+                  Type 'string' is not assignable to type '"password" | "confirmPassword" | "title" | "role" | "email" | "firstName" | "lastName" | "departmentId" | "studentNumber" | "employeeNumber" | "acceptTerms" | ("password" | ... 9 more ... | "acceptTerms")[] | undefined'.
+src/pages/auth/RegisterPage.tsx(173,12): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/auth/RegisterPage.tsx(178,15): error TS2322: Type 'UseFormRegister<RegisterForm>' is not assignable to type 'UseFormRegister<FieldValues>'.
+  Types of parameters 'options' and 'options' are incompatible.
+    Type 'RegisterOptions<FieldValues, any> | undefined' is not assignable to type 'RegisterOptions<RegisterForm, any> | undefined'.
+      Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'RegisterOptions<RegisterForm, any> | undefined'.
+        Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type '(Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }> & { ...; }) | (Partial<...> & { ...; }) | (Partial<...> & { ...; })'.
+          Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }> & { ...; }'.
+            Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }>'.
+              Types of property 'deps' are incompatible.
+                Type 'string | string[] | undefined' is not assignable to type '"password" | "confirmPassword" | "title" | "role" | "email" | "firstName" | "lastName" | "departmentId" | "studentNumber" | "employeeNumber" | "acceptTerms" | ("password" | ... 9 more ... | "acceptTerms")[] | undefined'.
+                  Type 'string' is not assignable to type '"password" | "confirmPassword" | "title" | "role" | "email" | "firstName" | "lastName" | "departmentId" | "studentNumber" | "employeeNumber" | "acceptTerms" | ("password" | ... 9 more ... | "acceptTerms")[] | undefined'.
+src/pages/auth/RegisterPage.tsx(182,12): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/auth/RegisterPage.tsx(188,15): error TS2322: Type 'UseFormRegister<RegisterForm>' is not assignable to type 'UseFormRegister<FieldValues>'.
+  Types of parameters 'options' and 'options' are incompatible.
+    Type 'RegisterOptions<FieldValues, any> | undefined' is not assignable to type 'RegisterOptions<RegisterForm, any> | undefined'.
+      Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'RegisterOptions<RegisterForm, any> | undefined'.
+        Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type '(Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }> & { ...; }) | (Partial<...> & { ...; }) | (Partial<...> & { ...; })'.
+          Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }> & { ...; }'.
+            Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }>'.
+              Types of property 'deps' are incompatible.
+                Type 'string | string[] | undefined' is not assignable to type '"password" | "confirmPassword" | "title" | "role" | "email" | "firstName" | "lastName" | "departmentId" | "studentNumber" | "employeeNumber" | "acceptTerms" | ("password" | ... 9 more ... | "acceptTerms")[] | undefined'.
+                  Type 'string' is not assignable to type '"password" | "confirmPassword" | "title" | "role" | "email" | "firstName" | "lastName" | "departmentId" | "studentNumber" | "employeeNumber" | "acceptTerms" | ("password" | ... 9 more ... | "acceptTerms")[] | undefined'.
+src/pages/auth/RegisterPage.tsx(195,12): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/auth/RegisterPage.tsx(222,12): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/auth/RegisterPage.tsx(255,12): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/auth/RegisterPage.tsx(260,15): error TS2322: Type 'UseFormRegister<RegisterForm>' is not assignable to type 'UseFormRegister<FieldValues>'.
+  Types of parameters 'options' and 'options' are incompatible.
+    Type 'RegisterOptions<FieldValues, any> | undefined' is not assignable to type 'RegisterOptions<RegisterForm, any> | undefined'.
+      Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'RegisterOptions<RegisterForm, any> | undefined'.
+        Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type '(Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }> & { ...; }) | (Partial<...> & { ...; }) | (Partial<...> & { ...; })'.
+          Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }> & { ...; }'.
+            Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }>'.
+              Types of property 'deps' are incompatible.
+                Type 'string | string[] | undefined' is not assignable to type '"password" | "confirmPassword" | "title" | "role" | "email" | "firstName" | "lastName" | "departmentId" | "studentNumber" | "employeeNumber" | "acceptTerms" | ("password" | ... 9 more ... | "acceptTerms")[] | undefined'.
+                  Type 'string' is not assignable to type '"password" | "confirmPassword" | "title" | "role" | "email" | "firstName" | "lastName" | "departmentId" | "studentNumber" | "employeeNumber" | "acceptTerms" | ("password" | ... 9 more ... | "acceptTerms")[] | undefined'.
+src/pages/auth/RegisterPage.tsx(265,12): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/auth/RegisterPage.tsx(270,15): error TS2322: Type 'UseFormRegister<RegisterForm>' is not assignable to type 'UseFormRegister<FieldValues>'.
+  Types of parameters 'options' and 'options' are incompatible.
+    Type 'RegisterOptions<FieldValues, any> | undefined' is not assignable to type 'RegisterOptions<RegisterForm, any> | undefined'.
+      Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'RegisterOptions<RegisterForm, any> | undefined'.
+        Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type '(Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }> & { ...; }) | (Partial<...> & { ...; }) | (Partial<...> & { ...; })'.
+          Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }> & { ...; }'.
+            Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }>'.
+              Types of property 'deps' are incompatible.
+                Type 'string | string[] | undefined' is not assignable to type '"password" | "confirmPassword" | "title" | "role" | "email" | "firstName" | "lastName" | "departmentId" | "studentNumber" | "employeeNumber" | "acceptTerms" | ("password" | ... 9 more ... | "acceptTerms")[] | undefined'.
+                  Type 'string' is not assignable to type '"password" | "confirmPassword" | "title" | "role" | "email" | "firstName" | "lastName" | "departmentId" | "studentNumber" | "employeeNumber" | "acceptTerms" | ("password" | ... 9 more ... | "acceptTerms")[] | undefined'.
+src/pages/auth/RegisterPage.tsx(277,12): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/auth/RegisterPage.tsx(282,15): error TS2322: Type 'UseFormRegister<RegisterForm>' is not assignable to type 'UseFormRegister<FieldValues>'.
+  Types of parameters 'options' and 'options' are incompatible.
+    Type 'RegisterOptions<FieldValues, any> | undefined' is not assignable to type 'RegisterOptions<RegisterForm, any> | undefined'.
+      Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'RegisterOptions<RegisterForm, any> | undefined'.
+        Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type '(Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }> & { ...; }) | (Partial<...> & { ...; }) | (Partial<...> & { ...; })'.
+          Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }> & { ...; }'.
+            Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }>'.
+              Types of property 'deps' are incompatible.
+                Type 'string | string[] | undefined' is not assignable to type '"password" | "confirmPassword" | "title" | "role" | "email" | "firstName" | "lastName" | "departmentId" | "studentNumber" | "employeeNumber" | "acceptTerms" | ("password" | ... 9 more ... | "acceptTerms")[] | undefined'.
+                  Type 'string' is not assignable to type '"password" | "confirmPassword" | "title" | "role" | "email" | "firstName" | "lastName" | "departmentId" | "studentNumber" | "employeeNumber" | "acceptTerms" | ("password" | ... 9 more ... | "acceptTerms")[] | undefined'.
+src/pages/auth/RegisterPage.tsx(291,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/auth/RegisterPage.tsx(296,17): error TS2322: Type 'UseFormRegister<RegisterForm>' is not assignable to type 'UseFormRegister<FieldValues>'.
+  Types of parameters 'options' and 'options' are incompatible.
+    Type 'RegisterOptions<FieldValues, any> | undefined' is not assignable to type 'RegisterOptions<RegisterForm, any> | undefined'.
+      Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'RegisterOptions<RegisterForm, any> | undefined'.
+        Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type '(Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }> & { ...; }) | (Partial<...> & { ...; }) | (Partial<...> & { ...; })'.
+          Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }> & { ...; }'.
+            Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }>'.
+              Types of property 'deps' are incompatible.
+                Type 'string | string[] | undefined' is not assignable to type '"password" | "confirmPassword" | "title" | "role" | "email" | "firstName" | "lastName" | "departmentId" | "studentNumber" | "employeeNumber" | "acceptTerms" | ("password" | ... 9 more ... | "acceptTerms")[] | undefined'.
+                  Type 'string' is not assignable to type '"password" | "confirmPassword" | "title" | "role" | "email" | "firstName" | "lastName" | "departmentId" | "studentNumber" | "employeeNumber" | "acceptTerms" | ("password" | ... 9 more ... | "acceptTerms")[] | undefined'.
+src/pages/auth/RegisterPage.tsx(313,13): error TS2322: Type 'UseFormRegister<RegisterForm>' is not assignable to type 'UseFormRegister<FieldValues>'.
+  Types of parameters 'options' and 'options' are incompatible.
+    Type 'RegisterOptions<FieldValues, any> | undefined' is not assignable to type 'RegisterOptions<RegisterForm, any> | undefined'.
+      Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'RegisterOptions<RegisterForm, any> | undefined'.
+        Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type '(Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }> & { ...; }) | (Partial<...> & { ...; }) | (Partial<...> & { ...; })'.
+          Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }> & { ...; }'.
+            Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 10 more ... | ("password" | ... 9 more ... | "acceptTerms")[]; }>'.
+              Types of property 'deps' are incompatible.
+                Type 'string | string[] | undefined' is not assignable to type '"password" | "confirmPassword" | "title" | "role" | "email" | "firstName" | "lastName" | "departmentId" | "studentNumber" | "employeeNumber" | "acceptTerms" | ("password" | ... 9 more ... | "acceptTerms")[] | undefined'.
+                  Type 'string' is not assignable to type '"password" | "confirmPassword" | "title" | "role" | "email" | "firstName" | "lastName" | "departmentId" | "studentNumber" | "employeeNumber" | "acceptTerms" | ("password" | ... 9 more ... | "acceptTerms")[] | undefined'.
+src/pages/auth/ResetPasswordPage.tsx(62,11): error TS2322: Type 'UseFormRegister<ResetForm>' is not assignable to type 'UseFormRegister<FieldValues>'.
+  Types of parameters 'options' and 'options' are incompatible.
+    Type 'RegisterOptions<FieldValues, any> | undefined' is not assignable to type 'RegisterOptions<ResetForm, any> | undefined'.
+      Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'RegisterOptions<ResetForm, any> | undefined'.
+        Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type '(Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 1 more ... | ("password" | "confirmPassword")[]; }> & { ...; }) | (Partial<...> & { ...; }) | (Partial<...> & { ...; })'.
+          Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 1 more ... | ("password" | "confirmPassword")[]; }> & { ...; }'.
+            Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 1 more ... | ("password" | "confirmPassword")[]; }>'.
+              Types of property 'deps' are incompatible.
+                Type 'string | string[] | undefined' is not assignable to type '"password" | "confirmPassword" | ("password" | "confirmPassword")[] | undefined'.
+                  Type 'string' is not assignable to type '"password" | "confirmPassword" | ("password" | "confirmPassword")[] | undefined'.
+src/pages/auth/ResetPasswordPage.tsx(69,11): error TS2322: Type 'UseFormRegister<ResetForm>' is not assignable to type 'UseFormRegister<FieldValues>'.
+  Types of parameters 'options' and 'options' are incompatible.
+    Type 'RegisterOptions<FieldValues, any> | undefined' is not assignable to type 'RegisterOptions<ResetForm, any> | undefined'.
+      Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'RegisterOptions<ResetForm, any> | undefined'.
+        Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type '(Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 1 more ... | ("password" | "confirmPassword")[]; }> & { ...; }) | (Partial<...> & { ...; }) | (Partial<...> & { ...; })'.
+          Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 1 more ... | ("password" | "confirmPassword")[]; }> & { ...; }'.
+            Type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: string | string[]; }> & { ...; }' is not assignable to type 'Partial<{ required: string | ValidationRule<boolean>; min: ValidationRule<string | number>; max: ValidationRule<string | number>; ... 9 more ...; deps: "password" | ... 1 more ... | ("password" | "confirmPassword")[]; }>'.
+              Types of property 'deps' are incompatible.
+                Type 'string | string[] | undefined' is not assignable to type '"password" | "confirmPassword" | ("password" | "confirmPassword")[] | undefined'.
+                  Type 'string' is not assignable to type '"password" | "confirmPassword" | ("password" | "confirmPassword")[] | undefined'.
+src/pages/courses/CourseDetailPage.tsx(117,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element[]; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element[]; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/courses/CourseDetailPage.tsx(123,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element[]; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element[]; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/courses/CourseDetailPage.tsx(131,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element[]; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element[]; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/courses/CourseDetailPage.tsx(149,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element[]; item: true; xs: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element[]; item: true; xs: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/courses/CourseFormPage.tsx(154,47): error TS2345: Argument of type 'Pick<Course, "code" | "id" | "name">[]' is not assignable to parameter of type 'Course[]'.
+  Type 'Pick<Course, "code" | "id" | "name">' is missing the following properties from type 'Course': credits, ects, department_id
+src/pages/courses/CourseListPage.tsx(161,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/courses/CourseListPage.tsx(171,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/courses/CourseListPage.tsx(178,19): error TS2322: Type '(event: React.ChangeEvent<{ value: unknown; }>) => void' is not assignable to type '(event: ChangeEvent<Omit<HTMLInputElement, "value"> & { value: string; }> | (Event & { target: { value: string; name: string; }; }), child: ReactNode) => void'.
+  Types of parameters 'event' and 'event' are incompatible.
+    Type 'ChangeEvent<Omit<HTMLInputElement, "value"> & { value: string; }> | (Event & { target: { value: string; name: string; }; })' is not assignable to type 'ChangeEvent<{ value: unknown; }>'.
+      Type 'Event & { target: { value: string; name: string; }; }' is missing the following properties from type 'ChangeEvent<{ value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/pages/courses/CourseListPage.tsx(189,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/courses/CourseListPage.tsx(196,19): error TS2322: Type '(event: React.ChangeEvent<{ value: unknown; }>) => void' is not assignable to type '(event: ChangeEvent<Omit<HTMLInputElement, "value"> & { value: "code"; }> | (Event & { target: { value: "code"; name: string; }; }) | ChangeEvent<Omit<...> & { ...; }> | ... 4 more ... | (Event & { ...; }), child: ReactNode) => void'.
+  Types of parameters 'event' and 'event' are incompatible.
+    Type 'ChangeEvent<Omit<HTMLInputElement, "value"> & { value: "code"; }> | (Event & { target: { value: "code"; name: string; }; }) | ChangeEvent<Omit<HTMLInputElement, "value"> & { ...; }> | ... 4 more ... | (Event & { ...; })' is not assignable to type 'ChangeEvent<{ value: unknown; }>'.
+      Type 'Event & { target: { value: "code"; name: string; }; }' is missing the following properties from type 'ChangeEvent<{ value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/pages/courses/CourseListPage.tsx(205,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/courses/CourseListPage.tsx(212,19): error TS2322: Type '(event: React.ChangeEvent<{ value: unknown; }>) => void' is not assignable to type '(event: ChangeEvent<Omit<HTMLInputElement, "value"> & { value: "desc"; }> | (Event & { target: { value: "desc"; name: string; }; }) | ChangeEvent<Omit<...> & { ...; }> | ... 4 more ... | (Event & { ...; }), child: ReactNode) => void'.
+  Types of parameters 'event' and 'event' are incompatible.
+    Type 'ChangeEvent<Omit<HTMLInputElement, "value"> & { value: "desc"; }> | (Event & { target: { value: "desc"; name: string; }; }) | ChangeEvent<Omit<HTMLInputElement, "value"> & { ...; }> | ... 4 more ... | (Event & { ...; })' is not assignable to type 'ChangeEvent<{ value: unknown; }>'.
+      Type 'Event & { target: { value: "desc"; name: string; }; }' is missing the following properties from type 'ChangeEvent<{ value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/pages/courses/CourseListPage.tsx(219,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/dashboard/DashboardPage.tsx(763,22): error TS7053: Element implicitly has an 'any' type because expression of type 'UserRole | ""' can't be used to index type 'Record<AppRole, string>'.
+  Property '' does not exist on type 'Record<AppRole, string>'.
+src/pages/enrollments/FacultySectionStudentsPage.tsx(177,35): error TS2339: Property 'data' does not exist on type 'UserListResult'.
+src/pages/grades/FacultyGradeEntryPage.tsx(179,50): error TS2339: Property 'label' does not exist on type 'Section'.
+src/pages/grades/FacultyGradeEntryPage.tsx(205,50): error TS2339: Property 'label' does not exist on type 'SectionStudent'.
+src/pages/grades/TranscriptPage.tsx(37,20): error TS2352: Conversion of type 'ArrayBuffer' to type 'Blob' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type 'ArrayBuffer' is missing the following properties from type 'Blob': size, type, arrayBuffer, bytes, and 2 more.
+src/pages/profile/ProfilePage.tsx(75,5): error TS2322: Type 'Resolver<{ firstName: string | undefined; lastName: string | undefined; phone: string | null | undefined; }, any, { firstName?: string | undefined; lastName?: string | undefined; phone?: string | ... 1 more ... | undefined; }>' is not assignable to type 'Resolver<ProfileForm, any, ProfileForm>'.
+  Types of parameters 'values' and 'values' are incompatible.
+    Type 'ProfileForm' is not assignable to type '{ firstName: string | undefined; lastName: string | undefined; phone: string | null | undefined; }'.
+      Property 'phone' is optional in type 'ProfileForm' but required in type '{ firstName: string | undefined; lastName: string | undefined; phone: string | null | undefined; }'.
+src/pages/profile/ProfilePage.tsx(196,15): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & AvatarOwnProps & AvatarSlotsAndSlotProps & CommonProps & Omit<...>): Element | null', gave the following error.
+    Type 'string | null | undefined' is not assignable to type 'string | undefined'.
+      Type 'null' is not assignable to type 'string | undefined'.
+  Overload 2 of 2, '(props: DefaultComponentProps<AvatarTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type 'string | null | undefined' is not assignable to type 'string | undefined'.
+      Type 'null' is not assignable to type 'string | undefined'.
+src/pages/profile/ProfilePage.tsx(252,56): error TS2345: Argument of type 'SubmitHandler<ProfileForm>' is not assignable to parameter of type 'SubmitHandler<TFieldValues>'.
+  Type 'TFieldValues' is not assignable to type 'ProfileForm'.
+    Type 'FieldValues' is missing the following properties from type 'ProfileForm': firstName, lastName
+src/pages/profile/ProfilePage.tsx(254,16): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/profile/ProfilePage.tsx(263,16): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/profile/ProfilePage.tsx(272,16): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/profile/ProfilePage.tsx(295,15): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & AvatarOwnProps & AvatarSlotsAndSlotProps & CommonProps & Omit<...>): Element | null', gave the following error.
+    Type 'string | null | undefined' is not assignable to type 'string | undefined'.
+      Type 'null' is not assignable to type 'string | undefined'.
+  Overload 2 of 2, '(props: DefaultComponentProps<AvatarTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type 'string | null | undefined' is not assignable to type 'string | undefined'.
+      Type 'null' is not assignable to type 'string | undefined'.
+src/pages/profile/ProfilePage.tsx(318,16): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/profile/ProfilePage.tsx(328,16): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/profile/ProfilePage.tsx(338,16): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/scheduling/MySchedulePage.tsx(93,20): error TS2352: Conversion of type 'ArrayBuffer' to type 'Blob' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type 'ArrayBuffer' is missing the following properties from type 'Blob': size, type, arrayBuffer, bytes, and 2 more.
+src/pages/sections/SectionDetailPage.tsx(98,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element[]; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element[]; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/sections/SectionDetailPage.tsx(104,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element[]; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element[]; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/sections/SectionDetailPage.tsx(112,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element[]; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element[]; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/sections/SectionDetailPage.tsx(122,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element[]; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element[]; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/sections/SectionFormPage.tsx(128,5): error TS2322: Type 'Resolver<{ course_id: string; section_number: string; semester: NonNullable<"fall" | "spring" | "summer" | undefined>; year: number; instructor_id: string; capacity: number; classroom_id: string | ... 1 more ... | undefined; schedule_json: { ...; }[] | undefined; }, any, { ...; }>' is not assignable to type 'Resolver<FormValues, any, FormValues>'.
+  Types of parameters 'values' and 'values' are incompatible.
+    Type 'FormValues' is not assignable to type '{ course_id: string; section_number: string; semester: NonNullable<"fall" | "spring" | "summer" | undefined>; year: number; instructor_id: string; capacity: number; classroom_id: string | ... 1 more ... | undefined; schedule_json: { ...; }[] | undefined; }'.
+      Property 'classroom_id' is optional in type 'FormValues' but required in type '{ course_id: string; section_number: string; semester: NonNullable<"fall" | "spring" | "summer" | undefined>; year: number; instructor_id: string; capacity: number; classroom_id: string | ... 1 more ... | undefined; schedule_json: { ...; }[] | undefined; }'.
+src/pages/sections/SectionFormPage.tsx(286,40): error TS2345: Argument of type 'SubmitHandler<FormValues>' is not assignable to parameter of type 'SubmitHandler<TFieldValues>'.
+  Type 'TFieldValues' is not assignable to type 'FormValues'.
+    Type 'FieldValues' is missing the following properties from type 'FormValues': course_id, section_number, semester, year, and 3 more.
+src/pages/sections/SectionFormPage.tsx(288,16): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/sections/SectionFormPage.tsx(315,16): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/sections/SectionFormPage.tsx(325,16): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/sections/SectionFormPage.tsx(349,16): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/sections/SectionFormPage.tsx(360,16): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/sections/SectionFormPage.tsx(388,16): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/sections/SectionFormPage.tsx(399,16): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/sections/SectionFormPage.tsx(444,22): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/sections/SectionFormPage.tsx(468,22): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/sections/SectionFormPage.tsx(479,22): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/sections/SectionFormPage.tsx(490,22): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element; item: true; xs: number; md: number; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<GridTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element; item: true; xs: number; md: number; }' is not assignable to type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+      Property 'item' does not exist on type 'IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>'.
+src/pages/sections/SectionListPage.tsx(142,17): error TS2322: Type '(event: React.ChangeEvent<{ value: unknown; }>) => void' is not assignable to type '(event: ChangeEvent<Omit<HTMLInputElement, "value"> & { value: "created_at"; }> | (Event & { target: { value: "created_at"; name: string; }; }) | ... 5 more ... | (Event & { ...; }), child: ReactNode) => void'.
+  Types of parameters 'event' and 'event' are incompatible.
+    Type 'ChangeEvent<Omit<HTMLInputElement, "value"> & { value: "created_at"; }> | (Event & { target: { value: "created_at"; name: string; }; }) | ... 5 more ... | (Event & { ...; })' is not assignable to type 'ChangeEvent<{ value: unknown; }>'.
+      Type 'Event & { target: { value: "created_at"; name: string; }; }' is missing the following properties from type 'ChangeEvent<{ value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/pages/sections/SectionListPage.tsx(157,17): error TS2322: Type '(event: React.ChangeEvent<{ value: unknown; }>) => void' is not assignable to type '(event: ChangeEvent<Omit<HTMLInputElement, "value"> & { value: "desc"; }> | (Event & { target: { value: "desc"; name: string; }; }) | ChangeEvent<Omit<...> & { ...; }> | ... 4 more ... | (Event & { ...; }), child: ReactNode) => void'.
+  Types of parameters 'event' and 'event' are incompatible.
+    Type 'ChangeEvent<Omit<HTMLInputElement, "value"> & { value: "desc"; }> | (Event & { target: { value: "desc"; name: string; }; }) | ChangeEvent<Omit<HTMLInputElement, "value"> & { ...; }> | ... 4 more ... | (Event & { ...; })' is not assignable to type 'ChangeEvent<{ value: unknown; }>'.
+      Type 'Event & { target: { value: "desc"; name: string; }; }' is missing the following properties from type 'ChangeEvent<{ value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/services/apiClient.ts(22,7): error TS2322: Type '{ Authorization: string; Accept?: AxiosHeaderValue | undefined; "Content-Length"?: AxiosHeaderValue | undefined; "User-Agent"?: AxiosHeaderValue | undefined; "Content-Encoding"?: AxiosHeaderValue | undefined; 'Content-Type'?: ContentType | undefined; }' is not assignable to type 'AxiosRequestHeaders'.
+  Type '{ Authorization: string; Accept?: AxiosHeaderValue | undefined; "Content-Length"?: AxiosHeaderValue | undefined; "User-Agent"?: AxiosHeaderValue | undefined; "Content-Encoding"?: AxiosHeaderValue | undefined; 'Content-Type'?: ContentType | undefined; }' is missing the following properties from type 'AxiosHeaders': set, get, has, delete, and 24 more.
+src/utils/validationSchemas.ts(38,34): error TS2769: No overload matches this call.
+  Overload 2 of 2, '(enums: readonly (string | Reference<unknown> | undefined)[], message?: Message<{ values: any; }> | undefined): StringSchema<string | undefined, AnyObject, undefined, "">', gave the following error.
+    Type 'null' is not assignable to type 'string | Reference<unknown> | undefined'.
+src/utils/validationSchemas.ts(50,34): error TS2769: No overload matches this call.
+  Overload 2 of 2, '(enums: readonly (string | Reference<unknown> | undefined)[], message?: Message<{ values: any; }> | undefined): StringSchema<string | undefined, AnyObject, undefined, "">', gave the following error.
+    Type 'null' is not assignable to type 'string | Reference<unknown> | undefined'.
+src/utils/validationSchemas.ts(70,37): error TS2769: No overload matches this call.
+  Overload 2 of 2, '(enums: readonly (string | Reference<unknown> | undefined)[], message?: Message<{ values: any; }> | undefined): StringSchema<string | undefined, AnyObject, undefined, "">', gave the following error.
+    Type 'null' is not assignable to type 'string | Reference<unknown> | undefined'.

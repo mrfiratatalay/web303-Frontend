@@ -30,6 +30,23 @@ import StudentCheckInPage from './pages/attendance/StudentCheckInPage';
 import MyAttendancePage from './pages/attendance/MyAttendancePage';
 import ExcuseSubmitPage from './pages/attendance/ExcuseSubmitPage';
 import FacultyExcusesPage from './pages/attendance/FacultyExcusesPage';
+import WalletPage from './pages/wallet/WalletPage';
+import EventListPage from './pages/events/EventListPage';
+import EventDetailPage from './pages/events/EventDetailPage';
+import MyRegistrationsPage from './pages/events/MyRegistrationsPage';
+import EventRegistrationsPage from './pages/events/EventRegistrationsPage';
+import EventCheckInPage from './pages/events/EventCheckInPage';
+import ReservationCreatePage from './pages/reservations/ReservationCreatePage';
+import ReservationListPage from './pages/reservations/ReservationListPage';
+import MyReservationsPage from './pages/reservations/MyReservationsPage';
+import MealCafeteriasPage from './pages/meals/MealCafeteriasPage';
+import MealMenusPage from './pages/meals/MealMenusPage';
+import MealMenuDetailPage from './pages/meals/MealMenuDetailPage';
+import MealReservationsPage from './pages/meals/MealReservationsPage';
+import MealQrUsePage from './pages/meals/MealQrUsePage';
+import MySchedulePage from './pages/scheduling/MySchedulePage';
+import ScheduleDetailPage from './pages/scheduling/ScheduleDetailPage';
+import GenerateSchedulePage from './pages/scheduling/GenerateSchedulePage';
 
 function App() {
   return (
@@ -203,6 +220,83 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={['faculty', 'admin']}>
               <FacultyExcusesPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path="/wallet" element={<WalletPage />} />
+
+        <Route path="/events" element={<EventListPage />} />
+        <Route path="/events/checkin"
+          element={
+            <ProtectedRoute allowedRoles={['faculty', 'admin']}>
+              <EventCheckInPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/events/my-registrations" element={<MyRegistrationsPage />} />
+        <Route
+          path="/events/:id/registrations"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <EventRegistrationsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/events/:id" element={<EventDetailPage />} />
+
+        <Route
+          path="/reservations/new"
+          element={
+            <ProtectedRoute allowedRoles={['student']}>
+              <ReservationCreatePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reservations/my"
+          element={
+            <ProtectedRoute allowedRoles={['student']}>
+              <MyReservationsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/reservations"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <ReservationListPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path="/meals/cafeterias" element={<MealCafeteriasPage />} />
+        <Route path="/meals/menus" element={<MealMenusPage />} />
+        <Route path="/meals/menus/:id" element={<MealMenuDetailPage />} />
+        <Route
+          path="/meals/reservations"
+          element={
+            <ProtectedRoute allowedRoles={['student']}>
+              <MealReservationsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/meals/qr-use"
+          element={
+            <ProtectedRoute allowedRoles={['faculty', 'admin']}>
+              <MealQrUsePage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path="/scheduling/my" element={<MySchedulePage />} />
+        <Route path="/scheduling/:scheduleId" element={<ScheduleDetailPage />} />
+        <Route
+          path="/scheduling/generate"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <GenerateSchedulePage />
             </ProtectedRoute>
           }
         />

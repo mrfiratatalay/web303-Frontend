@@ -1,8 +1,12 @@
-import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 
-function LoadingSpinner({ label }) {
+interface LoadingSpinnerProps {
+  label?: string;
+}
+
+function LoadingSpinner({ label }: LoadingSpinnerProps) {
   return (
     <Box display="flex" alignItems="center" justifyContent="center" gap={1}>
       <CircularProgress size={20} />
