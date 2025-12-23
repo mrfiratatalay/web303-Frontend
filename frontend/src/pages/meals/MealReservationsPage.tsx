@@ -4,6 +4,7 @@ import {
   Button,
   Card,
   CardContent,
+  Chip,
   Stack,
   Table,
   TableBody,
@@ -16,6 +17,7 @@ import {
 import Alert from '../../components/feedback/Alert';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import Toast from '../../components/feedback/Toast';
+import QRCodeDisplay from '../../components/qrcode/QRCodeDisplay';
 import { MealReservation } from '../../types/meals';
 import { cancelMealReservation, extractData, getMyMealReservations } from '../../services/mealApi';
 import { getErrorMessage } from '../../utils/error';
@@ -99,7 +101,21 @@ function MealReservationsPage() {
                       <TableCell>{reservation.menu?.title || reservation.menu?.name || reservation.menu_id || '-'}</TableCell>
                       <TableCell>{reservation.menu?.date || reservation.reserved_at || '-'}</TableCell>
                       <TableCell>{reservation.status || '-'}</TableCell>
-                      <TableCell>{reservation.qr_code || '-'}</TableCell>
+                      <TableCell>
+                        {reservation.qr_code && reservation.status === 'reserved' ? (
+                          <QRCodeDisplay
+                            value={reservation.qr_code}
+                            size={80}
+                            title={reservation.menu?.title || 'Yemek Rezervasyonu'}
+                          />
+                        ) : (
+                          <Chip
+                            label={reservation.status === 'used' ? 'Kullanıldı' : 'QR Yok'}
+                            size="small"
+                            color={reservation.status === 'used' ? 'success' : 'default'}
+                          />
+                        )}
+                      </TableCell>
                       <TableCell align="right">
                         <Button
                           size="small"
