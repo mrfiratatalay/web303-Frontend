@@ -19,6 +19,28 @@ import { ScheduleEntry } from '../../types/scheduling';
 import { downloadMyScheduleIcal, extractData, getMySchedule } from '../../services/schedulingApi';
 import { getErrorMessage } from '../../utils/error';
 
+const dayNameTurkish: Record<string, string> = {
+  Monday: 'Pazartesi',
+  Tuesday: 'Salı',
+  Wednesday: 'Çarşamba',
+  Thursday: 'Perşembe',
+  Friday: 'Cuma',
+  Saturday: 'Cumartesi',
+  Sunday: 'Pazar',
+  Pazartesi: 'Pazartesi',
+  Salı: 'Salı',
+  Çarşamba: 'Çarşamba',
+  Perşembe: 'Perşembe',
+  Cuma: 'Cuma',
+  Cumartesi: 'Cumartesi',
+  Pazar: 'Pazar',
+};
+
+const formatDay = (day: string | undefined | null): string => {
+  if (!day) return '-';
+  return dayNameTurkish[day] || day;
+};
+
 const normalizeEntries = (raw: any): ScheduleEntry[] => {
   if (!raw) return [];
   if (Array.isArray(raw)) {
@@ -42,7 +64,7 @@ const normalizeEntries = (raw: any): ScheduleEntry[] => {
 
     return raw.map((entry) => ({
       id: entry.id,
-      day: entry.day,
+      day: entry.day_name || entry.day,
       start_time: entry.start_time || entry.startTime,
       end_time: entry.end_time || entry.endTime,
       course_code: entry.course_code || entry.courseCode || entry.course?.code,
@@ -71,17 +93,17 @@ function MySchedulePage() {
     const load = async () => {
       setLoading(true);
       setError('');
-    try {
-      const response = await getMySchedule();
-      const data = extractData<any>(response);
-      setEntries(normalizeEntries(data));
-    } catch (err) {
-      setError(getErrorMessage(err, 'Program yuklenemedi.'));
-      setEntries([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+      try {
+        const response = await getMySchedule();
+        const data = extractData<any>(response);
+        setEntries(normalizeEntries(data));
+      } catch (err) {
+        setError(getErrorMessage(err, 'Program yuklenemedi.'));
+        setEntries([]);
+      } finally {
+        setLoading(false);
+      }
+    };
     load();
   }, []);
 
@@ -150,7 +172,7 @@ function MySchedulePage() {
                     <TableRow key={item.id || idx}>
                       <TableCell>{item.course_code || '-'}</TableCell>
                       <TableCell>{item.section_number || '-'}</TableCell>
-                      <TableCell>{item.day || '-'}</TableCell>
+                      <TableCell>{formatDay(item.day)}</TableCell>
                       <TableCell>
                         {item.start_time || '-'} {item.end_time ? `- ${item.end_time}` : ''}
                       </TableCell>

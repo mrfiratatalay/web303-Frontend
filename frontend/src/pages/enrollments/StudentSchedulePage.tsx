@@ -18,6 +18,21 @@ import { ScheduleEntry } from '../../types/academics';
 import { extractData, getMySchedule } from '../../services/enrollmentApi';
 import { getErrorMessage } from '../../utils/error';
 
+const dayNameTurkish: Record<string, string> = {
+  Monday: 'Pazartesi',
+  Tuesday: 'Salı',
+  Wednesday: 'Çarşamba',
+  Thursday: 'Perşembe',
+  Friday: 'Cuma',
+  Saturday: 'Cumartesi',
+  Sunday: 'Pazar',
+};
+
+const formatDay = (day: string | undefined | null): string => {
+  if (!day) return '-';
+  return dayNameTurkish[day] || day;
+};
+
 function StudentSchedulePage() {
   const [schedule, setSchedule] = useState<ScheduleEntry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -90,7 +105,7 @@ function StudentSchedulePage() {
                     <TableRow key={idx}>
                       <TableCell>{item.courseCode}</TableCell>
                       <TableCell>{item.sectionNumber}</TableCell>
-                      <TableCell>{item.day}</TableCell>
+                      <TableCell>{formatDay(item.day)}</TableCell>
                       <TableCell>
                         {item.startTime} - {item.endTime}
                       </TableCell>
