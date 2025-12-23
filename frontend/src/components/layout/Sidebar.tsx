@@ -173,7 +173,12 @@ export const navSections: Array<{ title: string; items: NavItem[] }> = [
         roles: ['faculty', 'admin'],
         icon: <QrCodeScannerOutlinedIcon fontSize="small" />,
       },
-      { to: '/scheduling/my', label: strings.sidebar.items.scheduling, icon: <CalendarMonthOutlinedIcon fontSize="small" /> },
+      {
+        to: '/scheduling/my',
+        label: strings.sidebar.items.scheduling,
+        roles: ['faculty', 'admin'],
+        icon: <CalendarMonthOutlinedIcon fontSize="small" />,
+      },
       {
         to: '/scheduling/generate',
         label: strings.sidebar.items.schedulingGenerate,
