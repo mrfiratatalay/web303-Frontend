@@ -7,6 +7,17 @@ const unwrap = <T>(response: AxiosResponse<{ data: T }> | { data?: T } | T): T =
   (response as AxiosResponse<T>)?.data ??
   (response as T);
 
+export type Classroom = {
+  id: string;
+  building: string;
+  room_number: string;
+  capacity?: number;
+  has_projector?: boolean;
+  has_ac?: boolean;
+};
+
+export const getClassrooms = () => apiClient.get<Classroom[]>('/classrooms');
+
 export const getReservations = (params?: {
   status?: string;
   classroom_id?: string;

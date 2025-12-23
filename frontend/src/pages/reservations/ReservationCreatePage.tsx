@@ -1,9 +1,13 @@
-﻿import { FormEvent, useState } from 'react';
+﻿import { FormEvent, useEffect, useState } from 'react';
 import {
   Box,
   Button,
   Card,
   CardContent,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
   Stack,
   TextField,
   Typography,
@@ -11,11 +15,13 @@ import {
 import Alert from '../../components/feedback/Alert';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import Toast from '../../components/feedback/Toast';
-import { createReservation, extractData } from '../../services/reservationApi';
+import { createReservation, extractData, getClassrooms, Classroom } from '../../services/reservationApi';
 import { Reservation } from '../../types/reservations';
 import { getErrorMessage } from '../../utils/error';
 
 function ReservationCreatePage() {
+  const [classrooms, setClassrooms] = useState<Classroom[]>([]);
+  const [loadingClassrooms, setLoadingClassrooms] = useState(true);
   const [classroomId, setClassroomId] = useState('');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
@@ -28,10 +34,25 @@ function ReservationCreatePage() {
     type: 'success' as 'success' | 'error' | 'info' | 'warning',
   });
 
+  useEffect(() => {
+    const loadClassrooms = async () => {
+      try {
+        const response = await getClassrooms();
+        const data = extractData<Classroom[]>(response);
+        setClassrooms(Array.isArray(data) ? data : []);
+      } catch (err) {
+        setError(getErrorMessage(err, 'Derslikler yuklenemedi.'));
+      } finally {
+        setLoadingClassrooms(false);
+      }
+    };
+    loadClassrooms();
+  }, []);
+
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    if (!classroomId.trim()) {
-      setError('Derslik ID gerekli.');
+    if (!classroomId) {
+      setError('Derslik secimi gerekli.');
       return;
     }
     if (!startTime || !endTime) {
@@ -47,14 +68,14 @@ function ReservationCreatePage() {
     setError('');
     try {
       const response = await createReservation({
-        classroom_id: classroomId.trim(),
+        classroom_id: classroomId,
         start_time: new Date(startTime).toISOString(),
         end_time: new Date(endTime).toISOString(),
         purpose: purpose.trim() || undefined,
       });
       const data = extractData<Reservation>(response);
       if (data?.id) {
-        setToast({ open: true, type: 'success', message: 'Rezervasyon gonderildi.' });
+        setToast({ open: true, type: 'success', message: 'Rezervasyon talebi gonderildi. Admin onayi bekleniyor.' });
       } else {
         setToast({ open: true, type: 'success', message: 'Rezervasyon olusturuldu.' });
       }
@@ -76,7 +97,7 @@ function ReservationCreatePage() {
   return (
     <Stack spacing={2}>
       <Typography variant="h5" fontWeight={800}>
-        Yeni Rezervasyon
+        Yeni Derslik Rezervasyonu
       </Typography>
 
       {error && <Alert variant="error" message={error} />}
@@ -85,12 +106,28 @@ function ReservationCreatePage() {
       <Card>
         <CardContent>
           <Stack spacing={2} component="form" onSubmit={handleSubmit}>
-            <TextField
-              label="Derslik ID"
-              value={classroomId}
-              onChange={(e) => setClassroomId(e.target.value)}
-              placeholder="Derslik ID girin"
-            />
+            <FormControl fullWidth>
+              <InputLabel id="classroom-label">Derslik</InputLabel>
+              <Select
+                labelId="classroom-label"
+                value={classroomId}
+                label="Derslik"
+                onChange={(e) => setClassroomId(e.target.value)}
+                disabled={loadingClassrooms}
+              >
+                {loadingClassrooms ? (
+                  <MenuItem disabled>Yukleniyor...</MenuItem>
+                ) : classrooms.length === 0 ? (
+                  <MenuItem disabled>Derslik bulunamadi</MenuItem>
+                ) : (
+                  classrooms.map((c) => (
+                    <MenuItem key={c.id} value={c.id}>
+                      {c.building} - {c.room_number} {c.capacity ? `(${c.capacity} kisi)` : ''}
+                    </MenuItem>
+                  ))
+                )}
+              </Select>
+            </FormControl>
             <TextField
               label="Baslangic"
               type="datetime-local"
@@ -109,13 +146,13 @@ function ReservationCreatePage() {
               label="Amac"
               value={purpose}
               onChange={(e) => setPurpose(e.target.value)}
-              placeholder="Opsiyonel aciklama"
+              placeholder="Toplanti, etkinlik, calisma vb."
               multiline
               minRows={2}
             />
             <Box>
-              <Button type="submit" variant="contained" disabled={submitting}>
-                {submitting ? <LoadingSpinner label="Gonderiliyor..." /> : 'Rezervasyon olustur'}
+              <Button type="submit" variant="contained" disabled={submitting || loadingClassrooms}>
+                {submitting ? <LoadingSpinner label="Gonderiliyor..." /> : 'Rezervasyon Talebi Olustur'}
               </Button>
             </Box>
           </Stack>
@@ -126,4 +163,3 @@ function ReservationCreatePage() {
 }
 
 export default ReservationCreatePage;
-

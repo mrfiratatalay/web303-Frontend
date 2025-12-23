@@ -42,10 +42,15 @@ const formatClassroom = (reservation: Reservation) => {
 };
 
 const formatStudent = (reservation: Reservation) => {
-  const first = reservation.student?.user?.first_name || '';
-  const last = reservation.student?.user?.last_name || '';
-  const name = `${first} ${last}`.trim();
-  return name || reservation.student?.user?.email || reservation.student_id || '-';
+  // Backend may return user or student.user
+  const user = reservation.user || reservation.student?.user;
+  if (user) {
+    const first = user.first_name || '';
+    const last = user.last_name || '';
+    const name = `${first} ${last}`.trim();
+    return name || user.email || '-';
+  }
+  return reservation.user_id || reservation.student_id || '-';
 };
 
 function ReservationListPage() {
@@ -64,8 +69,15 @@ function ReservationListPage() {
     setError('');
     try {
       const response = await getReservations();
-      const data = extractData<Reservation[] | Reservation>(response);
-      setReservations(Array.isArray(data) ? data : data ? [data] : []);
+      // Backend returns { reservations: [...], total, page, limit }
+      const rawData = extractData<{ reservations?: Reservation[] } | Reservation[]>(response);
+      let resList: Reservation[] = [];
+      if (rawData && typeof rawData === 'object' && 'reservations' in rawData && Array.isArray(rawData.reservations)) {
+        resList = rawData.reservations;
+      } else if (Array.isArray(rawData)) {
+        resList = rawData;
+      }
+      setReservations(resList);
     } catch (err) {
       setError(getErrorMessage(err, 'Rezervasyonlar yuklenemedi.'));
       setReservations([]);

@@ -4,6 +4,7 @@ export type Reservation = {
   id: string;
   classroom_id: string;
   student_id?: string;
+  user_id?: string;
   start_time: string;
   end_time: string;
   purpose?: string | null;
@@ -11,6 +12,12 @@ export type Reservation = {
   notes?: string | null;
   created_at?: string;
   updated_at?: string;
+  user?: {
+    id?: string;
+    first_name?: string;
+    last_name?: string;
+    email?: string;
+  };
   classroom?: {
     id: string;
     building?: string;
