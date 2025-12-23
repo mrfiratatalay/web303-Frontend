@@ -203,8 +203,8 @@ function WalletPage() {
                     {transactions.map((txn) => (
                       <TableRow key={txn.id}>
                         <TableCell>
-                          {txn.created_at
-                            ? new Date(txn.created_at).toLocaleDateString('tr-TR', {
+                          {(txn.created_at || txn.createdAt)
+                            ? new Date(txn.created_at || txn.createdAt || '').toLocaleDateString('tr-TR', {
                               year: 'numeric',
                               month: '2-digit',
                               day: '2-digit',

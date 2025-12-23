@@ -11,6 +11,7 @@ export type WalletTransaction = {
   description?: string | null;
   status?: string | null;
   created_at?: string;
+  createdAt?: string;
   balance_after?: number;
 };
 
