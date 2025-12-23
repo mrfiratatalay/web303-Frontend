@@ -26,7 +26,11 @@ import {
 import { WalletBalance, WalletTransaction } from '../../types/wallet';
 import { getErrorMessage } from '../../utils/error';
 
-const formatMoney = (value?: number) => (value === undefined || value === null ? '-' : value.toFixed(2));
+const formatMoney = (value?: number | string | null) => {
+  if (value === undefined || value === null) return '-';
+  const num = typeof value === 'string' ? parseFloat(value) : value;
+  return isNaN(num) ? '-' : num.toFixed(2);
+};
 
 function WalletPage() {
   const [balance, setBalance] = useState<WalletBalance | null>(null);
