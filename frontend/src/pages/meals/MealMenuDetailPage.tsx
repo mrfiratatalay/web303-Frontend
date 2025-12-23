@@ -112,9 +112,9 @@ function MealMenuDetailPage() {
           <Typography variant="subtitle1" fontWeight={700} mb={1}>
             Menu icerigi
           </Typography>
-          {menu.items?.length ? (
+          {(menu.items_json?.length || menu.items?.length) ? (
             <Stack spacing={1}>
-              {menu.items.map((item, idx) => (
+              {(menu.items_json || menu.items || []).map((item, idx) => (
                 <Stack key={item.id || idx} direction="row" justifyContent="space-between">
                   <Stack spacing={0.2}>
                     <Typography fontWeight={600}>{item.name}</Typography>
@@ -125,7 +125,7 @@ function MealMenuDetailPage() {
                     )}
                   </Stack>
                   <Typography color="text.secondary">
-                    {item.calories != null ? `${item.calories} cal` : '-'}
+                    {item.calories != null ? `${item.calories} cal` : ''}
                   </Typography>
                 </Stack>
               ))}
