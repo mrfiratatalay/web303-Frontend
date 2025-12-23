@@ -176,7 +176,6 @@ export const navSections: Array<{ title: string; items: NavItem[] }> = [
       {
         to: '/scheduling/my',
         label: strings.sidebar.items.scheduling,
-        roles: ['faculty', 'admin'],
         icon: <CalendarMonthOutlinedIcon fontSize="small" />,
       },
       {
