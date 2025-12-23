@@ -5,6 +5,7 @@ export type Reservation = {
   classroom_id: string;
   student_id?: string;
   user_id?: string;
+  date?: string;
   start_time: string;
   end_time: string;
   purpose?: string | null;

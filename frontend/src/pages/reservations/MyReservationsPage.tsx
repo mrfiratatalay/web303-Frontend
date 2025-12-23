@@ -18,11 +18,22 @@ import { extractData, getMyReservations } from '../../services/reservationApi';
 import { Reservation } from '../../types/reservations';
 import { getErrorMessage } from '../../utils/error';
 
-const formatDateRange = (start?: string, end?: string) => {
-  if (!start || !end) {
-    return '-';
-  }
-  return `${new Date(start).toLocaleString('tr-TR')} - ${new Date(end).toLocaleString('tr-TR')}`;
+const formatDateRange = (reservation: Reservation) => {
+  const { date, start_time, end_time } = reservation;
+  if (!date && !start_time) return '-';
+  // date: 2024-12-24, start_time: 14:43, end_time: 15:43
+  const dateStr = date ? new Date(date).toLocaleDateString('tr-TR') : '-';
+  const startStr = start_time || '-';
+  const endStr = end_time || '-';
+  return `${dateStr} ${startStr} - ${endStr}`;
+};
+
+const statusTurkish: Record<string, string> = {
+  pending: 'Beklemede',
+  approved: 'Onaylandı',
+  rejected: 'Reddedildi',
+  cancelled: 'İptal Edildi',
+  completed: 'Tamamlandı',
 };
 
 const formatClassroom = (reservation: Reservation) => {
@@ -93,9 +104,9 @@ function MyReservationsPage() {
                   {reservations.map((reservation) => (
                     <TableRow key={reservation.id}>
                       <TableCell>{formatClassroom(reservation)}</TableCell>
-                      <TableCell>{formatDateRange(reservation.start_time, reservation.end_time)}</TableCell>
-                      <TableCell>{reservation.status}</TableCell>
-                      <TableCell>{reservation.notes || '-'}</TableCell>
+                      <TableCell>{formatDateRange(reservation)}</TableCell>
+                      <TableCell>{statusTurkish[reservation.status] || reservation.status}</TableCell>
+                      <TableCell>{reservation.purpose || '-'}</TableCell>
                     </TableRow>
                   ))}
                   {!reservations.length && (
