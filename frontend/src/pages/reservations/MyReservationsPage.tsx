@@ -45,8 +45,15 @@ function MyReservationsPage() {
       setError('');
       try {
         const response = await getMyReservations();
-        const data = extractData<Reservation[] | Reservation>(response);
-        setReservations(Array.isArray(data) ? data : data ? [data] : []);
+        // Backend returns { reservations: [...], total, page, limit }
+        const rawData = extractData<{ reservations?: Reservation[] } | Reservation[]>(response);
+        let resList: Reservation[] = [];
+        if (rawData && typeof rawData === 'object' && 'reservations' in rawData && Array.isArray(rawData.reservations)) {
+          resList = rawData.reservations;
+        } else if (Array.isArray(rawData)) {
+          resList = rawData;
+        }
+        setReservations(resList);
       } catch (err) {
         setError(getErrorMessage(err, 'Rezervasyonlar yuklenemedi.'));
         setReservations([]);
