@@ -60,8 +60,16 @@ function WalletPage() {
     setLoadingTransactions(true);
     try {
       const response = await getWalletTransactions();
-      const data = extractData<WalletTransaction[] | WalletTransaction>(response);
-      setTransactions(Array.isArray(data) ? data : data ? [data] : []);
+      // Backend returns { data: { transactions: [...], total, page, limit} }
+      // or { success: true, transactions: [...] }
+      const rawData = extractData<{ transactions?: WalletTransaction[] } | WalletTransaction[]>(response);
+      let txns: WalletTransaction[] = [];
+      if (rawData && typeof rawData === 'object' && 'transactions' in rawData && Array.isArray(rawData.transactions)) {
+        txns = rawData.transactions;
+      } else if (Array.isArray(rawData)) {
+        txns = rawData;
+      }
+      setTransactions(txns);
     } catch (err) {
       setError(getErrorMessage(err, 'Cuzdan islemleri yuklenemedi.'));
       setTransactions([]);
