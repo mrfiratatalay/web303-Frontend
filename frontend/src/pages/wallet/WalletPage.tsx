@@ -203,9 +203,19 @@ function WalletPage() {
                     {transactions.map((txn) => (
                       <TableRow key={txn.id}>
                         <TableCell>
-                          {txn.created_at ? new Date(txn.created_at).toLocaleString('tr-TR') : '-'}
+                          {txn.created_at
+                            ? new Date(txn.created_at).toLocaleDateString('tr-TR', {
+                              year: 'numeric',
+                              month: '2-digit',
+                              day: '2-digit',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })
+                            : '-'}
                         </TableCell>
-                        <TableCell>{txn.type || '-'}</TableCell>
+                        <TableCell>
+                          {txn.type === 'credit' ? 'Yükleme' : txn.type === 'debit' ? 'Harcama' : txn.type || '-'}
+                        </TableCell>
                         <TableCell>{txn.description || '-'}</TableCell>
                         <TableCell align="right">{formatMoney(txn.amount)}</TableCell>
                         <TableCell align="right">{formatMoney(txn.balance_after)}</TableCell>
