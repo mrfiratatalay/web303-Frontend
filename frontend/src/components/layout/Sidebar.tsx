@@ -164,7 +164,12 @@ export const navSections: Array<{ title: string; items: NavItem[] }> = [
         roles: ['faculty', 'admin'],
         icon: <QrCodeScannerOutlinedIcon fontSize="small" />,
       },
-      { to: '/wallet', label: strings.sidebar.items.wallet, icon: <AccountBalanceWalletOutlinedIcon fontSize="small" /> },
+      {
+        to: '/wallet',
+        label: strings.sidebar.items.wallet,
+        roles: ['student', 'faculty'],
+        icon: <AccountBalanceWalletOutlinedIcon fontSize="small" />
+      },
       { to: '/events', label: strings.sidebar.items.events, icon: <EventAvailableOutlinedIcon fontSize="small" /> },
       { to: '/events/my-registrations', label: strings.sidebar.items.eventRegistrations, icon: <EventNoteOutlinedIcon fontSize="small" /> },
       {

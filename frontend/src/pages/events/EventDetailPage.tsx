@@ -43,15 +43,15 @@ function EventDetailPage() {
     if (!id) return;
     setLoading(true);
     setError('');
-      try {
-        const response = await getEventById(id);
-        const data = extractData<Event>(response);
-        setEvent(data);
-      } catch (err) {
-        setError(getErrorMessage(err, 'Etkinlik yuklenemedi.'));
-      } finally {
-        setLoading(false);
-      }
+    try {
+      const response = await getEventById(id);
+      const data = extractData<Event>(response);
+      setEvent(data);
+    } catch (err) {
+      setError(getErrorMessage(err, 'Etkinlik yuklenemedi.'));
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -208,8 +208,15 @@ function EventDetailPage() {
                   {actionLoading ? 'Iptal ediliyor...' : 'Kaydi iptal et'}
                 </Button>
               ) : (
-                <Button variant="contained" onClick={handleRegister} disabled={actionLoading}>
-                  {actionLoading ? 'Kayit yapiliyor...' : 'Kayit ol'}
+                <Button
+                  variant="contained"
+                  onClick={user?.role === 'admin' ? () => navigate(`/admin/events/${id}`) : handleRegister}
+                  disabled={actionLoading}
+                >
+                  {actionLoading
+                    ? (user?.role === 'admin' ? 'Yukleniyor...' : 'Kayit yapiliyor...')
+                    : (user?.role === 'admin' ? 'Duzenle' : 'Kayit ol')
+                  }
                 </Button>
               )}
               <Button variant="text" component={RouterLink} to="/events/my-registrations">

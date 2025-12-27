@@ -87,6 +87,14 @@ function App() {
           }
         />
         <Route
+          path="/admin/meals/menus/:id"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <MenuManagementPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/admin/events"
           element={
             <ProtectedRoute allowedRoles={['admin']}>

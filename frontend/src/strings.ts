@@ -111,7 +111,7 @@ export const strings = {
       title: 'Yeni hesap olu\u015ftur',
       subtitle: '\u00d6\u011frenci veya akademisyen olarak kay\u0131t olun',
       cta: 'Zaten hesab\u0131n\u0131z var m\u0131?',
-      success: 'Kay\u0131t ba\u015far\u0131l\u0131. L\u00fctfen e-postan\u0131z\u0131 do\u011frulama i\u00e7in kontrol edin.',
+      success: 'Kay\u0131t ba\u015far\u0131l\u0131! Email adresinize g\u00f6nderilen do\u011frulama linkine t\u0131klay\u0131n.',
       error: 'Kay\u0131t ba\u015far\u0131s\u0131z.',
       departments: {
         loadError: 'B\u00f6l\u00fcmler y\u00fcklenemedi. L\u00fctfen daha sonra tekrar deneyin.',

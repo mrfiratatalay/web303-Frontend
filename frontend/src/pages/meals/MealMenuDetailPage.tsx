@@ -12,6 +12,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Alert from '../../components/feedback/Alert';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import Toast from '../../components/feedback/Toast';
+import { useAuth } from '../../hooks/useAuth';
 import { MealMenu } from '../../types/meals';
 import { createMealReservation, extractData, getMealMenuById } from '../../services/mealApi';
 import { getErrorMessage } from '../../utils/error';
@@ -19,6 +20,7 @@ import { getErrorMessage } from '../../utils/error';
 function MealMenuDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [menu, setMenu] = useState<MealMenu | null>(null);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
@@ -137,8 +139,15 @@ function MealMenuDetailPage() {
       </Card>
 
       <Box>
-        <Button variant="contained" onClick={handleReserve} disabled={actionLoading}>
-          {actionLoading ? <LoadingSpinner label="Rezervasyon yapiliyor..." /> : 'Rezerve et'}
+        <Button
+          variant="contained"
+          onClick={user?.role === 'admin' ? () => navigate(`/admin/meals/menus/${id}`) : handleReserve}
+          disabled={actionLoading}
+        >
+          {actionLoading
+            ? <LoadingSpinner label={user?.role === 'admin' ? "Yukleniyor..." : "Rezervasyon yapiliyor..."} />
+            : (user?.role === 'admin' ? 'Duzenle' : 'Rezerve et')
+          }
         </Button>
       </Box>
 

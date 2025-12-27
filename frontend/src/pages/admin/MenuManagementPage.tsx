@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
     Box,
     Button,
@@ -32,6 +33,7 @@ import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import Toast from '../../components/feedback/Toast';
 import {
     getMealMenus,
+    getMealMenuById,
     createMealMenu,
     updateMealMenu,
     deleteMealMenu,
@@ -63,6 +65,8 @@ const defaultFormData: MenuFormData = {
 };
 
 function MenuManagementPage() {
+    const { id } = useParams();
+    const navigate = useNavigate();
     const [menus, setMenus] = useState<MealMenu[]>([]);
     const [cafeterias, setCafeterias] = useState<Cafeteria[]>([]);
     const [loading, setLoading] = useState(true);
@@ -97,6 +101,24 @@ function MenuManagementPage() {
         loadData();
     }, []);
 
+    useEffect(() => {
+        const loadMenuForEdit = async () => {
+            if (id) {
+                try {
+                    const response = await getMealMenuById(id);
+                    const menu = extractData<MealMenu>(response);
+                    if (menu) {
+                        handleOpenDialog(menu);
+                    }
+                } catch (err) {
+                    setError(getErrorMessage(err, 'Menü yüklenemedi'));
+                }
+            }
+        };
+        loadMenuForEdit();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id]);
+
     const handleOpenDialog = (menu?: MealMenu) => {
         if (menu) {
             setEditingMenu(menu);
@@ -128,6 +150,10 @@ function MenuManagementPage() {
             if (editingMenu) {
                 await updateMealMenu(editingMenu.id, formData);
                 setToast({ open: true, message: 'Menü güncellendi', type: 'success' });
+                // If we came from a direct link, redirect back to meals menu list
+                if (id) {
+                    setTimeout(() => navigate('/meals/menus'), 1000);
+                }
             } else {
                 await createMealMenu(formData);
                 setToast({ open: true, message: 'Menü oluşturuldu', type: 'success' });
