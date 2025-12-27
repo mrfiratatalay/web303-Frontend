@@ -5,6 +5,8 @@ const passwordSchema = Yup.string()
   .matches(/[A-Z]/, 'Şifre en az bir büyük harf içermelidir')
   .matches(/[a-z]/, 'Şifre en az bir küçük harf içermelidir')
   .matches(/[0-9]/, 'Şifre en az bir rakam içermelidir')
+  .matches(/[@$!%*?&._\-,]/, 'Şifre en az bir özel karakter içermelidir (@$!%*?&._-,)')
+  .matches(/^[a-zA-Z\d@$!%*?&._\-,]+$/, 'Şifre sadece harf, rakam ve izin verilen özel karakterler içerebilir')
   .required('Şifre zorunludur');
 
 export const loginSchema = Yup.object({
@@ -35,7 +37,7 @@ export const registerSchema = Yup.object({
   }),
   password: passwordSchema,
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password'), null], 'Şifreler eşleşmiyor')
+    .oneOf([Yup.ref('password')], 'Şifreler eşleşmiyor')
     .required('Şifre tekrar zorunludur'),
   acceptTerms: Yup.boolean().oneOf([true], 'Kullanım şartlarını onaylayın'),
 });
@@ -47,7 +49,7 @@ export const forgotPasswordSchema = Yup.object({
 export const resetPasswordSchema = Yup.object({
   password: passwordSchema,
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password'), null], 'Şifreler eşleşmiyor')
+    .oneOf([Yup.ref('password')], 'Şifreler eşleşmiyor')
     .required('Şifre tekrar zorunludur'),
 });
 
@@ -67,6 +69,6 @@ export const changePasswordSchema = Yup.object({
   currentPassword: Yup.string().required('Mevcut şifre zorunludur'),
   newPassword: passwordSchema,
   confirmNewPassword: Yup.string()
-    .oneOf([Yup.ref('newPassword'), null], 'Şifreler eşleşmiyor')
+    .oneOf([Yup.ref('newPassword')], 'Şifreler eşleşmiyor')
     .required('Yeni şifre tekrar zorunludur'),
 });
