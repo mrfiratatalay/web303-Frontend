@@ -6,6 +6,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import App from './App';
 import { AuthProvider } from './context/AuthContext';
 import ErrorBoundary from './components/feedback/ErrorBoundary';
+import { ToastProvider } from './hooks/useToast';
 import ConfigError from './components/feedback/ConfigError';
 import './index.css';
 import { strings } from './strings';
@@ -38,7 +39,9 @@ if (apiBaseUrlMissing) {
     <ErrorBoundary>
       <BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
         <AuthProvider>
-          <App />
+          <ToastProvider>
+            <App />
+          </ToastProvider>
         </AuthProvider>
       </BrowserRouter>
     </ErrorBoundary>,

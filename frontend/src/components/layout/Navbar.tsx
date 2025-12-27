@@ -18,6 +18,7 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import { useAuth } from '../../hooks/useAuth';
 import { strings } from '../../strings';
+import NotificationBadge from '../notifications/NotificationBadge';
 
 type NavbarProps = {
   onMenuClick?: () => void;
@@ -104,6 +105,7 @@ function Navbar({ onMenuClick }: NavbarProps) {
 
         {user ? (
           <Stack direction="row" spacing={1.25} alignItems="center">
+            <NotificationBadge />
             <Box
               onClick={handleMenuOpen}
               sx={{

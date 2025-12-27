@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 import ProtectedRoute from './components/routing/ProtectedRoute';
 import Layout from './components/layout/Layout';
 import LoginPage from './pages/auth/LoginPage';
@@ -49,6 +50,17 @@ import MealQrUsePage from './pages/meals/MealQrUsePage';
 import MySchedulePage from './pages/scheduling/MySchedulePage';
 import ScheduleDetailPage from './pages/scheduling/ScheduleDetailPage';
 import GenerateSchedulePage from './pages/scheduling/GenerateSchedulePage';
+import LoadingSkeleton from './components/common/LoadingSkeleton';
+import { Container } from '@mui/material';
+
+// Lazy load analytics and notification pages for code splitting
+const AnalyticsDashboardPage = lazy(() => import('./pages/analytics/AnalyticsDashboardPage'));
+const AcademicAnalyticsPage = lazy(() => import('./pages/analytics/AcademicAnalyticsPage'));
+const AttendanceAnalyticsPage = lazy(() => import('./pages/analytics/AttendanceAnalyticsPage'));
+const MealAnalyticsPage = lazy(() => import('./pages/analytics/MealAnalyticsPage'));
+const EventAnalyticsPage = lazy(() => import('./pages/analytics/EventAnalyticsPage'));
+const NotificationsPage = lazy(() => import('./pages/notifications/NotificationsPage'));
+const NotificationPreferencesPage = lazy(() => import('./pages/notifications/NotificationPreferencesPage'));
 
 
 function App() {
@@ -327,6 +339,52 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/analytics/dashboard"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <Suspense fallback={<Container sx={{ py: 4 }}><LoadingSkeleton variant="chart" count={2} /></Container>}>
+                <AnalyticsDashboardPage />
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/analytics/academic"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'faculty']}>
+              <AcademicAnalyticsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/analytics/attendance"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'faculty']}>
+              <AttendanceAnalyticsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/analytics/meal"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <MealAnalyticsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/analytics/event"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <EventAnalyticsPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path="/notifications" element={<NotificationsPage />} />
+        <Route path="/notifications/preferences" element={<NotificationPreferencesPage />} />
       </Route>
 
       <Route path="*" element={<NotFoundPage />} />
