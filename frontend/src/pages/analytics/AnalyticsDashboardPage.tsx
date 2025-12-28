@@ -162,7 +162,7 @@ const AnalyticsDashboardPage = () => {
                                         Son 30 Gün Ortalaması
                                     </Typography>
                                     <Typography variant="h4" fontWeight="bold">
-                                        {data.attendanceRate?.toFixed(1) ?? 0}%
+                                        {Number(data.attendanceRate ?? 0).toFixed(1)}%
                                     </Typography>
                                 </Box>
                             </Paper>

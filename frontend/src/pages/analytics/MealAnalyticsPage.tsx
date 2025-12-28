@@ -165,7 +165,9 @@ const MealAnalyticsPage = () => {
                                     Kullanım Oranı
                                 </Typography>
                                 <Typography variant="h4" fontWeight="bold" color="info.main">
-                                    {data.usageStats ? ((data.usageStats.used / (data.usageStats.used + data.usageStats.cancelled)) * 100).toFixed(1) : 0}%
+                                    {data.usageStats && (data.usageStats.used + data.usageStats.cancelled) > 0 
+                                        ? ((data.usageStats.used / (data.usageStats.used + data.usageStats.cancelled)) * 100).toFixed(1) 
+                                        : 0}%
                                 </Typography>
                             </Paper>
                         </Grid>

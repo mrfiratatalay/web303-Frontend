@@ -147,7 +147,7 @@ const EventAnalyticsPage = () => {
                                     Check-in Oranı
                                 </Typography>
                                 <Typography variant="h3" fontWeight="bold" color="info.main">
-                                    {data.checkInRate?.toFixed(1) ?? 0}%
+                                    {Number(data.checkInRate ?? 0).toFixed(1)}%
                                 </Typography>
                             </Paper>
                         </Grid>

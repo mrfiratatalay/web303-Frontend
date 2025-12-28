@@ -79,8 +79,8 @@ const AcademicAnalyticsPage = () => {
     })) || [];
 
     const passFailData = data ? [
-        { name: 'Geçen', value: data.passRate, color: '#4caf50' },
-        { name: 'Kalan', value: data.failRate, color: '#f44336' }
+        { name: 'Geçen', value: Number(data.passRate ?? 0), color: '#4caf50' },
+        { name: 'Kalan', value: Number(data.failRate ?? 0), color: '#f44336' }
     ] : [];
 
     return (
@@ -131,7 +131,7 @@ const AcademicAnalyticsPage = () => {
                                     Geçme Oranı
                                 </Typography>
                                 <Typography variant="h3" fontWeight="bold" color="success.main">
-                                    {data.passRate?.toFixed(1) ?? 0}%
+                                    {Number(data.passRate ?? 0).toFixed(1)}%
                                 </Typography>
                             </Paper>
                         </Grid>
@@ -141,7 +141,7 @@ const AcademicAnalyticsPage = () => {
                                     Kalma Oranı
                                 </Typography>
                                 <Typography variant="h3" fontWeight="bold" color="error.main">
-                                    {data.failRate?.toFixed(1) ?? 0}%
+                                    {Number(data.failRate ?? 0).toFixed(1)}%
                                 </Typography>
                             </Paper>
                         </Grid>
@@ -237,12 +237,12 @@ const AcademicAnalyticsPage = () => {
                                                 </TableCell>
                                                 <TableCell align="right">
                                                     <Chip
-                                                        label={student.gpa?.toFixed(2)}
+                                                        label={Number(student.gpa)?.toFixed(2)}
                                                         color="success"
                                                         size="small"
                                                     />
                                                 </TableCell>
-                                                <TableCell align="right">{student.cgpa?.toFixed(2)}</TableCell>
+                                                <TableCell align="right">{Number(student.cgpa)?.toFixed(2)}</TableCell>
                                             </TableRow>
                                         ))}
                                     </TableBody>
@@ -277,7 +277,7 @@ const AcademicAnalyticsPage = () => {
                                                 <TableCell>{student.user?.email}</TableCell>
                                                 <TableCell align="right">
                                                     <Chip
-                                                        label={student.gpa?.toFixed(2)}
+                                                        label={Number(student.gpa)?.toFixed(2)}
                                                         color="error"
                                                         size="small"
                                                     />
@@ -308,8 +308,8 @@ const AcademicAnalyticsPage = () => {
                                     <TableBody>
                                         {data.gpaByDepartment.map((dept) => (
                                             <TableRow key={dept.department_id}>
-                                                <TableCell>{dept.department_id}</TableCell>
-                                                <TableCell align="right">{dept.averageGpa}</TableCell>
+                                                <TableCell>{dept.departmentName ?? `Bölüm ${dept.department_id?.toString().slice(0, 8)}...`}</TableCell>
+                                                <TableCell align="right">{Number(dept.averageGpa).toFixed(2)}</TableCell>
                                                 <TableCell align="right">{dept.studentCount}</TableCell>
                                             </TableRow>
                                         ))}
