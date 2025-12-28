@@ -28,6 +28,7 @@ import Grid from '@mui/material/Grid';
 import { alpha } from '@mui/material/styles';
 import { ElementType, ReactNode, useEffect, useMemo, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import PageTransition from '../../components/common/PageTransition';
 import { useAuth } from '../../hooks/useAuth';
 import { extractDashboard, getDashboard } from '../../services/dashboardApi';
 import { strings } from '../../strings';
@@ -79,6 +80,11 @@ const cardBaseSx = {
   borderColor: 'divider',
   boxShadow: '0 16px 40px rgba(15,23,42,0.05)',
   backgroundColor: 'background.paper',
+  transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+  '&:hover': {
+    transform: 'translateY(-2px)',
+    boxShadow: '0 20px 50px rgba(15,23,42,0.1)',
+  },
 };
 
 const StatCard = ({ label, value, helper, tone = 'primary', icon, progress, trend }: StatCardProps) => {
@@ -323,6 +329,12 @@ function DashboardPage() {
               borderRadius: 2,
               border: '1px solid',
               borderColor: 'divider',
+              transition: 'all 0.2s ease',
+              '&:hover': {
+                borderColor: 'primary.light',
+                bgcolor: 'action.hover',
+                transform: 'translateX(4px)',
+              },
             }}
           >
             <ListItemAvatar sx={{ minWidth: 48 }}>
@@ -395,6 +407,12 @@ function DashboardPage() {
               borderRadius: 2,
               border: '1px solid',
               borderColor: 'divider',
+              transition: 'all 0.2s ease',
+              '&:hover': {
+                borderColor: 'primary.light',
+                bgcolor: 'action.hover',
+                transform: 'translateX(4px)',
+              },
             }}
           >
             <ListItemText
@@ -731,6 +749,7 @@ function DashboardPage() {
   );
 
   return (
+    <PageTransition>
     <Stack spacing={2.5}>
       <Paper
         elevation={0}
@@ -793,6 +812,7 @@ function DashboardPage() {
         </>
       )}
     </Stack>
+    </PageTransition>
   );
 }
 

@@ -19,6 +19,7 @@ import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import { useAuth } from '../../hooks/useAuth';
 import { strings } from '../../strings';
 import NotificationBadge from '../notifications/NotificationBadge';
+import ThemeToggle from '../common/ThemeToggle';
 
 type NavbarProps = {
   onMenuClick?: () => void;
@@ -105,6 +106,7 @@ function Navbar({ onMenuClick }: NavbarProps) {
 
         {user ? (
           <Stack direction="row" spacing={1.25} alignItems="center">
+            <ThemeToggle />
             <NotificationBadge />
             <Box
               onClick={handleMenuOpen}

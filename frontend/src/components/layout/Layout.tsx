@@ -1,6 +1,8 @@
 import Box from '@mui/material/Box';
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import Breadcrumb from '../common/Breadcrumb';
+import Footer from './Footer';
 import MobileNav from './MobileNav';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
@@ -14,7 +16,7 @@ function Layout() {
       display="flex"
       flexDirection="column"
       minHeight="100vh"
-      sx={{ bgcolor: '#f8fafc' }}
+      sx={{ bgcolor: 'background.default' }}
     >
       <Navbar onMenuClick={() => setMobileNavOpen(true)} />
       <MobileNav open={mobileNavOpen} onClose={() => setMobileNavOpen(false)} />
@@ -26,9 +28,15 @@ function Layout() {
             flexGrow: 1,
             px: { xs: 2, md: 3 },
             py: 4,
+            display: 'flex',
+            flexDirection: 'column',
           }}
         >
-          <Outlet />
+          <Box flex={1}>
+            <Breadcrumb />
+            <Outlet />
+          </Box>
+          <Footer />
         </Box>
       </Box>
     </Box>
