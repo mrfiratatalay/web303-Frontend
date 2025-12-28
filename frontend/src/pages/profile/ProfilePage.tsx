@@ -454,7 +454,14 @@ function ProfilePage() {
                   sx={{
                     borderRadius: 2,
                     p: 2,
-                    bgcolor: 'grey.50',
+                    bgcolor: (theme) =>
+                      theme.palette.mode === 'dark'
+                        ? 'rgba(59, 130, 246, 0.08)'
+                        : 'grey.50',
+                    borderColor: (theme) =>
+                      theme.palette.mode === 'dark'
+                        ? 'rgba(59, 130, 246, 0.2)'
+                        : 'divider',
                   }}
                 >
                   <InfoRow icon={<EmailIcon />} label="E-posta" value={user.email} />
