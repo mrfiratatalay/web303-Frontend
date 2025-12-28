@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
     Container,
     Typography,
@@ -11,10 +11,12 @@ import {
     ToggleButtonGroup,
     ToggleButton,
     Alert,
-    CircularProgress,
+    Skeleton,
+    Paper,
 } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
+import NotificationsOffIcon from '@mui/icons-material/NotificationsOff';
 import {
     getNotifications,
     markAsRead,
@@ -22,23 +24,23 @@ import {
     deleteNotification,
     extractData,
 } from '../../services/notificationApi';
-import { NotificationType } from '../../types/notifications';
+import { Notification, NotificationType, NotificationListQuery } from '../../types/notifications';
 import NotificationList from '../../components/notifications/NotificationList';
 
 const NotificationsPage = () => {
-    const [notifications, setNotifications] = useState<any[]>([]);
+    const [notifications, setNotifications] = useState<Notification[]>([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [typeFilter, setTypeFilter] = useState<NotificationType | ''>('');
     const [readFilter, setReadFilter] = useState<'all' | 'read' | 'unread'>('all');
 
-    const fetchNotifications = async () => {
+    const fetchNotifications = useCallback(async () => {
         setLoading(true);
         setError('');
         try {
-            const params: any = { page, limit: 20 };
+            const params: NotificationListQuery = { page, limit: 20 };
             if (typeFilter) params.type = typeFilter;
             if (readFilter !== 'all') params.isRead = readFilter === 'read';
 
@@ -47,16 +49,17 @@ const NotificationsPage = () => {
 
             setNotifications(data.notifications || []);
             setTotalPages(data.pagination?.totalPages || 1);
-        } catch (err: any) {
-            setError(err?.response?.data?.message || 'Bildirimler yüklenirken hata oluştu');
+        } catch (err: unknown) {
+            const error = err as { response?: { data?: { message?: string } } };
+            setError(error?.response?.data?.message || 'Bildirimler yüklenirken hata oluştu');
         } finally {
             setLoading(false);
         }
-    };
+    }, [page, typeFilter, readFilter]);
 
     useEffect(() => {
         fetchNotifications();
-    }, [page, typeFilter, readFilter]);
+    }, [fetchNotifications]);
 
     const handleMarkAsRead = async (id: string) => {
         try {
@@ -64,8 +67,9 @@ const NotificationsPage = () => {
             setNotifications((prev) =>
                 prev.map((n) => (n.id === id ? { ...n, isRead: true } : n))
             );
-        } catch (err: any) {
-            setError(err?.response?.data?.message || 'Bildirim işaretlenirken hata oluştu');
+        } catch (err: unknown) {
+            const error = err as { response?: { data?: { message?: string } } };
+            setError(error?.response?.data?.message || 'Bildirim işaretlenirken hata oluştu');
         }
     };
 
@@ -73,8 +77,9 @@ const NotificationsPage = () => {
         try {
             await markAllAsRead();
             setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
-        } catch (err: any) {
-            setError(err?.response?.data?.message || 'Bildirimler işaretlenirken hata oluştu');
+        } catch (err: unknown) {
+            const error = err as { response?: { data?: { message?: string } } };
+            setError(error?.response?.data?.message || 'Bildirimler işaretlenirken hata oluştu');
         }
     };
 
@@ -82,10 +87,53 @@ const NotificationsPage = () => {
         try {
             await deleteNotification(id);
             setNotifications((prev) => prev.filter((n) => n.id !== id));
-        } catch (err: any) {
-            setError(err?.response?.data?.message || 'Bildirim silinirken hata oluştu');
+        } catch (err: unknown) {
+            const error = err as { response?: { data?: { message?: string } } };
+            setError(error?.response?.data?.message || 'Bildirim silinirken hata oluştu');
         }
     };
+
+    // Skeleton loader for loading state
+    const renderSkeleton = () => (
+        <Box>
+            {[1, 2, 3, 4].map((i) => (
+                <Paper key={i} sx={{ p: 2, mb: 2 }}>
+                    <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
+                        <Skeleton variant="rounded" width={80} height={24} />
+                        <Skeleton variant="circular" width={8} height={8} />
+                    </Box>
+                    <Skeleton variant="text" width="60%" height={28} />
+                    <Skeleton variant="text" width="90%" />
+                    <Skeleton variant="text" width={120} height={16} sx={{ mt: 1 }} />
+                </Paper>
+            ))}
+        </Box>
+    );
+
+    // Empty state component
+    const renderEmptyState = () => (
+        <Paper
+            sx={{
+                p: 6,
+                textAlign: 'center',
+                backgroundColor: 'background.default',
+                border: '2px dashed',
+                borderColor: 'divider',
+            }}
+        >
+            <NotificationsOffIcon sx={{ fontSize: 64, color: 'text.disabled', mb: 2 }} />
+            <Typography variant="h6" color="text.secondary" gutterBottom>
+                Bildirim Bulunamadı
+            </Typography>
+            <Typography variant="body2" color="text.disabled">
+                {readFilter === 'unread'
+                    ? 'Okunmamış bildiriminiz bulunmuyor. Tebrikler! 🎉'
+                    : typeFilter
+                    ? `"${typeFilter}" tipinde bildirim bulunmuyor.`
+                    : 'Henüz hiç bildiriminiz yok. Yeni bildirimler burada görünecek.'}
+            </Typography>
+        </Paper>
+    );
 
     return (
         <Container maxWidth="md" sx={{ py: 4 }}>
@@ -162,11 +210,9 @@ const NotificationsPage = () => {
             </Box>
 
             {loading ? (
-                <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
-                    <CircularProgress />
-                </Box>
+                renderSkeleton()
             ) : notifications.length === 0 ? (
-                <Alert severity="info">Bildirim bulunamadı</Alert>
+                renderEmptyState()
             ) : (
                 <NotificationList
                     notifications={notifications}

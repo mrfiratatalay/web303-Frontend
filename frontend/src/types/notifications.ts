@@ -13,9 +13,10 @@ export interface Notification {
     title: string;
     message: string;
     isRead: boolean;
+    readAt?: string;
     createdAt: string;
-    updatedAt: string;
-    metadata?: Record<string, any>;
+    updatedAt?: string;
+    metadata?: Record<string, unknown>;
     actionUrl?: string;
 }
 
@@ -40,31 +41,19 @@ export interface UnreadCountResponse {
     unreadCount: number;
 }
 
+export interface NotificationPreferenceTypes {
+    academic: boolean;
+    attendance: boolean;
+    meal: boolean;
+    event: boolean;
+    payment: boolean;
+    system: boolean;
+}
+
 export interface NotificationPreferences {
-    email_preferences: {
-        academic: boolean;
-        attendance: boolean;
-        meal: boolean;
-        event: boolean;
-        payment: boolean;
-        system: boolean;
-    };
-    push_preferences: {
-        academic: boolean;
-        attendance: boolean;
-        meal: boolean;
-        event: boolean;
-        payment: boolean;
-        system: boolean;
-    };
-    sms_preferences: {
-        academic: boolean;
-        attendance: boolean;
-        meal: boolean;
-        event: boolean;
-        payment: boolean;
-        system: boolean;
-    };
+    email_preferences: NotificationPreferenceTypes;
+    push_preferences: NotificationPreferenceTypes;
+    sms_preferences: NotificationPreferenceTypes;
 }
 
 export interface NotificationPreferencesResponse {

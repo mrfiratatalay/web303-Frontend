@@ -42,6 +42,7 @@ type NavItem = {
   label: string;
   roles?: AppRole[];
   icon: JSX.Element;
+  end?: boolean; // For exact route matching
 };
 
 export const navSections: Array<{ title: string; items: NavItem[] }> = [
@@ -126,6 +127,7 @@ export const navSections: Array<{ title: string; items: NavItem[] }> = [
         label: strings.sidebar.items.attendanceExcuse,
         roles: ['student'],
         icon: <MarkChatReadOutlinedIcon fontSize="small" />,
+        end: true, // Prevent conflict with /attendance/excuse/review
       },
       {
         to: '/attendance/sessions',
@@ -170,7 +172,7 @@ export const navSections: Array<{ title: string; items: NavItem[] }> = [
         roles: ['student', 'faculty'],
         icon: <AccountBalanceWalletOutlinedIcon fontSize="small" />
       },
-      { to: '/events', label: strings.sidebar.items.events, icon: <EventAvailableOutlinedIcon fontSize="small" /> },
+      { to: '/events', label: strings.sidebar.items.events, icon: <EventAvailableOutlinedIcon fontSize="small" />, end: true },
       { to: '/events/my-registrations', label: strings.sidebar.items.eventRegistrations, icon: <EventNoteOutlinedIcon fontSize="small" /> },
       {
         to: '/events/checkin',
@@ -286,6 +288,7 @@ export const navSections: Array<{ title: string; items: NavItem[] }> = [
         to: '/notifications',
         label: 'Bildirimler',
         icon: <EventNoteOutlinedIcon fontSize="small" />,
+        end: true, // Exact match to prevent both being active
       },
       {
         to: '/notifications/preferences',
@@ -335,6 +338,7 @@ function Sidebar() {
                   key={item.to}
                   component={NavLink}
                   to={item.to}
+                  end={item.end}
                   aria-label={item.label}
                   sx={{
                     position: 'relative',
