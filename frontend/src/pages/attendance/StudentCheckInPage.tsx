@@ -5,6 +5,11 @@ import {
   Card,
   CardContent,
   Chip,
+  Collapse,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
   Stack,
   Table,
   TableBody,
@@ -14,8 +19,13 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import CloseIcon from '@mui/icons-material/Close';
+import MyLocationIcon from '@mui/icons-material/MyLocation';
+import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import Alert from '../../components/feedback/Alert';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
+import QRScanner from '../../components/qrcode/QRScanner';
 import { checkIn, getMyActiveSessions, extractData, ActiveSession } from '../../services/attendanceApi';
 import { getErrorMessage } from '../../utils/error';
 
@@ -27,6 +37,8 @@ function StudentCheckInPage() {
   const [error, setError] = useState('');
   const [location, setLocation] = useState<{ latitude?: number; longitude?: number; accuracy?: number }>({});
   const [locationLoading, setLocationLoading] = useState(false);
+  const [showQrScanner, setShowQrScanner] = useState(false);
+  const [scannedQrCode, setScannedQrCode] = useState('');
 
   const loadSessions = async () => {
     setLoading(true);
@@ -61,6 +73,7 @@ function StudentCheckInPage() {
           accuracy: pos.coords.accuracy,
         });
         setLocationLoading(false);
+        setMessage('📍 Konum başarıyla alındı!');
       },
       (err) => {
         setError(err.message);
@@ -70,7 +83,7 @@ function StudentCheckInPage() {
     );
   };
 
-  const handleCheckIn = async (session: ActiveSession) => {
+  const handleCheckIn = async (session: ActiveSession, qrCode?: string) => {
     if (!location.latitude || !location.longitude) {
       setError('Önce konumunuzu alın.');
       return;
@@ -83,9 +96,9 @@ function StudentCheckInPage() {
         latitude: location.latitude,
         longitude: location.longitude,
         accuracy: location.accuracy,
-        qr_code: session.qr_code,
+        qr_code: qrCode || session.qr_code,
       });
-      setMessage(`${session.course.code} dersi için yoklamanız alındı!`);
+      setMessage(`✅ ${session.course.code} dersi için yoklamanız alındı!`);
       loadSessions(); // Refresh to update already_checked_in status
     } catch (err) {
       setError(getErrorMessage(err, 'Yoklama verilemedi.'));
@@ -94,111 +107,226 @@ function StudentCheckInPage() {
     }
   };
 
+  const handleQrScan = (code: string) => {
+    setScannedQrCode(code);
+    setShowQrScanner(false);
+
+    // Find matching session by QR code
+    const matchingSession = sessions.find((s) => s.qr_code === code);
+    if (matchingSession) {
+      if (matchingSession.already_checked_in) {
+        setError('Bu ders için zaten yoklama verdiniz.');
+        return;
+      }
+      // Auto check-in with scanned QR
+      handleCheckIn(matchingSession, code);
+    } else {
+      setError('QR kod eşleşen aktif yoklama oturumu bulunamadı. Dersin açık olduğundan emin olun.');
+    }
+  };
+
+  const pendingSessions = sessions.filter((s) => !s.already_checked_in);
+  const completedSessions = sessions.filter((s) => s.already_checked_in);
+
   return (
     <Stack spacing={2}>
       <Typography variant="h5" fontWeight={800}>
-        Yoklama Ver
+        📋 Yoklama Ver
       </Typography>
       {message && <Alert variant="success" message={message} />}
       {error && <Alert variant="error" message={error} />}
 
-      <Card>
+      {/* Quick Actions */}
+      <Card sx={{ bgcolor: 'primary.50' }}>
         <CardContent>
           <Stack spacing={2}>
             <Typography variant="subtitle1" fontWeight={700}>
-              Konum Bilgisi
+              🚀 Hızlı Yoklama
             </Typography>
-            <Stack direction="row" spacing={2} alignItems="center">
-              <Button variant="outlined" onClick={fetchLocation} disabled={locationLoading}>
-                {locationLoading ? 'Konum alınıyor...' : 'Konum Al'}
+            <Typography variant="body2" color="text.secondary">
+              Yoklama vermek için önce konumunuzu alın, sonra QR tarayın veya ders listesinden seçin.
+            </Typography>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+              <Button
+                variant={location.latitude ? 'outlined' : 'contained'}
+                color={location.latitude ? 'success' : 'primary'}
+                startIcon={<MyLocationIcon />}
+                onClick={fetchLocation}
+                disabled={locationLoading}
+                sx={{ flex: 1 }}
+              >
+                {locationLoading
+                  ? 'Konum alınıyor...'
+                  : location.latitude
+                    ? '✓ Konum Alındı'
+                    : '1. Konum Al'}
               </Button>
-              <Typography variant="body2" color="text.secondary">
-                {location.latitude
-                  ? `📍 Enlem: ${location.latitude.toFixed(5)}, Boylam: ${location.longitude?.toFixed(5)}, Doğruluk: ${Math.round(location.accuracy || 0)
-                  }m`
-                  : 'Konum alınmadı - Yoklama vermek için önce konum alın'}
-              </Typography>
+              <Button
+                variant="contained"
+                color="secondary"
+                startIcon={<QrCodeScannerIcon />}
+                onClick={() => setShowQrScanner(true)}
+                disabled={!location.latitude}
+                sx={{ flex: 1 }}
+              >
+                2. QR Tara ve Yoklama Ver
+              </Button>
             </Stack>
+            {location.latitude && (
+              <Typography variant="caption" color="text.secondary">
+                📍 Enlem: {location.latitude.toFixed(5)}, Boylam: {location.longitude?.toFixed(5)}, Doğruluk: {Math.round(location.accuracy || 0)}m
+              </Typography>
+            )}
           </Stack>
         </CardContent>
       </Card>
 
-      <Card>
-        <CardContent>
-          <Typography variant="subtitle1" fontWeight={700} mb={2}>
-            Aktif Yoklama Oturumları
-          </Typography>
-          {loading ? (
-            <Box py={4} textAlign="center">
-              <LoadingSpinner label="Aktif oturumlar yükleniyor..." />
-            </Box>
-          ) : sessions.length === 0 ? (
-            <Typography color="text.secondary" textAlign="center" py={4}>
-              Şu anda kayıtlı olduğunuz derslerde açık yoklama oturumu bulunmuyor.
+      {/* Pending Sessions */}
+      {pendingSessions.length > 0 && (
+        <Card>
+          <CardContent>
+            <Typography variant="subtitle1" fontWeight={700} mb={2} color="warning.main">
+              ⏳ Bekleyen Yoklamalar ({pendingSessions.length})
             </Typography>
-          ) : (
             <TableContainer>
-              <Table>
+              <Table size="small">
                 <TableHead>
                   <TableRow>
                     <TableCell>Ders</TableCell>
                     <TableCell>Şube</TableCell>
-                    <TableCell>Eğitmen</TableCell>
-                    <TableCell>Tarih / Saat</TableCell>
-                    <TableCell>Durum</TableCell>
+                    <TableCell>Saat</TableCell>
                     <TableCell align="right">İşlem</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {sessions.map((session) => (
+                  {pendingSessions.map((session) => (
                     <TableRow key={session.id}>
                       <TableCell>
                         <Typography fontWeight={600}>{session.course.code}</Typography>
-                        <Typography variant="body2" color="text.secondary">
+                        <Typography variant="caption" color="text.secondary">
                           {session.course.name}
                         </Typography>
                       </TableCell>
                       <TableCell>{session.section_number}</TableCell>
-                      <TableCell>{session.instructor || '-'}</TableCell>
-                      <TableCell>
-                        {session.date} {session.start_time}
-                      </TableCell>
-                      <TableCell>
-                        {session.already_checked_in ? (
-                          <Chip label="Yoklama Verildi" color="success" size="small" />
-                        ) : (
-                          <Chip label="Bekliyor" color="warning" size="small" />
-                        )}
-                      </TableCell>
+                      <TableCell>{session.start_time}</TableCell>
                       <TableCell align="right">
-                        {session.already_checked_in ? (
-                          <Typography variant="body2" color="success.main">
-                            ✓ Tamamlandı
-                          </Typography>
-                        ) : (
-                          <Button
-                            variant="contained"
-                            size="small"
-                            onClick={() => handleCheckIn(session)}
-                            disabled={checkingIn === session.id || !location.latitude}
-                          >
-                            {checkingIn === session.id ? 'Gönderiliyor...' : 'Yoklama Ver'}
-                          </Button>
-                        )}
+                        <Button
+                          variant="contained"
+                          size="small"
+                          onClick={() => handleCheckIn(session)}
+                          disabled={checkingIn === session.id || !location.latitude}
+                          startIcon={checkingIn === session.id ? undefined : <CameraAltIcon />}
+                        >
+                          {checkingIn === session.id ? 'Gönderiliyor...' : 'Yoklama Ver'}
+                        </Button>
                       </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
             </TableContainer>
-          )}
-          <Box mt={2}>
-            <Button variant="text" onClick={loadSessions} disabled={loading}>
-              🔄 Yenile
-            </Button>
-          </Box>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Completed Sessions */}
+      <Collapse in={completedSessions.length > 0}>
+        <Card sx={{ bgcolor: 'success.50' }}>
+          <CardContent>
+            <Typography variant="subtitle1" fontWeight={700} mb={2} color="success.main">
+              ✓ Tamamlanan Yoklamalar ({completedSessions.length})
+            </Typography>
+            <TableContainer>
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Ders</TableCell>
+                    <TableCell>Şube</TableCell>
+                    <TableCell>Saat</TableCell>
+                    <TableCell>Durum</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {completedSessions.map((session) => (
+                    <TableRow key={session.id}>
+                      <TableCell>
+                        <Typography fontWeight={600}>{session.course.code}</Typography>
+                      </TableCell>
+                      <TableCell>{session.section_number}</TableCell>
+                      <TableCell>{session.start_time}</TableCell>
+                      <TableCell>
+                        <Chip label="✓ Verildi" color="success" size="small" />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </CardContent>
+        </Card>
+      </Collapse>
+
+      {/* Empty State */}
+      {!loading && sessions.length === 0 && (
+        <Card>
+          <CardContent>
+            <Box py={4} textAlign="center">
+              <Typography variant="h6" color="text.secondary" gutterBottom>
+                📭 Aktif Yoklama Yok
+              </Typography>
+              <Typography color="text.secondary">
+                Şu anda kayıtlı olduğunuz derslerde açık yoklama oturumu bulunmuyor.
+              </Typography>
+            </Box>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Loading State */}
+      {loading && (
+        <Box py={4} textAlign="center">
+          <LoadingSpinner label="Aktif oturumlar yükleniyor..." />
+        </Box>
+      )}
+
+      {/* Refresh Button */}
+      <Box>
+        <Button variant="text" onClick={loadSessions} disabled={loading}>
+          🔄 Yenile
+        </Button>
+      </Box>
+
+      {/* QR Scanner Modal */}
+      <Dialog
+        open={showQrScanner}
+        onClose={() => setShowQrScanner(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Typography variant="h6" fontWeight={700}>
+            📷 QR Kod Tara
+          </Typography>
+          <IconButton onClick={() => setShowQrScanner(false)}>
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <Stack spacing={2} alignItems="center" py={2}>
+            <Typography variant="body2" color="text.secondary" textAlign="center">
+              Öğretmenin gösterdiği QR kodu kameranıza tutun.
+              <br />
+              QR tarandığında yoklamanız otomatik verilecek.
+            </Typography>
+            <QRScanner onScan={handleQrScan} width={300} height={300} />
+            {scannedQrCode && (
+              <Typography variant="caption" color="text.secondary">
+                Son taranan: {scannedQrCode.substring(0, 8)}...
+              </Typography>
+            )}
+          </Stack>
+        </DialogContent>
+      </Dialog>
     </Stack>
   );
 }
