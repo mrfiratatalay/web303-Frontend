@@ -27,6 +27,7 @@ import QrCode2Icon from '@mui/icons-material/QrCode2';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import Alert from '../../components/feedback/Alert';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
+import LocationMap from '../../components/map/LocationMap';
 import { AttendanceSession, Section } from '../../types/academics';
 import { closeSession, createSession, extractData, getMySessions } from '../../services/attendanceApi';
 import { getErrorMessage } from '../../utils/error';
@@ -56,6 +57,7 @@ function FacultySessionsPage() {
   const [creating, setCreating] = useState(false);
   const [qrModalSession, setQrModalSession] = useState<AttendanceSession | null>(null);
   const [copied, setCopied] = useState(false);
+  const [locationLoading, setLocationLoading] = useState(false);
 
   const selectedSection = useMemo(
     () => sections.find((s) => s.id === form.section_id) || null,
@@ -145,6 +147,7 @@ function FacultySessionsPage() {
       setError('Tarayıcı konum desteği bulunamadı.');
       return;
     }
+    setLocationLoading(true);
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         setForm((prev) => ({
@@ -152,10 +155,22 @@ function FacultySessionsPage() {
           latitude: String(pos.coords.latitude),
           longitude: String(pos.coords.longitude),
         }));
+        setLocationLoading(false);
       },
-      () => setError('Konum alınamadı. Lütfen izin verdiğinizden emin olun.'),
+      () => {
+        setError('Konum alınamadı. Lütfen izin verdiğinizden emin olun.');
+        setLocationLoading(false);
+      },
       { enableHighAccuracy: true, timeout: 8000 },
     );
+  };
+
+  const handleMapLocationChange = (location: { latitude: number; longitude: number }) => {
+    setForm((prev) => ({
+      ...prev,
+      latitude: String(location.latitude),
+      longitude: String(location.longitude),
+    }));
   };
 
   const handleCopyQr = async (qrCode: string) => {
@@ -255,10 +270,11 @@ function FacultySessionsPage() {
       {/* Create New Session */}
       <Card>
         <CardContent>
-          <Typography variant="subtitle1" fontWeight={700} mb={1}>
+          <Typography variant="subtitle1" fontWeight={700} mb={2}>
             ➕ Yeni Oturum Başlat
           </Typography>
           <Grid container spacing={2}>
+            {/* Section Selection */}
             <Grid item xs={12}>
               <Autocomplete
                 fullWidth
@@ -283,38 +299,64 @@ function FacultySessionsPage() {
                 )}
               />
             </Grid>
-            <Grid item xs={6} md={2}>
-              <TextField
-                fullWidth
-                type="number"
-                label="Konum çapı (m)"
-                value={form.geofence_radius}
-                onChange={(e) => setForm((prev) => ({ ...prev, geofence_radius: Number(e.target.value) }))}
+
+            {/* Location Map */}
+            <Grid item xs={12} md={8}>
+              <Typography variant="body2" color="text.secondary" mb={1}>
+                🗺️ Haritadan konum seçin veya "Anlık Konumu Al" butonunu kullanın:
+              </Typography>
+              <LocationMap
+                location={form.latitude && form.longitude ? {
+                  latitude: Number(form.latitude),
+                  longitude: Number(form.longitude),
+                } : null}
+                onLocationChange={handleMapLocationChange}
+                onLocationFetch={handleUseLocation}
+                loading={locationLoading}
+                editable={true}
+                height={250}
+                showAccuracyCircle={false}
+                geofenceRadius={form.geofence_radius}
               />
             </Grid>
-            <Grid item xs={6} md={3}>
-              <TextField
-                fullWidth
-                label="Enlem"
-                value={form.latitude}
-                onChange={(e) => setForm((prev) => ({ ...prev, latitude: e.target.value }))}
-              />
-            </Grid>
-            <Grid item xs={6} md={3}>
-              <TextField
-                fullWidth
-                label="Boylam"
-                value={form.longitude}
-                onChange={(e) => setForm((prev) => ({ ...prev, longitude: e.target.value }))}
-              />
-            </Grid>
-            <Grid item xs={6} md={4} display="flex" alignItems="center">
-              <Stack direction="row" spacing={1} alignItems="center" width="100%">
-                <Button variant="outlined" onClick={handleUseLocation}>
-                  Konumu doldur
-                </Button>
-                <Button variant="contained" onClick={handleCreate} disabled={creating || !form.section_id}>
-                  {creating ? <LoadingSpinner label="Oluşturuluyor..." /> : 'Şimdi başlat'}
+
+            {/* Geofence Radius */}
+            <Grid item xs={12} md={4}>
+              <Stack spacing={2}>
+                <TextField
+                  fullWidth
+                  type="number"
+                  label="Geofence Yarıçapı (metre)"
+                  value={form.geofence_radius}
+                  onChange={(e) => setForm((prev) => ({ ...prev, geofence_radius: Number(e.target.value) }))}
+                  helperText="Öğrencilerin bu mesafe içinde olması gerekir"
+                  InputProps={{
+                    inputProps: { min: 10, max: 500 },
+                  }}
+                />
+                <TextField
+                  fullWidth
+                  label="Enlem"
+                  value={form.latitude}
+                  onChange={(e) => setForm((prev) => ({ ...prev, latitude: e.target.value }))}
+                  size="small"
+                />
+                <TextField
+                  fullWidth
+                  label="Boylam"
+                  value={form.longitude}
+                  onChange={(e) => setForm((prev) => ({ ...prev, longitude: e.target.value }))}
+                  size="small"
+                />
+                <Button
+                  variant="contained"
+                  size="large"
+                  onClick={handleCreate}
+                  disabled={creating || !form.section_id}
+                  fullWidth
+                  sx={{ py: 1.5 }}
+                >
+                  {creating ? <LoadingSpinner label="Oluşturuluyor..." /> : '🚀 Oturumu Başlat'}
                 </Button>
               </Stack>
             </Grid>

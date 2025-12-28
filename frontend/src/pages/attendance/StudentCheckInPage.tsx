@@ -26,11 +26,11 @@ import {
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import CloseIcon from '@mui/icons-material/Close';
 import KeyboardIcon from '@mui/icons-material/Keyboard';
-import MyLocationIcon from '@mui/icons-material/MyLocation';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import Alert from '../../components/feedback/Alert';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import QRScanner from '../../components/qrcode/QRScanner';
+import LocationMap from '../../components/map/LocationMap';
 import { checkIn, getMyActiveSessions, extractData, ActiveSession } from '../../services/attendanceApi';
 import { getErrorMessage } from '../../utils/error';
 
@@ -166,7 +166,7 @@ function StudentCheckInPage() {
       {message && <Alert variant="success" message={message} />}
       {error && <Alert variant="error" message={error} />}
 
-      {/* Quick Actions */}
+      {/* Quick Actions with Map */}
       <Card sx={{ bgcolor: 'primary.50' }}>
         <CardContent>
           <Stack spacing={2}>
@@ -176,37 +176,33 @@ function StudentCheckInPage() {
             <Typography variant="body2" color="text.secondary">
               Yoklama vermek için önce konumunuzu alın, sonra QR tarayın veya ders listesinden seçin.
             </Typography>
-            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-              <Button
-                variant={location.latitude ? 'outlined' : 'contained'}
-                color={location.latitude ? 'success' : 'primary'}
-                startIcon={<MyLocationIcon />}
-                onClick={fetchLocation}
-                disabled={locationLoading}
-                sx={{ flex: 1 }}
-              >
-                {locationLoading
-                  ? 'Konum alınıyor...'
-                  : location.latitude
-                    ? '✓ Konum Alındı'
-                    : '1. Konum Al'}
-              </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                startIcon={<QrCodeScannerIcon />}
-                onClick={() => setShowQrModal(true)}
-                disabled={!location.latitude}
-                sx={{ flex: 1 }}
-              >
-                2. QR ile Yoklama Ver
-              </Button>
-            </Stack>
-            {location.latitude && (
-              <Typography variant="caption" color="text.secondary">
-                📍 Enlem: {location.latitude.toFixed(5)}, Boylam: {location.longitude?.toFixed(5)}, Doğruluk: {Math.round(location.accuracy || 0)}m
-              </Typography>
-            )}
+
+            {/* Location Map */}
+            <LocationMap
+              location={location.latitude && location.longitude ? {
+                latitude: location.latitude,
+                longitude: location.longitude,
+                accuracy: location.accuracy,
+              } : null}
+              onLocationFetch={fetchLocation}
+              loading={locationLoading}
+              height={200}
+              showAccuracyCircle={true}
+            />
+
+            {/* QR Button */}
+            <Button
+              variant="contained"
+              color="secondary"
+              size="large"
+              startIcon={<QrCodeScannerIcon />}
+              onClick={() => setShowQrModal(true)}
+              disabled={!location.latitude}
+              fullWidth
+              sx={{ py: 1.5 }}
+            >
+              {location.latitude ? '📱 QR ile Yoklama Ver' : 'Önce Konum Alın'}
+            </Button>
           </Stack>
         </CardContent>
       </Card>
