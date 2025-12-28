@@ -77,6 +77,11 @@ function MenuManagementPage() {
     const [submitting, setSubmitting] = useState(false);
     const [toast, setToast] = useState({ open: false, message: '', type: 'success' as 'success' | 'error' | 'info' | 'warning' });
 
+    // Delete confirmation dialog state
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    const [menuToDelete, setMenuToDelete] = useState<MealMenu | null>(null);
+    const [deleting, setDeleting] = useState(false);
+
     const loadData = async () => {
         setLoading(true);
         try {
@@ -167,15 +172,28 @@ function MenuManagementPage() {
         }
     };
 
-    const handleDelete = async (id: string) => {
-        if (!confirm('Bu menüyü silmek istediğinize emin misiniz?')) return;
+    const openDeleteDialog = (menu: MealMenu) => {
+        setMenuToDelete(menu);
+        setDeleteDialogOpen(true);
+    };
 
+    const closeDeleteDialog = () => {
+        setDeleteDialogOpen(false);
+        setMenuToDelete(null);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (!menuToDelete) return;
+        setDeleting(true);
         try {
-            await deleteMealMenu(id);
+            await deleteMealMenu(menuToDelete.id);
             setToast({ open: true, message: 'Menü silindi', type: 'success' });
+            closeDeleteDialog();
             loadData();
         } catch (err) {
             setToast({ open: true, message: getErrorMessage(err, 'Silme başarısız'), type: 'error' });
+        } finally {
+            setDeleting(false);
         }
     };
 
@@ -272,7 +290,7 @@ function MenuManagementPage() {
                                                 <IconButton size="small" onClick={() => handleOpenDialog(menu)}>
                                                     <EditIcon fontSize="small" />
                                                 </IconButton>
-                                                <IconButton size="small" color="error" onClick={() => handleDelete(menu.id)}>
+                                                <IconButton size="small" color="error" onClick={() => openDeleteDialog(menu)}>
                                                     <DeleteIcon fontSize="small" />
                                                 </IconButton>
                                             </TableCell>
@@ -372,6 +390,32 @@ function MenuManagementPage() {
                     <Button onClick={handleCloseDialog}>İptal</Button>
                     <Button variant="contained" onClick={handleSubmit} disabled={submitting}>
                         {submitting ? 'Kaydediliyor...' : 'Kaydet'}
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
+            {/* Delete Confirmation Dialog */}
+            <Dialog open={deleteDialogOpen} onClose={closeDeleteDialog} maxWidth="xs" fullWidth>
+                <DialogTitle>Menü Sil</DialogTitle>
+                <DialogContent>
+                    <Typography>
+                        <strong>{menuToDelete?.date}</strong> tarihli{' '}
+                        <strong>{menuToDelete?.meal_type === 'lunch' ? 'Öğle' : 'Akşam'}</strong> menüsünü
+                        silmek istediğinize emin misiniz?
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                        Bu işlem geri alınamaz.
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={closeDeleteDialog} disabled={deleting}>İptal</Button>
+                    <Button
+                        onClick={handleConfirmDelete}
+                        color="error"
+                        variant="contained"
+                        disabled={deleting}
+                    >
+                        {deleting ? 'Siliniyor...' : 'Sil'}
                     </Button>
                 </DialogActions>
             </Dialog>

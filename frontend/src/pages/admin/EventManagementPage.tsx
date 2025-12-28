@@ -91,6 +91,11 @@ function EventManagementPage() {
     const [submitting, setSubmitting] = useState(false);
     const [toast, setToast] = useState({ open: false, message: '', type: 'success' as 'success' | 'error' | 'info' | 'warning' });
 
+    // Delete confirmation dialog state
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    const [eventToDelete, setEventToDelete] = useState<Event | null>(null);
+    const [deleting, setDeleting] = useState(false);
+
     const loadEvents = async () => {
         setLoading(true);
         try {
@@ -158,15 +163,28 @@ function EventManagementPage() {
         }
     };
 
-    const handleDelete = async (id: string) => {
-        if (!confirm('Bu etkinliği silmek istediğinize emin misiniz?')) return;
+    const openDeleteDialog = (event: Event) => {
+        setEventToDelete(event);
+        setDeleteDialogOpen(true);
+    };
 
+    const closeDeleteDialog = () => {
+        setDeleteDialogOpen(false);
+        setEventToDelete(null);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (!eventToDelete) return;
+        setDeleting(true);
         try {
-            await deleteEvent(id);
+            await deleteEvent(eventToDelete.id);
             setToast({ open: true, message: 'Etkinlik silindi', type: 'success' });
+            closeDeleteDialog();
             loadEvents();
         } catch (err) {
             setToast({ open: true, message: getErrorMessage(err, 'Silme başarısız'), type: 'error' });
+        } finally {
+            setDeleting(false);
         }
     };
 
@@ -253,7 +271,7 @@ function EventManagementPage() {
                                                 <IconButton size="small" onClick={() => handleOpenDialog(event)}>
                                                     <EditIcon fontSize="small" />
                                                 </IconButton>
-                                                <IconButton size="small" color="error" onClick={() => handleDelete(event.id)}>
+                                                <IconButton size="small" color="error" onClick={() => openDeleteDialog(event)}>
                                                     <DeleteIcon fontSize="small" />
                                                 </IconButton>
                                             </TableCell>
@@ -378,6 +396,30 @@ function EventManagementPage() {
                     <Button onClick={handleCloseDialog}>İptal</Button>
                     <Button variant="contained" onClick={handleSubmit} disabled={submitting}>
                         {submitting ? 'Kaydediliyor...' : 'Kaydet'}
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
+            {/* Delete Confirmation Dialog */}
+            <Dialog open={deleteDialogOpen} onClose={closeDeleteDialog} maxWidth="xs" fullWidth>
+                <DialogTitle>Etkinlik Sil</DialogTitle>
+                <DialogContent>
+                    <Typography>
+                        <strong>{eventToDelete?.title}</strong> etkinliğini silmek istediğinize emin misiniz?
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                        Bu işlem geri alınamaz.
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={closeDeleteDialog} disabled={deleting}>İptal</Button>
+                    <Button
+                        onClick={handleConfirmDelete}
+                        color="error"
+                        variant="contained"
+                        disabled={deleting}
+                    >
+                        {deleting ? 'Siliniyor...' : 'Sil'}
                     </Button>
                 </DialogActions>
             </Dialog>
