@@ -1,6 +1,44 @@
-# Smart Campus Frontend (Part 1)
+# Smart Campus Frontend
 
-React + TypeScript + Vite frontend for the Smart Campus backend. Implements full Part 1 auth and profile flows with MUI and React Hook Form.
+React + TypeScript + Vite frontend for the Smart Campus Ecosystem Management Platform.
+
+## 🌐 Canlı Demo
+
+| Servis | URL |
+|--------|-----|
+| **Frontend** | https://web303-frontend.vercel.app |
+| **Backend API** | https://cen303-web-backend.onrender.com |
+| **Swagger Docs** | https://cen303-web-backend.onrender.com/swagger |
+
+### Test Hesapları
+
+| Rol | Email | Şifre |
+|-----|-------|-------|
+| Admin | admin@smartcampus.com | Admin123! |
+| Faculty | mehmet.sevri@smartcampus.com | Faculty123! |
+| Student | can.ahmed@smartcampus.com | Student123! |
+
+## ✨ Features
+
+### Part 1: Authentication
+- Login, Register, Email Verification
+- Forgot/Reset Password
+- Profile Management
+
+### Part 2: Academic
+- Course Catalog & Enrollments
+- GPS Attendance Check-in
+- Grades & Transcript
+
+### Part 3: Campus Services
+- Meal Reservations & Wallet
+- Event Registration & Check-in
+- Schedule & Classroom Reservations
+
+### Part 4: Analytics & Notifications
+- Admin Dashboard & Analytics
+- Notification Center
+- Notification Preferences
 
 ## Prerequisites
 
