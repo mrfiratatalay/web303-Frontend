@@ -110,7 +110,7 @@ function EventListPage() {
               placeholder="Baslik veya konum"
             />
             <Button variant="outlined" size="small" onClick={() => setQuery(DEFAULT_QUERY)}>
-              Sifirla
+              Sıfırla
             </Button>
           </Stack>
         </CardContent>

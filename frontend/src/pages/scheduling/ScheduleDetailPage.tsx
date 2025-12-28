@@ -98,7 +98,7 @@ function ScheduleDetailPage() {
         <CardContent>
           <Stack spacing={1}>
             <Typography>Program ID: {schedule.id}</Typography>
-            <Typography>Donem: {schedule.semester || '-'}</Typography>
+            <Typography>Dönem: {schedule.semester || '-'}</Typography>
             <Typography>Yil: {schedule.year ?? '-'}</Typography>
             <Typography>Oluşturma: {schedule.generated_at || '-'}</Typography>
           </Stack>

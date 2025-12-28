@@ -109,7 +109,7 @@ function ReservationListPage() {
       setToast({
         open: true,
         type: 'success',
-        message: action === 'approve' ? 'Rezervasyon onaylandi.' : 'Rezervasyon reddedildi.',
+        message: action === 'approve' ? 'Rezervasyon onaylandı.' : 'Rezervasyon reddedildi.',
       });
     } catch (err) {
       const message = getErrorMessage(err, 'İşlem başarısız.');
@@ -144,7 +144,7 @@ function ReservationListPage() {
                   <TableRow>
                     <TableCell>Derslik</TableCell>
                     <TableCell>Zaman</TableCell>
-                    <TableCell>Ogrenci</TableCell>
+                    <TableCell>Öğrenci</TableCell>
                     <TableCell>Durum</TableCell>
                     <TableCell align="right">İşlemler</TableCell>
                   </TableRow>

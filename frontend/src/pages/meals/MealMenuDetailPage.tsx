@@ -133,7 +133,7 @@ function MealMenuDetailPage() {
               ))}
             </Stack>
           ) : (
-            <Typography color="text.secondary">Menu icerigi bulunamadi.</Typography>
+            <Typography color="text.secondary">Menü içeriği bulunamadı.</Typography>
           )}
         </CardContent>
       </Card>
@@ -145,7 +145,7 @@ function MealMenuDetailPage() {
           disabled={actionLoading}
         >
           {actionLoading
-            ? <LoadingSpinner label={user?.role === 'admin' ? "Yukleniyor..." : "Rezervasyon yapiliyor..."} />
+            ? <LoadingSpinner label={user?.role === 'admin' ? "Yükleniyor..." : "Rezervasyon yapılıyor..."} />
             : (user?.role === 'admin' ? 'Duzenle' : 'Rezerve et')
           }
         </Button>

@@ -23,7 +23,7 @@ function SelectInput({ label, name, options = [], register, error, ...rest }: Pr
       {label && <InputLabel>{label}</InputLabel>}
       <Select label={label} defaultValue="" {...registration} {...rest}>
         <MenuItem value="">
-          <em>Seciniz</em>
+          <em>Seçiniz</em>
         </MenuItem>
         {options.map((option) => (
           <MenuItem key={option.value} value={option.value}>

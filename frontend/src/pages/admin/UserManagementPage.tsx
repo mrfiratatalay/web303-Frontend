@@ -48,9 +48,9 @@ const DEFAULT_QUERY: UserListQuery = {
 };
 
 const roleLabels: Record<string, string> = {
-  student: 'Ogrenci',
+  student: 'Öğrenci',
   faculty: 'Akademisyen',
-  admin: 'Yonetici',
+  admin: 'Yönetici',
 };
 
 const formatDate = (value?: string) =>
@@ -115,11 +115,11 @@ function UserManagementPage() {
         setDepartments(list);
       } else {
         setDepartments([]);
-        setDepartmentError('Bolumler alinmadi.');
+        setDepartmentError('Bölümler alınamadı.');
       }
     } catch (err) {
       setDepartments([]);
-      setDepartmentError(getErrorMessage(err, 'Bolumler alinmadi.'));
+      setDepartmentError(getErrorMessage(err, 'Bölümler alınamadı.'));
     }
   }, []);
 
@@ -136,7 +136,7 @@ function UserManagementPage() {
       setUsers(Array.isArray(data.users) ? data.users : []);
       setPagination(data.pagination || null);
     } catch (err) {
-      setError(getErrorMessage(err, 'Kullanici listesi alinmadi.'));
+      setError(getErrorMessage(err, 'Kullanıcı listesi alınamadı.'));
       setUsers([]);
       setPagination(null);
     } finally {
@@ -202,7 +202,7 @@ function UserManagementPage() {
       const data = unwrap<User>(response);
       setDetailUser(data);
     } catch (err) {
-      setDetailError(getErrorMessage(err, 'Kullanici detayi alinmadi.'));
+      setDetailError(getErrorMessage(err, 'Kullanıcı detayı alınamadı.'));
     } finally {
       setDetailLoading(false);
     }
@@ -236,7 +236,7 @@ function UserManagementPage() {
       closeDeleteDialog();
       loadUsers(); // Refresh list
     } catch (err) {
-      setDeleteError(getErrorMessage(err, 'Kullanici silinemedi.'));
+      setDeleteError(getErrorMessage(err, 'Kullanıcı silinemedi.'));
     } finally {
       setDeleteLoading(false);
     }
@@ -254,10 +254,10 @@ function UserManagementPage() {
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <div>
           <Typography variant="h5" fontWeight={800}>
-            Kullanici Yonetimi
+            Kullanıcı Yönetimi
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Admin kullanicilar icin listeleme, filtreleme ve detay gosterme
+            Admin kullanıcılar için listeleme, filtreleme ve detay gösterme
           </Typography>
         </div>
         <Button variant="outlined" size="small" onClick={handleRefresh}>
@@ -270,7 +270,7 @@ function UserManagementPage() {
           <Grid item xs={12} md={4}>
             <TextField
               fullWidth
-              label="Kullanici ara"
+              label="Kullanıcı ara"
               placeholder="Isim veya e-posta"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
@@ -287,18 +287,18 @@ function UserManagementPage() {
                 onChange={handleRoleChange}
               >
                 <MenuItem value="all">Tumu</MenuItem>
-                <MenuItem value="student">Ogrenci</MenuItem>
+                <MenuItem value="student">Öğrenci</MenuItem>
                 <MenuItem value="faculty">Akademisyen</MenuItem>
-                <MenuItem value="admin">Yonetici</MenuItem>
+                <MenuItem value="admin">Yönetici</MenuItem>
               </Select>
             </FormControl>
           </Grid>
           <Grid item xs={6} md={3}>
             <FormControl fullWidth size="small">
-              <InputLabel id="department-filter-label">Bolum</InputLabel>
+              <InputLabel id="department-filter-label">Bölüm</InputLabel>
               <Select
                 labelId="department-filter-label"
-                label="Bolum"
+                label="Bölüm"
                 value={query.departmentId || ''}
                 onChange={handleDepartmentChange}
               >
@@ -344,7 +344,7 @@ function UserManagementPage() {
           <Grid item xs={12} md={1.5}>
             <Stack direction="row" spacing={1} justifyContent={{ xs: 'flex-start', md: 'flex-end' }}>
               <Button variant="outlined" size="small" onClick={handleResetFilters}>
-                Sifirla
+                Sıfırla
               </Button>
             </Stack>
           </Grid>
@@ -367,7 +367,7 @@ function UserManagementPage() {
         )}
         {isLoading ? (
           <Box py={4}>
-            <LoadingSpinner label="Kullanicilar yukleniyor..." />
+            <LoadingSpinner label="Kullanıcılar yükleniyor..." />
           </Box>
         ) : (
           <>
@@ -377,10 +377,10 @@ function UserManagementPage() {
                   <TableRow>
                     <TableCell>Ad Soyad</TableCell>
                     <TableCell>Rol</TableCell>
-                    <TableCell>Bolum</TableCell>
+                    <TableCell>Bölüm</TableCell>
                     <TableCell>Durum</TableCell>
                     <TableCell>Kayit</TableCell>
-                    <TableCell align="right">Islem</TableCell>
+                    <TableCell align="right">İşlem</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -431,7 +431,7 @@ function UserManagementPage() {
                   {!users.length && (
                     <TableRow>
                       <TableCell colSpan={6} align="center" sx={{ py: 4 }}>
-                        <Typography color="text.secondary">Kayit bulunamadi.</Typography>
+                        <Typography color="text.secondary">Kayıt bulunamadı.</Typography>
                       </TableCell>
                     </TableRow>
                   )}
@@ -452,11 +452,11 @@ function UserManagementPage() {
       </Paper>
 
       <Dialog open={detailOpen} onClose={closeDetail} maxWidth="sm" fullWidth>
-        <DialogTitle>Kullanici Detayi</DialogTitle>
+        <DialogTitle>Kullanıcı Detayı</DialogTitle>
         <DialogContent dividers>
           {detailLoading ? (
             <Box py={3}>
-              <LoadingSpinner label="Detay yukleniyor..." />
+              <LoadingSpinner label="Detay yükleniyor..." />
             </Box>
           ) : detailError ? (
             <Alert variant="error" message={detailError} />
@@ -490,7 +490,7 @@ function UserManagementPage() {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="caption" color="text.secondary">
-                    Bolum
+                    Bölüm
                   </Typography>
                   <Typography>{getDepartmentName(detailUser)}</Typography>
                 </Grid>
@@ -503,7 +503,7 @@ function UserManagementPage() {
                 {detailUser.role === 'student' && (
                   <Grid item xs={12} sm={6}>
                     <Typography variant="caption" color="text.secondary">
-                      Ogrenci No
+                      Öğrenci No
                     </Typography>
                     <Typography>{detailUser.student?.student_number || '-'}</Typography>
                   </Grid>
@@ -527,7 +527,7 @@ function UserManagementPage() {
               </Grid>
             </Stack>
           ) : (
-            <Typography color="text.secondary">Kullanici detayi bulunamadi.</Typography>
+            <Typography color="text.secondary">Kullanıcı detayı bulunamadı.</Typography>
           )}
         </DialogContent>
         <DialogActions>
@@ -537,7 +537,7 @@ function UserManagementPage() {
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={deleteDialogOpen} onClose={closeDeleteDialog} maxWidth="xs" fullWidth>
-        <DialogTitle>Kullanici Sil</DialogTitle>
+        <DialogTitle>Kullanıcı Sil</DialogTitle>
         <DialogContent>
           {deleteError && (
             <Box mb={2}>
@@ -545,10 +545,10 @@ function UserManagementPage() {
             </Box>
           )}
           <Typography>
-            <strong>{userToDelete ? getFullName(userToDelete) : ''}</strong> kullanicisini silmek istediginize emin misiniz?
+            <strong>{userToDelete ? getFullName(userToDelete) : ''}</strong> kullanıcısını silmek istediğinize emin misiniz?
           </Typography>
           <Typography variant="body2" color="text.secondary" mt={1}>
-            Bu islem geri alinamaz.
+            Bu işlem geri alınamaz.
           </Typography>
         </DialogContent>
         <DialogActions>

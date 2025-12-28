@@ -9,18 +9,23 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  Divider,
   IconButton,
   Stack,
+  Tab,
+  Tabs,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
   Typography,
 } from '@mui/material';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import CloseIcon from '@mui/icons-material/Close';
+import KeyboardIcon from '@mui/icons-material/Keyboard';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import Alert from '../../components/feedback/Alert';
@@ -37,8 +42,10 @@ function StudentCheckInPage() {
   const [error, setError] = useState('');
   const [location, setLocation] = useState<{ latitude?: number; longitude?: number; accuracy?: number }>({});
   const [locationLoading, setLocationLoading] = useState(false);
-  const [showQrScanner, setShowQrScanner] = useState(false);
+  const [showQrModal, setShowQrModal] = useState(false);
   const [scannedQrCode, setScannedQrCode] = useState('');
+  const [manualQrCode, setManualQrCode] = useState('');
+  const [qrTabIndex, setQrTabIndex] = useState(0); // 0: Kamera, 1: Elle Giriş
 
   const loadSessions = async () => {
     setLoading(true);
@@ -99,6 +106,8 @@ function StudentCheckInPage() {
         qr_code: qrCode || session.qr_code,
       });
       setMessage(`✅ ${session.course.code} dersi için yoklamanız alındı!`);
+      setShowQrModal(false);
+      setManualQrCode('');
       loadSessions(); // Refresh to update already_checked_in status
     } catch (err) {
       setError(getErrorMessage(err, 'Yoklama verilemedi.'));
@@ -107,9 +116,8 @@ function StudentCheckInPage() {
     }
   };
 
-  const handleQrScan = (code: string) => {
+  const processQrCode = (code: string) => {
     setScannedQrCode(code);
-    setShowQrScanner(false);
 
     // Find matching session by QR code
     const matchingSession = sessions.find((s) => s.qr_code === code);
@@ -123,6 +131,18 @@ function StudentCheckInPage() {
     } else {
       setError('QR kod eşleşen aktif yoklama oturumu bulunamadı. Dersin açık olduğundan emin olun.');
     }
+  };
+
+  const handleQrScan = (code: string) => {
+    processQrCode(code);
+  };
+
+  const handleManualQrSubmit = () => {
+    if (!manualQrCode.trim()) {
+      setError('QR kodu giriniz.');
+      return;
+    }
+    processQrCode(manualQrCode.trim());
   };
 
   const pendingSessions = sessions.filter((s) => !s.already_checked_in);
@@ -165,11 +185,11 @@ function StudentCheckInPage() {
                 variant="contained"
                 color="secondary"
                 startIcon={<QrCodeScannerIcon />}
-                onClick={() => setShowQrScanner(true)}
+                onClick={() => setShowQrModal(true)}
                 disabled={!location.latitude}
                 sx={{ flex: 1 }}
               >
-                2. QR Tara ve Yoklama Ver
+                2. QR ile Yoklama Ver
               </Button>
             </Stack>
             {location.latitude && (
@@ -296,34 +316,97 @@ function StudentCheckInPage() {
         </Button>
       </Box>
 
-      {/* QR Scanner Modal */}
+      {/* QR Modal with Tabs */}
       <Dialog
-        open={showQrScanner}
-        onClose={() => setShowQrScanner(false)}
+        open={showQrModal}
+        onClose={() => setShowQrModal(false)}
         maxWidth="sm"
         fullWidth
       >
         <DialogTitle sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <Typography variant="h6" fontWeight={700}>
-            📷 QR Kod Tara
+            📱 QR ile Yoklama Ver
           </Typography>
-          <IconButton onClick={() => setShowQrScanner(false)}>
+          <IconButton onClick={() => setShowQrModal(false)}>
             <CloseIcon />
           </IconButton>
         </DialogTitle>
         <DialogContent>
-          <Stack spacing={2} alignItems="center" py={2}>
-            <Typography variant="body2" color="text.secondary" textAlign="center">
-              Öğretmenin gösterdiği QR kodu kameranıza tutun.
-              <br />
-              QR tarandığında yoklamanız otomatik verilecek.
-            </Typography>
-            <QRScanner onScan={handleQrScan} width={300} height={300} />
-            {scannedQrCode && (
-              <Typography variant="caption" color="text.secondary">
-                Son taranan: {scannedQrCode.substring(0, 8)}...
-              </Typography>
+          <Stack spacing={2} py={1}>
+            {/* Tabs for Camera / Manual Entry */}
+            <Tabs
+              value={qrTabIndex}
+              onChange={(_, newValue) => setQrTabIndex(newValue)}
+              variant="fullWidth"
+              sx={{ borderBottom: 1, borderColor: 'divider' }}
+            >
+              <Tab
+                icon={<CameraAltIcon />}
+                iconPosition="start"
+                label="Kamera ile Tara"
+              />
+              <Tab
+                icon={<KeyboardIcon />}
+                iconPosition="start"
+                label="Elle Gir"
+              />
+            </Tabs>
+
+            {/* Tab 0: Camera Scanner */}
+            {qrTabIndex === 0 && (
+              <Stack spacing={2} alignItems="center" py={2}>
+                <Typography variant="body2" color="text.secondary" textAlign="center">
+                  Öğretmenin gösterdiği QR kodu kameranıza tutun.
+                  <br />
+                  QR tarandığında yoklamanız otomatik verilecek.
+                </Typography>
+                <QRScanner onScan={handleQrScan} width={300} height={300} />
+                {scannedQrCode && (
+                  <Typography variant="caption" color="text.secondary">
+                    Son taranan: {scannedQrCode.substring(0, 8)}...
+                  </Typography>
+                )}
+              </Stack>
             )}
+
+            {/* Tab 1: Manual Entry */}
+            {qrTabIndex === 1 && (
+              <Stack spacing={2} py={2}>
+                <Typography variant="body2" color="text.secondary" textAlign="center">
+                  Öğretmenin gösterdiği QR kodunu elle girin.
+                  <br />
+                  (Kamera çalışmıyorsa bu seçeneği kullanın)
+                </Typography>
+                <TextField
+                  fullWidth
+                  label="QR Kodu"
+                  placeholder="Örn: 550e8400-e29b-41d4-a716-446655440000"
+                  value={manualQrCode}
+                  onChange={(e) => setManualQrCode(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleManualQrSubmit()}
+                  helperText="Öğretmenin ekranında görünen QR kod metnini buraya yapıştırın"
+                />
+                <Button
+                  variant="contained"
+                  fullWidth
+                  onClick={handleManualQrSubmit}
+                  disabled={!manualQrCode.trim() || checkingIn !== null}
+                  startIcon={checkingIn ? undefined : <QrCodeScannerIcon />}
+                >
+                  {checkingIn ? 'Gönderiliyor...' : 'Yoklama Ver'}
+                </Button>
+              </Stack>
+            )}
+
+            <Divider />
+
+            {/* Help Text */}
+            <Box sx={{ bgcolor: 'info.50', p: 2, borderRadius: 1 }}>
+              <Typography variant="caption" color="info.dark">
+                💡 <strong>İpucu:</strong> Öğretmen QR kodunu projeksiyona yansıtır. 
+                Kameranız çalışmıyorsa "Elle Gir" sekmesinden QR kod metnini yazabilirsiniz.
+              </Typography>
+            </Box>
           </Stack>
         </DialogContent>
       </Dialog>

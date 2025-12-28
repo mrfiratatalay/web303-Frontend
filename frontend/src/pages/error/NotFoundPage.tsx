@@ -9,12 +9,12 @@ function NotFoundPage() {
           <Typography variant="h4" fontWeight={700}>
             404
           </Typography>
-          <Typography variant="h6">Sayfa bulunamadi</Typography>
+          <Typography variant="h6">Sayfa bulunamadı</Typography>
           <Typography variant="body2" color="text.secondary" align="center">
             Aradiginiz sayfa yok veya tasinmis olabilir.
           </Typography>
           <Button component={Link} to="/login" variant="contained">
-            Giris sayfasina don
+            Giriş sayfasına dön
           </Button>
         </Stack>
       </Box>

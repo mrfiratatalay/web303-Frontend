@@ -71,7 +71,7 @@ function GenerateSchedulePage() {
           <Stack spacing={2}>
             <TextField
               select
-              label="Donem"
+              label="Dönem"
               SelectProps={{ native: true }}
               value={semester}
               onChange={(e) => setSemester(e.target.value)}

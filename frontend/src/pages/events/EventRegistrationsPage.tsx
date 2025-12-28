@@ -126,9 +126,9 @@ function EventRegistrationsPage() {
                           disabled={actionLoading === reg.id || reg.status === 'checked_in'}
                         >
                           {reg.status === 'checked_in'
-                            ? 'Check-in yapildi'
+                            ? 'Check-in yapıldı'
                             : actionLoading === reg.id
-                              ? 'Check-in yapiliyor...'
+                              ? 'Check-in yapılıyor...'
                               : 'Check-in'}
                         </Button>
                       </TableCell>
