@@ -6,6 +6,10 @@ import {
   CardContent,
   CardHeader,
   Chip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Divider,
   Stack,
   Typography,
@@ -38,6 +42,7 @@ function EventDetailPage() {
     message: '',
     type: 'success',
   });
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   const loadEvent = async () => {
     if (!id) return;
@@ -108,17 +113,22 @@ function EventDetailPage() {
     }
   };
 
-  const handleDelete = async () => {
+  const openDeleteDialog = () => setDeleteDialogOpen(true);
+  const closeDeleteDialog = () => setDeleteDialogOpen(false);
+
+  const handleConfirmDelete = async () => {
     if (!id) return;
     setActionLoading(true);
     setError('');
     try {
       await deleteEvent(id);
+      closeDeleteDialog();
       navigate('/events', {
         state: { toast: { message: 'Etkinlik silindi.', type: 'success' } },
       });
     } catch (err) {
       setError(getErrorMessage(err, 'Silme basarisiz.'));
+      closeDeleteDialog();
     } finally {
       setActionLoading(false);
     }
@@ -147,8 +157,8 @@ function EventDetailPage() {
         </Stack>
         <Stack direction="row" spacing={1}>
           {user?.role === 'admin' && (
-            <Button variant="contained" color="error" size="small" onClick={handleDelete} disabled={actionLoading}>
-              {actionLoading ? 'Siliniyor...' : 'Sil'}
+            <Button variant="contained" color="error" size="small" onClick={openDeleteDialog} disabled={actionLoading}>
+              Sil
             </Button>
           )}
         </Stack>
@@ -233,6 +243,25 @@ function EventDetailPage() {
         type={toast.type}
         onClose={() => setToast((prev) => ({ ...prev, open: false }))}
       />
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={deleteDialogOpen} onClose={closeDeleteDialog} maxWidth="xs" fullWidth>
+        <DialogTitle>Etkinliği Sil</DialogTitle>
+        <DialogContent>
+          <Typography>
+            <strong>{event.title}</strong> etkinliğini silmek istediğinize emin misiniz?
+          </Typography>
+          <Typography variant="body2" color="text.secondary" mt={1}>
+            Bu işlem geri alınamaz.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeDeleteDialog}>İptal</Button>
+          <Button onClick={handleConfirmDelete} color="error" variant="contained" disabled={actionLoading}>
+            {actionLoading ? 'Siliniyor...' : 'Sil'}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Stack>
   );
 }

@@ -5,6 +5,10 @@ import {
   Card,
   CardContent,
   Chip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Stack,
   Table,
   TableBody,
@@ -32,6 +36,8 @@ function MealReservationsPage() {
     message: '',
     type: 'success' as 'success' | 'error' | 'info' | 'warning',
   });
+  const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
+  const [reservationToCancel, setReservationToCancel] = useState<MealReservation | null>(null);
 
   const loadReservations = async () => {
     setLoading(true);
@@ -52,13 +58,25 @@ function MealReservationsPage() {
     loadReservations();
   }, []);
 
-  const handleCancel = async (reservationId: string) => {
-    setActionId(reservationId);
+  const openCancelDialog = (reservation: MealReservation) => {
+    setReservationToCancel(reservation);
+    setCancelDialogOpen(true);
+  };
+
+  const closeCancelDialog = () => {
+    setCancelDialogOpen(false);
+    setReservationToCancel(null);
+  };
+
+  const handleConfirmCancel = async () => {
+    if (!reservationToCancel) return;
+    setActionId(reservationToCancel.id);
     setError('');
     try {
-      await cancelMealReservation(reservationId);
+      await cancelMealReservation(reservationToCancel.id);
       setToast({ open: true, type: 'success', message: 'Rezervasyon iptal edildi.' });
-      setReservations((prev) => prev.filter((item) => item.id !== reservationId));
+      setReservations((prev) => prev.filter((item) => item.id !== reservationToCancel.id));
+      closeCancelDialog();
     } catch (err) {
       const message = getErrorMessage(err, 'Iptal basarisiz.');
       setError(message);
@@ -75,7 +93,6 @@ function MealReservationsPage() {
       </Typography>
 
       {error && <Alert variant="error" message={error} />}
-      <Toast open={toast.open} onClose={() => setToast((prev) => ({ ...prev, open: false }))} type={toast.type} message={toast.message} />
 
       {loading ? (
         <Box py={4}>
@@ -117,14 +134,16 @@ function MealReservationsPage() {
                         )}
                       </TableCell>
                       <TableCell align="right">
-                        <Button
-                          size="small"
-                          color="error"
-                          disabled={actionId === reservation.id}
-                          onClick={() => handleCancel(reservation.id)}
-                        >
-                          {actionId === reservation.id ? <LoadingSpinner label="" /> : 'Iptal et'}
-                        </Button>
+                        {reservation.status === 'reserved' && (
+                          <Button
+                            size="small"
+                            color="error"
+                            disabled={actionId === reservation.id}
+                            onClick={() => openCancelDialog(reservation)}
+                          >
+                            {actionId === reservation.id ? <LoadingSpinner label="" /> : 'İptal et'}
+                          </Button>
+                        )}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -141,6 +160,27 @@ function MealReservationsPage() {
           </CardContent>
         </Card>
       )}
+
+      {/* Cancel Confirmation Dialog */}
+      <Dialog open={cancelDialogOpen} onClose={closeCancelDialog} maxWidth="xs" fullWidth>
+        <DialogTitle>Rezervasyonu İptal Et</DialogTitle>
+        <DialogContent>
+          <Typography>
+            <strong>{reservationToCancel?.menu?.title || reservationToCancel?.menu?.name || 'Bu menü'}</strong> için olan rezervasyonunuzu iptal etmek istediğinize emin misiniz?
+          </Typography>
+          <Typography variant="body2" color="text.secondary" mt={1}>
+            İptal işlemi geri alınamaz.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeCancelDialog}>Vazgeç</Button>
+          <Button onClick={handleConfirmCancel} color="error" variant="contained" disabled={actionId === reservationToCancel?.id}>
+            {actionId === reservationToCancel?.id ? 'İptal ediliyor...' : 'İptal Et'}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Toast open={toast.open} onClose={() => setToast((prev) => ({ ...prev, open: false }))} type={toast.type} message={toast.message} />
     </Stack>
   );
 }
