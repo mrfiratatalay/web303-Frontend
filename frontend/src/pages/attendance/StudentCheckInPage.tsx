@@ -119,6 +119,12 @@ function StudentCheckInPage() {
   const processQrCode = (code: string) => {
     setScannedQrCode(code);
 
+    // Check if there are any active sessions
+    if (sessions.length === 0) {
+      setError('Kayıtlı olduğunuz derslerde aktif yoklama oturumu bulunmuyor.');
+      return;
+    }
+
     // Find matching session by QR code
     const matchingSession = sessions.find((s) => s.qr_code === code);
     if (matchingSession) {
@@ -129,7 +135,11 @@ function StudentCheckInPage() {
       // Auto check-in with scanned QR
       handleCheckIn(matchingSession, code);
     } else {
-      setError('QR kod eşleşen aktif yoklama oturumu bulunamadı. Dersin açık olduğundan emin olun.');
+      // QR doesn't match any enrolled course's session
+      setError(
+        'Bu QR kod kayıtlı olduğunuz derslerden birine ait değil. ' +
+        'Bu derse kayıtlı olduğunuzdan emin olun veya doğru QR kodu taradığınızı kontrol edin.'
+      );
     }
   };
 
