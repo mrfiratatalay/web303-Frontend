@@ -278,3 +278,4 @@ function QRScanner({
 
 export default QRScanner;
 
+
