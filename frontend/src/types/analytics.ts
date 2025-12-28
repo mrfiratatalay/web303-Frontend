@@ -1,68 +1,128 @@
-export type ExportFormat = 'csv' | 'json';
+export type ExportFormat = 'csv' | 'json' | 'excel' | 'pdf';
 
 export type AnalyticsType = 'academic' | 'attendance' | 'meal' | 'event';
 
-// Admin Dashboard Analytics
+// Admin Dashboard Analytics - Backend yapısına uygun
 export interface AnalyticsDashboard {
-  totalStudents: number;
-  totalFaculty: number;
+  totalUsers: number;
+  activeUsersToday: number;
   totalCourses: number;
-  totalSections: number;
-  activeUsers: number;
-  averageAttendanceRate: number;
-  averageGPA: number;
-  mealUsageToday: number;
+  totalEnrollments: number;
+  attendanceRate: number;
+  mealReservationsToday: number;
   upcomingEvents: number;
-  systemHealth: {
-    status: 'healthy' | 'warning' | 'critical';
-    uptime: number;
-    lastCheck: string;
-  };
+  systemHealth: string;
+  // Frontend'de kullanılan eski alanlar için uyumluluk
+  totalStudents?: number;
+  totalFaculty?: number;
+  totalSections?: number;
+  activeUsers?: number;
+  averageAttendanceRate?: number;
+  averageGPA?: number;
+  mealUsageToday?: number;
 }
 
-// Academic Performance Analytics
+// Academic Performance Analytics - Backend yapısına uygun
 export interface GradeDistribution {
-  grade: string;
+  letter_grade: string;
   count: number;
-  percentage: number;
+  // Frontend uyumluluğu
+  grade?: string;
+  percentage?: number;
 }
 
 export interface TopStudent {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
+  id: number;
+  student_number: string;
   gpa: number;
   cgpa: number;
-  totalCredits: number;
+  user: {
+    first_name: string;
+    last_name: string;
+  };
+  // Frontend uyumluluğu
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  totalCredits?: number;
+}
+
+export interface AtRiskStudent {
+  id: number;
+  student_number: string;
+  gpa: number;
+  user: {
+    first_name: string;
+    last_name: string;
+    email: string;
+  };
 }
 
 export interface DepartmentPerformance {
-  departmentId: string;
-  departmentName: string;
-  averageGPA: number;
+  department_id: number;
+  averageGpa: string;
   studentCount: number;
-  topPerformers: number;
+  // Frontend uyumluluğu
+  departmentId?: string;
+  departmentName?: string;
+  averageGPA?: number;
+  topPerformers?: number;
 }
 
 export interface AcademicPerformance {
-  overallStats: {
+  gpaByDepartment: DepartmentPerformance[];
+  gradeDistribution: GradeDistribution[];
+  passRate: number;
+  failRate: number;
+  topStudents: TopStudent[];
+  atRiskStudents: AtRiskStudent[];
+  // Frontend uyumluluğu
+  overallStats?: {
     averageGPA: number;
     averageCGPA: number;
     totalStudents: number;
     passingRate: number;
   };
-  gradeDistribution: GradeDistribution[];
-  topStudents: TopStudent[];
-  departmentPerformance: DepartmentPerformance[];
-  semesterTrends: {
+  departmentPerformance?: DepartmentPerformance[];
+  semesterTrends?: {
     semester: string;
     averageGPA: number;
     studentCount: number;
   }[];
 }
 
-// Attendance Analytics
+// Attendance Analytics - Backend yapısına uygun
+export interface AttendanceByCourse {
+  section_id: number;
+  totalSessions: number;
+  section: {
+    section_number: string;
+    course: {
+      code: string;
+      name: string;
+    };
+  };
+}
+
+export interface AttendanceTrend {
+  date: string;
+  sessionsCount: number;
+  // Frontend uyumluluğu
+  attendanceRate?: number;
+  sessionCount?: number;
+}
+
+export interface CriticalAbsence {
+  id: number;
+  student_number: string;
+  user: {
+    first_name: string;
+    last_name: string;
+    email: string;
+  };
+  attendanceRecords: any[];
+}
+
 export interface SectionAttendance {
   sectionId: string;
   courseCode: string;
@@ -75,19 +135,19 @@ export interface SectionAttendance {
 }
 
 export interface AttendanceAnalytics {
-  overallStats: {
+  attendanceByCourse: AttendanceByCourse[];
+  attendanceTrends: AttendanceTrend[];
+  criticalAbsences: CriticalAbsence[];
+  lowAttendanceCourses: any[];
+  // Frontend uyumluluğu
+  overallStats?: {
     totalSessions: number;
     averageAttendanceRate: number;
     totalExcuses: number;
     approvedExcuses: number;
   };
-  sectionAttendance: SectionAttendance[];
-  attendanceTrends: {
-    date: string;
-    attendanceRate: number;
-    sessionCount: number;
-  }[];
-  lowAttendanceStudents: {
+  sectionAttendance?: SectionAttendance[];
+  lowAttendanceStudents?: {
     studentId: string;
     studentName: string;
     attendanceRate: number;
@@ -95,7 +155,24 @@ export interface AttendanceAnalytics {
   }[];
 }
 
-// Meal Usage Analytics
+// Meal Usage Analytics - Backend yapısına uygun
+export interface DailyMealCount {
+  date: string;
+  count: number;
+}
+
+export interface PeakHour {
+  hour: number;
+  count: number;
+  // Frontend uyumluluğu
+  usageCount?: number;
+}
+
+export interface UsageStats {
+  used: number;
+  cancelled: number;
+}
+
 export interface CafeteriaUsage {
   cafeteriaId: string;
   cafeteriaName: string;
@@ -114,27 +191,49 @@ export interface PopularMeal {
 }
 
 export interface MealUsageReport {
-  overallStats: {
+  dailyMealCounts: DailyMealCount[];
+  mealTypeDistribution: { count: number }[];
+  totalRevenue: number;
+  peakHours: PeakHour[];
+  usageStats: UsageStats;
+  // Frontend uyumluluğu
+  overallStats?: {
     totalReservations: number;
     totalUsage: number;
     usageRate: number;
     totalRevenue: number;
   };
-  cafeteriaUsage: CafeteriaUsage[];
-  popularMeals: PopularMeal[];
-  usageTrends: {
+  cafeteriaUsage?: CafeteriaUsage[];
+  popularMeals?: PopularMeal[];
+  usageTrends?: {
     date: string;
     reservations: number;
     usage: number;
     revenue: number;
   }[];
-  peakHours: {
-    hour: number;
-    usageCount: number;
-  }[];
 }
 
-// Event Analytics
+// Event Analytics - Backend yapısına uygun
+export interface PopularEvent {
+  id: number;
+  title: string;
+  category: string;
+  date: string;
+  capacity: number;
+  registrationCount: number;
+}
+
+export interface RegistrationByCategory {
+  category: string;
+  eventCount: number;
+  totalCapacity: number;
+}
+
+export interface EventByCategory {
+  category: string;
+  count: number;
+}
+
 export interface EventPerformance {
   eventId: string;
   eventName: string;
@@ -148,27 +247,28 @@ export interface EventPerformance {
 }
 
 export interface EventStatistics {
-  overallStats: {
+  popularEvents: PopularEvent[];
+  registrationsByCategory: RegistrationByCategory[];
+  checkInRate: number;
+  totalRegistrations: number;
+  checkedInCount: number;
+  eventsByCategory: EventByCategory[];
+  // Frontend uyumluluğu
+  overallStats?: {
     totalEvents: number;
     totalRegistrations: number;
     totalCheckIns: number;
     averageAttendanceRate: number;
   };
-  eventPerformance: EventPerformance[];
-  eventTypeTrends: {
+  eventPerformance?: EventPerformance[];
+  eventTypeTrends?: {
     eventType: string;
     count: number;
     averageAttendance: number;
   }[];
-  registrationTrends: {
+  registrationTrends?: {
     date: string;
     registrations: number;
     checkIns: number;
-  }[];
-  popularEvents: {
-    eventId: string;
-    eventName: string;
-    registrations: number;
-    attendanceRate: number;
   }[];
 }

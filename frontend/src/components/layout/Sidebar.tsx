@@ -244,6 +244,56 @@ export const navSections: Array<{ title: string; items: NavItem[] }> = [
       },
     ],
   },
+  {
+    title: 'Analitik',
+    items: [
+      {
+        to: '/analytics/dashboard',
+        label: 'Analytics Dashboard',
+        roles: ['admin'],
+        icon: <AssessmentOutlinedIcon fontSize="small" />,
+      },
+      {
+        to: '/analytics/academic',
+        label: 'Akademik Analiz',
+        roles: ['admin', 'faculty'],
+        icon: <AssessmentOutlinedIcon fontSize="small" />,
+      },
+      {
+        to: '/analytics/attendance',
+        label: 'Yoklama Analitiği',
+        roles: ['admin', 'faculty'],
+        icon: <AssessmentOutlinedIcon fontSize="small" />,
+      },
+      {
+        to: '/analytics/meal',
+        label: 'Yemek Raporları',
+        roles: ['admin'],
+        icon: <RestaurantOutlinedIcon fontSize="small" />,
+      },
+      {
+        to: '/analytics/event',
+        label: 'Etkinlik Analitiği',
+        roles: ['admin'],
+        icon: <EventAvailableOutlinedIcon fontSize="small" />,
+      },
+    ],
+  },
+  {
+    title: 'Bildirimler',
+    items: [
+      {
+        to: '/notifications',
+        label: 'Bildirimler',
+        icon: <EventNoteOutlinedIcon fontSize="small" />,
+      },
+      {
+        to: '/notifications/preferences',
+        label: 'Bildirim Tercihleri',
+        icon: <RuleFolderOutlinedIcon fontSize="small" />,
+      },
+    ],
+  },
 ];
 
 function Sidebar() {

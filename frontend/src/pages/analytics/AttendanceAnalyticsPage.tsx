@@ -13,9 +13,10 @@ import {
     TableContainer,
     TableHead,
     TableRow,
+    Chip,
 } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { getAttendanceAnalytics, exportAnalytics, extractData } from '../../services/analyticsApi';
 import { AttendanceAnalytics } from '../../types/analytics';
 import LoadingSkeleton from '../../components/common/LoadingSkeleton';
@@ -69,6 +70,17 @@ const AttendanceAnalyticsPage = () => {
         );
     }
 
+    // Prepare chart data from backend response
+    const courseChartData = data?.attendanceByCourse?.map(item => ({
+        name: `${item.section?.course?.code || 'N/A'} - ${item.section?.section_number || ''}`,
+        sessions: item.totalSessions,
+    })) || [];
+
+    const trendChartData = data?.attendanceTrends?.map(item => ({
+        date: new Date(item.date).toLocaleDateString('tr-TR'),
+        sessions: item.sessionsCount,
+    })) || [];
+
     return (
         <Container maxWidth="lg" sx={{ py: 4 }}>
             <Box sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -111,88 +123,132 @@ const AttendanceAnalyticsPage = () => {
             {data && (
                 <>
                     <Grid container spacing={3} sx={{ mb: 4 }}>
-                        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
                             <Paper sx={{ p: 3, textAlign: 'center' }}>
                                 <Typography variant="body2" color="text.secondary">
-                                    Toplam Oturum
-                                </Typography>
-                                <Typography variant="h3" fontWeight="bold">
-                                    {data.overallStats.totalSessions}
-                                </Typography>
-                            </Paper>
-                        </Grid>
-                        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-                            <Paper sx={{ p: 3, textAlign: 'center' }}>
-                                <Typography variant="body2" color="text.secondary">
-                                    Ortalama Devam
-                                </Typography>
-                                <Typography variant="h3" fontWeight="bold" color="success.main">
-                                    {data.overallStats.averageAttendanceRate.toFixed(1)}%
-                                </Typography>
-                            </Paper>
-                        </Grid>
-                        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-                            <Paper sx={{ p: 3, textAlign: 'center' }}>
-                                <Typography variant="body2" color="text.secondary">
-                                    Toplam Mazeret
-                                </Typography>
-                                <Typography variant="h3" fontWeight="bold">
-                                    {data.overallStats.totalExcuses}
-                                </Typography>
-                            </Paper>
-                        </Grid>
-                        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-                            <Paper sx={{ p: 3, textAlign: 'center' }}>
-                                <Typography variant="body2" color="text.secondary">
-                                    Onaylanan Mazeret
+                                    Toplam Ders
                                 </Typography>
                                 <Typography variant="h3" fontWeight="bold" color="primary.main">
-                                    {data.overallStats.approvedExcuses}
+                                    {data.attendanceByCourse?.length ?? 0}
+                                </Typography>
+                            </Paper>
+                        </Grid>
+                        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+                            <Paper sx={{ p: 3, textAlign: 'center' }}>
+                                <Typography variant="body2" color="text.secondary">
+                                    Kritik Devamsızlık
+                                </Typography>
+                                <Typography variant="h3" fontWeight="bold" color="error.main">
+                                    {data.criticalAbsences?.length ?? 0}
+                                </Typography>
+                            </Paper>
+                        </Grid>
+                        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+                            <Paper sx={{ p: 3, textAlign: 'center' }}>
+                                <Typography variant="body2" color="text.secondary">
+                                    Düşük Katılımlı Ders
+                                </Typography>
+                                <Typography variant="h3" fontWeight="bold" color="warning.main">
+                                    {data.lowAttendanceCourses?.length ?? 0}
                                 </Typography>
                             </Paper>
                         </Grid>
                     </Grid>
 
-                    <Paper sx={{ p: 3, mb: 3 }}>
-                        <Typography variant="h6" gutterBottom>
-                            Şube Bazlı Devam Oranları
-                        </Typography>
-                        <ResponsiveContainer width="100%" height={300}>
-                            <BarChart data={data.sectionAttendance}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="courseCode" />
-                                <YAxis />
-                                <Tooltip />
-                                <Legend />
-                                <Bar dataKey="averageAttendanceRate" fill="#82ca9d" name="Devam Oranı (%)" />
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </Paper>
-
-                    {data.lowAttendanceStudents && data.lowAttendanceStudents.length > 0 && (
-                        <Paper sx={{ p: 3 }}>
+                    {/* Attendance Trends Chart */}
+                    {trendChartData.length > 0 && (
+                        <Paper sx={{ p: 3, mb: 3 }}>
                             <Typography variant="h6" gutterBottom>
-                                Düşük Devam Oranına Sahip Öğrenciler
+                                Son 30 Günlük Yoklama Trendi
+                            </Typography>
+                            <ResponsiveContainer width="100%" height={300}>
+                                <LineChart data={trendChartData}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="date" />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <Legend />
+                                    <Line type="monotone" dataKey="sessions" stroke="#1976d2" name="Oturum Sayısı" />
+                                </LineChart>
+                            </ResponsiveContainer>
+                        </Paper>
+                    )}
+
+                    {/* Attendance by Course Chart */}
+                    {courseChartData.length > 0 && (
+                        <Paper sx={{ p: 3, mb: 3 }}>
+                            <Typography variant="h6" gutterBottom>
+                                Derslere Göre Yoklama Oturumları
+                            </Typography>
+                            <ResponsiveContainer width="100%" height={300}>
+                                <BarChart data={courseChartData}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="name" />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <Legend />
+                                    <Bar dataKey="sessions" fill="#82ca9d" name="Toplam Oturum" />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </Paper>
+                    )}
+
+                    {/* Attendance by Course Table */}
+                    {data.attendanceByCourse && data.attendanceByCourse.length > 0 && (
+                        <Paper sx={{ p: 3, mb: 3 }}>
+                            <Typography variant="h6" gutterBottom>
+                                Derslere Göre Yoklama Detayları
                             </Typography>
                             <TableContainer>
                                 <Table>
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell>Öğrenci Adı</TableCell>
-                                            <TableCell align="right">Devam Oranı</TableCell>
-                                            <TableCell align="right">Toplam Devamsızlık</TableCell>
+                                            <TableCell>Ders Kodu</TableCell>
+                                            <TableCell>Ders Adı</TableCell>
+                                            <TableCell>Şube</TableCell>
+                                            <TableCell align="right">Toplam Oturum</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {data.lowAttendanceStudents.map((student) => (
-                                            <TableRow key={student.studentId}>
-                                                <TableCell>{student.studentName}</TableCell>
-                                                <TableCell align="right">
-                                                    <Typography color="error.main">
-                                                        {student.attendanceRate.toFixed(1)}%
-                                                    </Typography>
+                                        {data.attendanceByCourse.map((item) => (
+                                            <TableRow key={item.section_id}>
+                                                <TableCell>
+                                                    <Chip label={item.section?.course?.code || 'N/A'} size="small" color="primary" />
                                                 </TableCell>
-                                                <TableCell align="right">{student.totalAbsences}</TableCell>
+                                                <TableCell>{item.section?.course?.name || 'N/A'}</TableCell>
+                                                <TableCell>{item.section?.section_number || '-'}</TableCell>
+                                                <TableCell align="right">{item.totalSessions}</TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </Paper>
+                    )}
+
+                    {/* Critical Absences Table */}
+                    {data.criticalAbsences && data.criticalAbsences.length > 0 && (
+                        <Paper sx={{ p: 3 }}>
+                            <Typography variant="h6" gutterBottom color="error.main">
+                                Kritik Devamsızlık Yapan Öğrenciler
+                            </Typography>
+                            <TableContainer>
+                                <Table>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>Öğrenci No</TableCell>
+                                            <TableCell>Ad Soyad</TableCell>
+                                            <TableCell>E-posta</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {data.criticalAbsences.map((student) => (
+                                            <TableRow key={student.id}>
+                                                <TableCell>{student.student_number}</TableCell>
+                                                <TableCell>
+                                                    {student.user?.first_name} {student.user?.last_name}
+                                                </TableCell>
+                                                <TableCell>{student.user?.email}</TableCell>
                                             </TableRow>
                                         ))}
                                     </TableBody>

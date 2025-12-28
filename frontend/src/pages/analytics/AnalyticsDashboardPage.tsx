@@ -51,7 +51,7 @@ const AnalyticsDashboardPage = () => {
                             {title}
                         </Typography>
                         <Typography variant="h4" fontWeight="bold">
-                            {value}
+                            {value ?? 0}
                         </Typography>
                     </Box>
                     <Box
@@ -103,24 +103,16 @@ const AnalyticsDashboardPage = () => {
                     <Grid container spacing={3} sx={{ mb: 4 }}>
                         <Grid size={{ xs: 12, sm: 6, md: 4 }}>
                             <StatCard
-                                title="Toplam Öğrenci"
-                                value={data.totalStudents}
+                                title="Toplam Kullanıcı"
+                                value={data.totalUsers}
                                 icon={<PeopleIcon sx={{ fontSize: 40, color: 'primary.main' }} />}
                                 color="primary"
                             />
                         </Grid>
                         <Grid size={{ xs: 12, sm: 6, md: 4 }}>
                             <StatCard
-                                title="Toplam Öğretim Üyesi"
-                                value={data.totalFaculty}
-                                icon={<SchoolIcon sx={{ fontSize: 40, color: 'secondary.main' }} />}
-                                color="secondary"
-                            />
-                        </Grid>
-                        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <StatCard
-                                title="Aktif Kullanıcı"
-                                value={data.activeUsers}
+                                title="Bugün Aktif Kullanıcı"
+                                value={data.activeUsersToday}
                                 icon={<TrendingUpIcon sx={{ fontSize: 40, color: 'success.main' }} />}
                                 color="success"
                             />
@@ -135,9 +127,17 @@ const AnalyticsDashboardPage = () => {
                         </Grid>
                         <Grid size={{ xs: 12, sm: 6, md: 4 }}>
                             <StatCard
-                                title="Toplam Şube"
-                                value={data.totalSections}
-                                icon={<ClassIcon sx={{ fontSize: 40, color: 'warning.main' }} />}
+                                title="Toplam Kayıt"
+                                value={data.totalEnrollments}
+                                icon={<SchoolIcon sx={{ fontSize: 40, color: 'secondary.main' }} />}
+                                color="secondary"
+                            />
+                        </Grid>
+                        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+                            <StatCard
+                                title="Bugünkü Yemek Rezervasyonu"
+                                value={data.mealReservationsToday}
+                                icon={<RestaurantIcon sx={{ fontSize: 40, color: 'warning.main' }} />}
                                 color="warning"
                             />
                         </Grid>
@@ -155,44 +155,14 @@ const AnalyticsDashboardPage = () => {
                         <Grid size={{ xs: 12, md: 6 }}>
                             <Paper sx={{ p: 3 }}>
                                 <Typography variant="h6" gutterBottom>
-                                    Akademik Performans
+                                    Yoklama Oranı
                                 </Typography>
                                 <Box sx={{ mt: 2 }}>
                                     <Typography variant="body2" color="text.secondary">
-                                        Ortalama GPA
+                                        Son 30 Gün Ortalaması
                                     </Typography>
                                     <Typography variant="h4" fontWeight="bold">
-                                        {data.averageGPA.toFixed(2)}
-                                    </Typography>
-                                </Box>
-                            </Paper>
-                        </Grid>
-                        <Grid size={{ xs: 12, md: 6 }}>
-                            <Paper sx={{ p: 3 }}>
-                                <Typography variant="h6" gutterBottom>
-                                    Devam Oranı
-                                </Typography>
-                                <Box sx={{ mt: 2 }}>
-                                    <Typography variant="body2" color="text.secondary">
-                                        Ortalama Devam
-                                    </Typography>
-                                    <Typography variant="h4" fontWeight="bold">
-                                        {data.averageAttendanceRate.toFixed(1)}%
-                                    </Typography>
-                                </Box>
-                            </Paper>
-                        </Grid>
-                        <Grid size={{ xs: 12, md: 6 }}>
-                            <Paper sx={{ p: 3 }}>
-                                <Typography variant="h6" gutterBottom>
-                                    Yemek Kullanımı
-                                </Typography>
-                                <Box sx={{ mt: 2 }}>
-                                    <Typography variant="body2" color="text.secondary">
-                                        Bugünkü Kullanım
-                                    </Typography>
-                                    <Typography variant="h4" fontWeight="bold">
-                                        {data.mealUsageToday}
+                                        {data.attendanceRate?.toFixed(1) ?? 0}%
                                     </Typography>
                                 </Box>
                             </Paper>
@@ -210,21 +180,18 @@ const AnalyticsDashboardPage = () => {
                                         variant="h5"
                                         fontWeight="bold"
                                         color={
-                                            data.systemHealth.status === 'healthy'
+                                            data.systemHealth === 'healthy'
                                                 ? 'success.main'
-                                                : data.systemHealth.status === 'warning'
+                                                : data.systemHealth === 'warning'
                                                     ? 'warning.main'
                                                     : 'error.main'
                                         }
                                     >
-                                        {data.systemHealth.status === 'healthy'
+                                        {data.systemHealth === 'healthy'
                                             ? 'Sağlıklı'
-                                            : data.systemHealth.status === 'warning'
+                                            : data.systemHealth === 'warning'
                                                 ? 'Uyarı'
                                                 : 'Kritik'}
-                                    </Typography>
-                                    <Typography variant="caption" color="text.secondary">
-                                        Uptime: {Math.floor(data.systemHealth.uptime / 3600)} saat
                                     </Typography>
                                 </Box>
                             </Paper>
