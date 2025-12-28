@@ -30,6 +30,8 @@ function Layout() {
             py: 4,
             display: 'flex',
             flexDirection: 'column',
+            width: '100%',
+            maxWidth: 'none',
           }}
         >
           <Box flex={1}>

@@ -1,4 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import BadgeIcon from '@mui/icons-material/Badge';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import EmailIcon from '@mui/icons-material/Email';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import LockIcon from '@mui/icons-material/Lock';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import PersonIcon from '@mui/icons-material/Person';
+import PhoneIcon from '@mui/icons-material/Phone';
+import SchoolIcon from '@mui/icons-material/School';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import WorkIcon from '@mui/icons-material/Work';
 import {
   Avatar,
   Box,
@@ -16,17 +27,6 @@ import {
   Typography,
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import BadgeIcon from '@mui/icons-material/Badge';
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import EmailIcon from '@mui/icons-material/Email';
-import LockIcon from '@mui/icons-material/Lock';
-import PersonIcon from '@mui/icons-material/Person';
-import PhoneIcon from '@mui/icons-material/Phone';
-import SchoolIcon from '@mui/icons-material/School';
-import WorkIcon from '@mui/icons-material/Work';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Alert from '../../components/feedback/Alert';
@@ -443,9 +443,9 @@ function ProfilePage() {
         <CardContent sx={{ p: 3 }}>
           {/* Tab 0: Profile Info */}
           {activeTab === 0 && (
-            <Grid container spacing={4}>
+            <Stack spacing={4}>
               {/* Left: Info Display */}
-              <Grid item xs={12} md={5}>
+              <Box>
                 <Typography variant="subtitle1" fontWeight={700} gutterBottom>
                   Hesap Bilgileri
                 </Typography>
@@ -487,10 +487,10 @@ function ProfilePage() {
                     </>
                   )}
                 </Card>
-              </Grid>
+              </Box>
 
               {/* Right: Edit Form */}
-              <Grid item xs={12} md={7}>
+              <Box>
                 <Typography variant="subtitle1" fontWeight={700} gutterBottom>
                   Bilgileri Düzenle
                 </Typography>
@@ -546,8 +546,8 @@ function ProfilePage() {
                     </Grid>
                   </Grid>
                 </Box>
-              </Grid>
-            </Grid>
+              </Box>
+            </Stack>
           )}
 
           {/* Tab 1: Security */}
