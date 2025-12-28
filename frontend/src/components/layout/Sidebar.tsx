@@ -1,4 +1,5 @@
-import { NavLink } from 'react-router-dom';
+import { useState, useEffect, useMemo } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -7,6 +8,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
+import Collapse from '@mui/material/Collapse';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import SpaceDashboardOutlinedIcon from '@mui/icons-material/SpaceDashboardOutlined';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import MenuBookOutlinedIcon from '@mui/icons-material/MenuBookOutlined';
@@ -302,6 +306,34 @@ export const navSections: Array<{ title: string; items: NavItem[] }> = [
 function Sidebar() {
   const { user } = useAuth();
   const role = user?.role;
+  const location = useLocation();
+
+  // Aktif rotaya göre hangi bölümün açık olması gerektiğini bul
+  const getActiveSectionIndex = useMemo(() => {
+    return navSections.findIndex((section) =>
+      section.items.some((item) => location.pathname.startsWith(item.to))
+    );
+  }, [location.pathname]);
+
+  // Her bölüm için açık/kapalı state'i
+  const [openSections, setOpenSections] = useState<Record<number, boolean>>({});
+
+  // Sayfa yüklendiğinde veya rota değiştiğinde aktif bölümü aç
+  useEffect(() => {
+    if (getActiveSectionIndex !== -1) {
+      setOpenSections((prev) => ({
+        ...prev,
+        [getActiveSectionIndex]: true,
+      }));
+    }
+  }, [getActiveSectionIndex]);
+
+  const toggleSection = (index: number) => {
+    setOpenSections((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
 
   return (
     <Box
@@ -316,94 +348,150 @@ function Sidebar() {
         px: 1.5,
         py: 2,
         boxShadow: 'inset -1px 0 0 rgba(15,23,42,0.04)',
+        overflowY: 'auto',
+        maxHeight: 'calc(100vh - 64px)',
+        '&::-webkit-scrollbar': {
+          width: 6,
+        },
+        '&::-webkit-scrollbar-track': {
+          bgcolor: 'transparent',
+        },
+        '&::-webkit-scrollbar-thumb': {
+          bgcolor: 'divider',
+          borderRadius: 3,
+        },
       }}
     >
-      {navSections.map((section) => {
+      {navSections.map((section, sectionIndex) => {
         const visibleItems = section.items.filter((item) => !item.roles || (role && item.roles.includes(role)));
         if (!visibleItems.length) return null;
 
+        const isOpen = openSections[sectionIndex] ?? false;
+        const hasActiveItem = visibleItems.some((item) => location.pathname.startsWith(item.to));
+
         return (
-          <Box key={section.title} sx={{ mb: 1.5 }}>
-            <Typography
-              variant="overline"
-              fontWeight={700}
-              color="text.secondary"
-              sx={{ px: 1, letterSpacing: 0.6, display: 'block', mb: 0.5 }}
+          <Box key={section.title} sx={{ mb: 0.5 }}>
+            {/* Tıklanabilir Bölüm Başlığı */}
+            <Box
+              onClick={() => toggleSection(sectionIndex)}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                px: 1,
+                py: 0.75,
+                cursor: 'pointer',
+                borderRadius: 1.5,
+                transition: 'background-color 0.2s ease',
+                '&:hover': {
+                  bgcolor: 'action.hover',
+                },
+              }}
             >
-              {section.title}
-            </Typography>
-            <List disablePadding sx={{ display: 'flex', flexDirection: 'column', gap: 0.25 }}>
-              {visibleItems.map((item) => (
-                <ListItemButton
-                  key={item.to}
-                  component={NavLink}
-                  to={item.to}
-                  end={item.end}
-                  aria-label={item.label}
-                  sx={{
-                    position: 'relative',
-                    borderRadius: 2,
-                    px: 1.5,
-                    py: 0.9,
-                    gap: 1,
-                    minHeight: 44,
-                    transition: 'background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease',
-                    '&:hover': {
-                      bgcolor: 'action.hover',
-                    },
-                    '&:focus-visible': {
-                      outline: '2px solid',
-                      outlineColor: 'primary.main',
-                      boxShadow: '0 0 0 3px rgba(59,130,246,0.25)',
-                    },
-                    '&.active': {
-                      bgcolor: 'primary.light',
-                      color: 'primary.dark',
-                      fontWeight: 700,
-                      boxShadow: 'inset 0 0 0 1px rgba(59,130,246,0.16)',
-                      '&::before': {
-                        content: '""',
-                        position: 'absolute',
-                        left: 6,
-                        top: 8,
-                        bottom: 8,
-                        width: 3,
-                        bgcolor: 'primary.main',
-                        borderRadius: 8,
+              <Typography
+                variant="overline"
+                fontWeight={700}
+                color={hasActiveItem ? 'primary.main' : 'text.secondary'}
+                sx={{ 
+                  letterSpacing: 0.6, 
+                  display: 'block',
+                  fontSize: '0.7rem',
+                  userSelect: 'none',
+                }}
+              >
+                {section.title}
+              </Typography>
+              <Box
+                sx={{
+                  color: hasActiveItem ? 'primary.main' : 'text.secondary',
+                  display: 'flex',
+                  alignItems: 'center',
+                  transition: 'transform 0.2s ease',
+                }}
+              >
+                {isOpen ? (
+                  <ExpandLessIcon fontSize="small" />
+                ) : (
+                  <ExpandMoreIcon fontSize="small" />
+                )}
+              </Box>
+            </Box>
+
+            {/* Collapse ile Açılır-Kapanır İçerik */}
+            <Collapse in={isOpen} timeout="auto" unmountOnExit>
+              <List disablePadding sx={{ display: 'flex', flexDirection: 'column', gap: 0.25, pl: 0.5 }}>
+                {visibleItems.map((item) => (
+                  <ListItemButton
+                    key={item.to}
+                    component={NavLink}
+                    to={item.to}
+                    end={item.end}
+                    aria-label={item.label}
+                    sx={{
+                      position: 'relative',
+                      borderRadius: 2,
+                      px: 1.5,
+                      py: 0.75,
+                      gap: 1,
+                      minHeight: 40,
+                      transition: 'background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease',
+                      '&:hover': {
+                        bgcolor: 'action.hover',
                       },
-                    },
-                    '& .MuiListItemIcon-root': {
-                      minWidth: 32,
-                      color: 'text.secondary',
-                      justifyContent: 'center',
-                    },
-                    '&.active .MuiListItemIcon-root': { color: 'primary.main' },
-                  }}
-                >
-                  <ListItemIcon sx={{ minWidth: 32 }}>{item.icon}</ListItemIcon>
-                  <Tooltip title={item.label} enterDelay={500} placement="right">
-                    <ListItemText
-                      primary={item.label}
-                      primaryTypographyProps={{
-                        variant: 'body2',
-                        fontWeight: 600,
-                        noWrap: true,
-                        sx: { lineHeight: 1.4, letterSpacing: 0.1 },
-                      }}
-                      sx={{
-                        my: 0,
-                        '.MuiListItemText-primary': {
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
+                      '&:focus-visible': {
+                        outline: '2px solid',
+                        outlineColor: 'primary.main',
+                        boxShadow: '0 0 0 3px rgba(59,130,246,0.25)',
+                      },
+                      '&.active': {
+                        bgcolor: 'primary.light',
+                        color: 'primary.dark',
+                        fontWeight: 700,
+                        boxShadow: 'inset 0 0 0 1px rgba(59,130,246,0.16)',
+                        '&::before': {
+                          content: '""',
+                          position: 'absolute',
+                          left: 4,
+                          top: 6,
+                          bottom: 6,
+                          width: 3,
+                          bgcolor: 'primary.main',
+                          borderRadius: 8,
                         },
-                      }}
-                    />
-                  </Tooltip>
-                </ListItemButton>
-              ))}
-            </List>
-            <Divider sx={{ mt: 1, mb: 1.5 }} />
+                      },
+                      '& .MuiListItemIcon-root': {
+                        minWidth: 28,
+                        color: 'text.secondary',
+                        justifyContent: 'center',
+                      },
+                      '&.active .MuiListItemIcon-root': { color: 'primary.main' },
+                    }}
+                  >
+                    <ListItemIcon sx={{ minWidth: 28 }}>{item.icon}</ListItemIcon>
+                    <Tooltip title={item.label} enterDelay={500} placement="right">
+                      <ListItemText
+                        primary={item.label}
+                        primaryTypographyProps={{
+                          variant: 'body2',
+                          fontWeight: 500,
+                          noWrap: true,
+                          sx: { lineHeight: 1.4, letterSpacing: 0.1, fontSize: '0.825rem' },
+                        }}
+                        sx={{
+                          my: 0,
+                          '.MuiListItemText-primary': {
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                          },
+                        }}
+                      />
+                    </Tooltip>
+                  </ListItemButton>
+                ))}
+              </List>
+            </Collapse>
+            <Divider sx={{ mt: 0.75, mb: 0.5 }} />
           </Box>
         );
       })}
