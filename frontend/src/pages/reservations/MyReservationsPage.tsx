@@ -66,7 +66,7 @@ function MyReservationsPage() {
         }
         setReservations(resList);
       } catch (err) {
-        setError(getErrorMessage(err, 'Rezervasyonlar yuklenemedi.'));
+        setError(getErrorMessage(err, 'Rezervasyonlar yüklenemedi.'));
         setReservations([]);
       } finally {
         setLoading(false);
@@ -85,7 +85,7 @@ function MyReservationsPage() {
 
       {loading ? (
         <Box py={4}>
-          <LoadingSpinner label="Rezervasyonlar yukleniyor..." />
+          <LoadingSpinner label="Rezervasyonlar yükleniyor..." />
         </Box>
       ) : (
         <Card>
@@ -112,7 +112,7 @@ function MyReservationsPage() {
                   {!reservations.length && (
                     <TableRow>
                       <TableCell colSpan={4} align="center">
-                        <Typography color="text.secondary">Rezervasyon bulunamadi.</Typography>
+                        <Typography color="text.secondary">Rezervasyon bulunamadı.</Typography>
                       </TableCell>
                     </TableRow>
                   )}

@@ -47,7 +47,7 @@ function MealReservationsPage() {
       const data = extractData<MealReservation[] | MealReservation>(response);
       setReservations(Array.isArray(data) ? data : data ? [data] : []);
     } catch (err) {
-      setError(getErrorMessage(err, 'Rezervasyonlar yuklenemedi.'));
+      setError(getErrorMessage(err, 'Rezervasyonlar yüklenemedi.'));
       setReservations([]);
     } finally {
       setLoading(false);
@@ -78,7 +78,7 @@ function MealReservationsPage() {
       setReservations((prev) => prev.filter((item) => item.id !== reservationToCancel.id));
       closeCancelDialog();
     } catch (err) {
-      const message = getErrorMessage(err, 'Iptal basarisiz.');
+      const message = getErrorMessage(err, 'İptal başarısız.');
       setError(message);
       setToast({ open: true, type: 'error', message });
     } finally {
@@ -89,14 +89,14 @@ function MealReservationsPage() {
   return (
     <Stack spacing={2}>
       <Typography variant="h5" fontWeight={800}>
-        Yemek rezervasyonlarim
+        Yemek Rezervasyonlarım
       </Typography>
 
       {error && <Alert variant="error" message={error} />}
 
       {loading ? (
         <Box py={4}>
-          <LoadingSpinner label="Rezervasyonlar yukleniyor..." />
+          <LoadingSpinner label="Rezervasyonlar yükleniyor..." />
         </Box>
       ) : (
         <Card>
@@ -109,7 +109,7 @@ function MealReservationsPage() {
                     <TableCell>Tarih</TableCell>
                     <TableCell>Durum</TableCell>
                     <TableCell>QR</TableCell>
-                    <TableCell align="right">Islem</TableCell>
+                    <TableCell align="right">İşlem</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -150,7 +150,7 @@ function MealReservationsPage() {
                   {!reservations.length && (
                     <TableRow>
                       <TableCell colSpan={5} align="center">
-                        <Typography color="text.secondary">Rezervasyon bulunamadi.</Typography>
+                        <Typography color="text.secondary">Rezervasyon bulunamadı.</Typography>
                       </TableCell>
                     </TableRow>
                   )}

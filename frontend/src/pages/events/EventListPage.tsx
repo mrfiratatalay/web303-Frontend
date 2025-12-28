@@ -63,7 +63,7 @@ function EventListPage() {
       setEvents(data.events);
       setPagination(data.pagination || null);
     } catch (err) {
-      setError(getErrorMessage(err, 'Etkinlikler yuklenemedi.'));
+      setError(getErrorMessage(err, 'Etkinlikler yüklenemedi.'));
       setEvents([]);
       setPagination(null);
     } finally {
@@ -120,7 +120,7 @@ function EventListPage() {
 
       {loading ? (
         <Box py={4}>
-          <LoadingSpinner label="Etkinlikler yukleniyor..." />
+          <LoadingSpinner label="Etkinlikler yükleniyor..." />
         </Box>
       ) : (
         <Card>

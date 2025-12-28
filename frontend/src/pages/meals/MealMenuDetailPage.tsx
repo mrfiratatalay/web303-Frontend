@@ -41,7 +41,7 @@ function MealMenuDetailPage() {
         const data = extractData<MealMenu>(response);
         setMenu(data || null);
       } catch (err) {
-        setError(getErrorMessage(err, 'Menu yuklenemedi.'));
+        setError(getErrorMessage(err, 'Menü yüklenemedi.'));
       } finally {
         setLoading(false);
       }
@@ -55,9 +55,9 @@ function MealMenuDetailPage() {
     setError('');
     try {
       await createMealReservation({ menu_id: id });
-      setToast({ open: true, message: 'Rezervasyon olusturuldu.', type: 'success' });
+      setToast({ open: true, message: 'Rezervasyon oluşturuldu.', type: 'success' });
     } catch (err) {
-      const message = getErrorMessage(err, 'Rezervasyon basarisiz.');
+      const message = getErrorMessage(err, 'Rezervasyon başarısız.');
       setError(message);
       setToast({ open: true, message, type: 'error' });
     } finally {
@@ -68,13 +68,13 @@ function MealMenuDetailPage() {
   if (loading) {
     return (
       <Box py={4}>
-        <LoadingSpinner label="Menu yukleniyor..." />
+        <LoadingSpinner label="Menü yükleniyor..." />
       </Box>
     );
   }
 
   if (error || !menu) {
-    return <Alert variant="error" message={error || 'Menu bulunamadi.'} />;
+    return <Alert variant="error" message={error || 'Menü bulunamadı.'} />;
   }
 
   return (
@@ -84,7 +84,7 @@ function MealMenuDetailPage() {
           {menu.title || menu.name || 'Yemek menusu'}
         </Typography>
         <Button variant="outlined" onClick={() => navigate(-1)}>
-          Geri
+          Geri Dön
         </Button>
       </Stack>
 

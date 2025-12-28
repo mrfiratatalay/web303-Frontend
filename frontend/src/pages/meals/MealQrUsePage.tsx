@@ -18,7 +18,7 @@ function MealQrUsePage() {
 
   const handleSubmit = async () => {
     if (!qrCode.trim()) {
-      setError('QR kod gerekli.');
+      setError('QR kod gereklidir.');
       return;
     }
     setLoading(true);
@@ -28,7 +28,7 @@ function MealQrUsePage() {
       setToast({ open: true, type: 'success', message: 'Rezervasyon kullanildi.' });
       setQrCode('');
     } catch (err) {
-      const message = getErrorMessage(err, 'QR kullanimi basarisiz.');
+      const message = getErrorMessage(err, 'QR kullanımı başarısız.');
       setError(message);
       setToast({ open: true, type: 'error', message });
     } finally {
@@ -53,11 +53,11 @@ function MealQrUsePage() {
               label="QR kod"
               value={qrCode}
               onChange={(e) => setQrCode(e.target.value)}
-              placeholder="QR kodu taratin veya yapistirin"
+              placeholder="QR kodu taratın veya yapıştırın"
             />
             <Box>
               <Button variant="contained" onClick={handleSubmit} disabled={loading}>
-                {loading ? <LoadingSpinner label="Gonderiliyor..." /> : 'Gonder'}
+                {loading ? <LoadingSpinner label="Gönderiliyor..." /> : 'Gönder'}
               </Button>
             </Box>
           </Stack>

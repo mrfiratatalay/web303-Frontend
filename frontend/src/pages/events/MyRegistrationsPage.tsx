@@ -55,7 +55,7 @@ function MyRegistrationsPage() {
       const data = extractData<EventRegistration[]>(response);
       setRegistrations(data || []);
     } catch (err) {
-      setError(getErrorMessage(err, 'Kayitlar yuklenemedi.'));
+      setError(getErrorMessage(err, 'Kayıtlar yüklenemedi.'));
       setRegistrations([]);
     } finally {
       setLoading(false);
@@ -72,10 +72,10 @@ function MyRegistrationsPage() {
     setError('');
     try {
       await cancelRegistration(registration.event_id, registration.id);
-      setToast({ open: true, message: 'Kayit iptal edildi.', type: 'success' });
+      setToast({ open: true, message: 'Kayıt iptal edildi.', type: 'success' });
       loadRegistrations();
     } catch (err) {
-      setError(getErrorMessage(err, 'Iptal basarisiz.'));
+      setError(getErrorMessage(err, 'İptal başarısız.'));
     } finally {
       setActionLoading(null);
     }
@@ -96,7 +96,7 @@ function MyRegistrationsPage() {
 
       {loading ? (
         <Box py={4}>
-          <LoadingSpinner label="Kayitlar yukleniyor..." />
+          <LoadingSpinner label="Kayıtlar yükleniyor..." />
         </Box>
       ) : (
         <Card>
@@ -177,7 +177,7 @@ function MyRegistrationsPage() {
                   {!registrations.length && (
                     <TableRow>
                       <TableCell colSpan={5} align="center">
-                        <Typography color="text.secondary">Kayit bulunamadi.</Typography>
+                        <Typography color="text.secondary">Kayıt bulunamadı.</Typography>
                       </TableCell>
                     </TableRow>
                   )}

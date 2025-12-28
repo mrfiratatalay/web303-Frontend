@@ -51,7 +51,7 @@ function EventRegistrationsPage() {
       setEvent(extractData<Event>(eventResponse));
       setRegistrations(extractData<EventRegistration[]>(regResponse) || []);
     } catch (err) {
-      setError(getErrorMessage(err, 'Kayitlar yuklenemedi.'));
+      setError(getErrorMessage(err, 'Kayıtlar yüklenemedi.'));
       setRegistrations([]);
     } finally {
       setLoading(false);
@@ -69,10 +69,10 @@ function EventRegistrationsPage() {
     setError('');
     try {
       await checkInRegistration(id, registration.id);
-      setToast({ open: true, message: 'Check-in basarili.', type: 'success' });
+      setToast({ open: true, message: 'Check-in başarılı.', type: 'success' });
       loadData();
     } catch (err) {
-      setError(getErrorMessage(err, 'Check-in basarisiz.'));
+      setError(getErrorMessage(err, 'Check-in başarısız.'));
     } finally {
       setActionLoading(null);
     }
@@ -93,7 +93,7 @@ function EventRegistrationsPage() {
 
       {loading ? (
         <Box py={4}>
-          <LoadingSpinner label="Kayitlar yukleniyor..." />
+          <LoadingSpinner label="Kayıtlar yükleniyor..." />
         </Box>
       ) : (
         <Card>
@@ -105,7 +105,7 @@ function EventRegistrationsPage() {
                     <TableCell>Katilimci</TableCell>
                     <TableCell>E-posta</TableCell>
                     <TableCell>Durum</TableCell>
-                    <TableCell align="right">Islem</TableCell>
+                    <TableCell align="right">İşlem</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>

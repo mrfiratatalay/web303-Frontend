@@ -35,10 +35,10 @@ function EventCheckInPage() {
     setError('');
     try {
       await checkInByQrCode(qrCode.trim());
-      setToast({ open: true, message: 'Check-in basarili.', type: 'success' });
+      setToast({ open: true, message: 'Check-in başarılı.', type: 'success' });
       setQrCode('');
     } catch (err) {
-      setError(getErrorMessage(err, 'Check-in basarisiz.'));
+      setError(getErrorMessage(err, 'Check-in başarısız.'));
     } finally {
       setLoading(false);
     }
@@ -53,11 +53,11 @@ function EventCheckInPage() {
     setError('');
     try {
       await checkInRegistration(eventId.trim(), registrationId.trim());
-      setToast({ open: true, message: 'Check-in basarili.', type: 'success' });
+      setToast({ open: true, message: 'Check-in başarılı.', type: 'success' });
       setEventId('');
       setRegistrationId('');
     } catch (err) {
-      setError(getErrorMessage(err, 'Check-in basarisiz.'));
+      setError(getErrorMessage(err, 'Check-in başarısız.'));
     } finally {
       setLoading(false);
     }
@@ -107,7 +107,7 @@ function EventCheckInPage() {
             />
             <TextField
               fullWidth
-              label="Kayit ID"
+              label="Kayıt ID"
               value={registrationId}
               onChange={(e) => setRegistrationId(e.target.value)}
             />

@@ -32,7 +32,7 @@ function MealCafeteriasPage() {
       const data = extractData<Cafeteria[] | Cafeteria>(response);
       setCafeterias(Array.isArray(data) ? data : data ? [data] : []);
     } catch (err) {
-      setError(getErrorMessage(err, 'Yemekhaneler yuklenemedi.'));
+      setError(getErrorMessage(err, 'Yemekhaneler yüklenemedi.'));
       setCafeterias([]);
     } finally {
       setLoading(false);
@@ -51,7 +51,7 @@ function MealCafeteriasPage() {
 
       {loading ? (
         <Box py={4}>
-          <LoadingSpinner label="Yemekhaneler yukleniyor..." />
+          <LoadingSpinner label="Yemekhaneler yükleniyor..." />
         </Box>
       ) : (
         <Card>
@@ -78,7 +78,7 @@ function MealCafeteriasPage() {
                   {!cafeterias.length && (
                     <TableRow>
                       <TableCell colSpan={4} align="center">
-                        <Typography color="text.secondary">Yemekhane bulunamadi.</Typography>
+                        <Typography color="text.secondary">Yemekhane bulunamadı.</Typography>
                       </TableCell>
                     </TableRow>
                   )}

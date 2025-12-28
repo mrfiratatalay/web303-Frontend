@@ -69,7 +69,7 @@ function MealMenusPage() {
         const data = normalizeMealMenuListResponse(response, { page: query.page, limit: query.limit });
         setMenus(data.menus);
     } catch (err) {
-      setError(getErrorMessage(err, 'Menuler yuklenemedi.'));
+      setError(getErrorMessage(err, 'Menüler yüklenemedi.'));
       setMenus([]);
     } finally {
       setLoading(false);
@@ -115,7 +115,7 @@ function MealMenusPage() {
               ))}
             </TextField>
             <Button variant="outlined" size="small" onClick={() => setQuery(DEFAULT_QUERY)}>
-              Sifirla
+              Sıfırla
             </Button>
           </Stack>
         </CardContent>
@@ -125,7 +125,7 @@ function MealMenusPage() {
 
       {loading ? (
         <Box py={4}>
-          <LoadingSpinner label="Menuler yukleniyor..." />
+          <LoadingSpinner label="Menüler yükleniyor..." />
         </Box>
       ) : (
         <Card>
@@ -138,7 +138,7 @@ function MealMenusPage() {
                     <TableCell>Yemekhane</TableCell>
                     <TableCell>Tarih</TableCell>
                     <TableCell align="right">Fiyat</TableCell>
-                    <TableCell align="right">Islem</TableCell>
+                    <TableCell align="right">İşlem</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -158,7 +158,7 @@ function MealMenusPage() {
                   {!menus.length && (
                     <TableRow>
                       <TableCell colSpan={5} align="center">
-                        <Typography color="text.secondary">Menu bulunamadi.</Typography>
+                        <Typography color="text.secondary">Menü bulunamadı.</Typography>
                       </TableCell>
                     </TableRow>
                   )}

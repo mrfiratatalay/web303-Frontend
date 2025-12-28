@@ -32,7 +32,7 @@ function GenerateSchedulePage() {
 
   const handleSubmit = async () => {
     if (!year || Number.isNaN(Number(year))) {
-      setError('Yil gerekli.');
+      setError('Yıl gereklidir.');
       return;
     }
     setLoading(true);
@@ -47,9 +47,9 @@ function GenerateSchedulePage() {
       const data = extractData<{ scheduleId?: string; id?: string; message?: string }>(response);
       const createdId = data?.scheduleId || data?.id || null;
       setScheduleId(createdId);
-      setToast({ open: true, type: 'success', message: data?.message || 'Program olusturuldu.' });
+      setToast({ open: true, type: 'success', message: data?.message || 'Program oluşturuldu.' });
     } catch (err) {
-      const message = getErrorMessage(err, 'Program olusturma basarisiz.');
+      const message = getErrorMessage(err, 'Program oluşturma başarısız.');
       setError(message);
       setToast({ open: true, type: 'error', message });
     } finally {
@@ -60,7 +60,7 @@ function GenerateSchedulePage() {
   return (
     <Stack spacing={2}>
       <Typography variant="h5" fontWeight={800}>
-        Program olustur
+        Program Oluştur
       </Typography>
 
       {error && <Alert variant="error" message={error} />}
@@ -96,7 +96,7 @@ function GenerateSchedulePage() {
             />
             <Box>
               <Button variant="contained" onClick={handleSubmit} disabled={loading}>
-                {loading ? <LoadingSpinner label="Olusturuluyor..." /> : 'Olustur'}
+                {loading ? <LoadingSpinner label="Oluşturuluyor..." /> : 'Oluştur'}
               </Button>
             </Box>
           </Stack>
@@ -109,7 +109,7 @@ function GenerateSchedulePage() {
             <Stack spacing={1}>
               <Typography fontWeight={700}>Program ID: {scheduleId}</Typography>
               <Button variant="outlined" onClick={() => navigate(`/scheduling/${scheduleId}`)}>
-                Program detayini gor
+                Program detayını gör
               </Button>
             </Stack>
           </CardContent>

@@ -79,7 +79,7 @@ function ReservationListPage() {
       }
       setReservations(resList);
     } catch (err) {
-      setError(getErrorMessage(err, 'Rezervasyonlar yuklenemedi.'));
+      setError(getErrorMessage(err, 'Rezervasyonlar yüklenemedi.'));
       setReservations([]);
     } finally {
       setLoading(false);
@@ -112,7 +112,7 @@ function ReservationListPage() {
         message: action === 'approve' ? 'Rezervasyon onaylandi.' : 'Rezervasyon reddedildi.',
       });
     } catch (err) {
-      const message = getErrorMessage(err, 'Islem basarisiz.');
+      const message = getErrorMessage(err, 'İşlem başarısız.');
       setError(message);
       setToast({ open: true, type: 'error', message });
     } finally {
@@ -133,7 +133,7 @@ function ReservationListPage() {
 
       {loading ? (
         <Box py={4}>
-          <LoadingSpinner label="Rezervasyonlar yukleniyor..." />
+          <LoadingSpinner label="Rezervasyonlar yükleniyor..." />
         </Box>
       ) : (
         <Card>
@@ -146,7 +146,7 @@ function ReservationListPage() {
                     <TableCell>Zaman</TableCell>
                     <TableCell>Ogrenci</TableCell>
                     <TableCell>Durum</TableCell>
-                    <TableCell align="right">Islemler</TableCell>
+                    <TableCell align="right">İşlemler</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -186,7 +186,7 @@ function ReservationListPage() {
                   {!reservations.length && (
                     <TableRow>
                       <TableCell colSpan={5} align="center">
-                        <Typography color="text.secondary">Rezervasyon talebi bulunamadi.</Typography>
+                        <Typography color="text.secondary">Rezervasyon talebi bulunamadı.</Typography>
                       </TableCell>
                     </TableRow>
                   )}

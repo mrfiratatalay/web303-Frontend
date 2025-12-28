@@ -63,7 +63,7 @@ function ScheduleDetailPage() {
       setSchedule(data || null);
       setEntries(normalizeEntries(data));
     } catch (err) {
-      setError(getErrorMessage(err, 'Program yuklenemedi.'));
+      setError(getErrorMessage(err, 'Program yüklenemedi.'));
     } finally {
       setLoading(false);
     }
@@ -74,13 +74,13 @@ function ScheduleDetailPage() {
   if (loading) {
     return (
       <Box py={4}>
-        <LoadingSpinner label="Program yukleniyor..." />
+        <LoadingSpinner label="Program yükleniyor..." />
       </Box>
     );
   }
 
   if (error || !schedule) {
-    return <Alert variant="error" message={error || 'Program bulunamadi.'} />;
+    return <Alert variant="error" message={error || 'Program bulunamadı.'} />;
   }
 
   return (
@@ -90,7 +90,7 @@ function ScheduleDetailPage() {
           Program detayi
         </Typography>
         <Button variant="outlined" onClick={() => navigate(-1)}>
-          Geri
+          Geri Dön
         </Button>
       </Stack>
 
@@ -100,7 +100,7 @@ function ScheduleDetailPage() {
             <Typography>Program ID: {schedule.id}</Typography>
             <Typography>Donem: {schedule.semester || '-'}</Typography>
             <Typography>Yil: {schedule.year ?? '-'}</Typography>
-            <Typography>Olusturma: {schedule.generated_at || '-'}</Typography>
+            <Typography>Oluşturma: {schedule.generated_at || '-'}</Typography>
           </Stack>
         </CardContent>
       </Card>
@@ -133,7 +133,7 @@ function ScheduleDetailPage() {
                 {!entries.length && (
                   <TableRow>
                     <TableCell colSpan={5} align="center">
-                      <Typography color="text.secondary">Program kaydi bulunamadi.</Typography>
+                      <Typography color="text.secondary">Program kaydı bulunamadı.</Typography>
                     </TableCell>
                   </TableRow>
                 )}

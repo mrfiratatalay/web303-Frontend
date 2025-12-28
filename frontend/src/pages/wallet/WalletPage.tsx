@@ -53,7 +53,7 @@ function WalletPage() {
       const data = extractData<WalletBalance>(response);
       setBalance(data || null);
     } catch (err) {
-      setError(getErrorMessage(err, 'Cuzdan bakiyesi yuklenemedi.'));
+      setError(getErrorMessage(err, 'Cüzdan bakiyesi yüklenemedi.'));
       setBalance(null);
     } finally {
       setLoadingBalance(false);
@@ -75,7 +75,7 @@ function WalletPage() {
       }
       setTransactions(txns);
     } catch (err) {
-      setError(getErrorMessage(err, 'Cuzdan islemleri yuklenemedi.'));
+      setError(getErrorMessage(err, 'Cüzdan işlemleri yüklenemedi.'));
       setTransactions([]);
     } finally {
       setLoadingTransactions(false);
@@ -106,9 +106,9 @@ function WalletPage() {
       }
       await loadTransactions();
       setTopupAmount('');
-      setToast({ open: true, type: 'success', message: 'Yukleme basarili.' });
+      setToast({ open: true, type: 'success', message: 'Yükleme başarılı.' });
     } catch (err) {
-      const message = getErrorMessage(err, 'Yukleme basarisiz.');
+      const message = getErrorMessage(err, 'Yükleme başarısız.');
       setError(message);
       setToast({ open: true, type: 'error', message });
     } finally {
@@ -139,7 +139,7 @@ function WalletPage() {
             </Typography>
             {loadingBalance ? (
               <Box py={2}>
-                <LoadingSpinner label="Bakiye yukleniyor..." />
+                <LoadingSpinner label="Bakiye yükleniyor..." />
               </Box>
             ) : (
               <Typography variant="h4" fontWeight={800}>
@@ -181,11 +181,11 @@ function WalletPage() {
         <CardContent>
           <Stack spacing={2}>
             <Typography variant="subtitle1" fontWeight={700}>
-              Islemler
+              İşlemler
             </Typography>
             {loadingTransactions ? (
               <Box py={2}>
-                <LoadingSpinner label="Islemler yukleniyor..." />
+                <LoadingSpinner label="İşlemler yükleniyor..." />
               </Box>
             ) : (
               <TableContainer>
@@ -194,7 +194,7 @@ function WalletPage() {
                     <TableRow>
                       <TableCell>Tarih</TableCell>
                       <TableCell>Tip</TableCell>
-                      <TableCell>Aciklama</TableCell>
+                      <TableCell>Açıklama</TableCell>
                       <TableCell align="right">Tutar</TableCell>
                       <TableCell align="right">Bakiye</TableCell>
                     </TableRow>
@@ -224,7 +224,7 @@ function WalletPage() {
                     {!transactions.length && (
                       <TableRow>
                         <TableCell colSpan={5} align="center">
-                          <Typography color="text.secondary">Islem bulunamadi.</Typography>
+                          <Typography color="text.secondary">İşlem bulunamadı.</Typography>
                         </TableCell>
                       </TableRow>
                     )}

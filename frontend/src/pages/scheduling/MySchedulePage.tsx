@@ -98,7 +98,7 @@ function MySchedulePage() {
         const data = extractData<any>(response);
         setEntries(normalizeEntries(data));
       } catch (err) {
-        setError(getErrorMessage(err, 'Program yuklenemedi.'));
+        setError(getErrorMessage(err, 'Program yüklenemedi.'));
         setEntries([]);
       } finally {
         setLoading(false);
@@ -130,7 +130,7 @@ function MySchedulePage() {
       link.remove();
       window.URL.revokeObjectURL(url);
     } catch (err) {
-      setError(getErrorMessage(err, 'iCal indirme basarisiz.'));
+      setError(getErrorMessage(err, 'iCal indirme başarısız.'));
     } finally {
       setDownloading(false);
     }
@@ -151,7 +151,7 @@ function MySchedulePage() {
 
       {loading ? (
         <Box py={4}>
-          <LoadingSpinner label="Program yukleniyor..." />
+          <LoadingSpinner label="Program yükleniyor..." />
         </Box>
       ) : (
         <Card>
@@ -182,7 +182,7 @@ function MySchedulePage() {
                   {!entries.length && (
                     <TableRow>
                       <TableCell colSpan={5} align="center">
-                        <Typography color="text.secondary">Program kaydi bulunamadi.</Typography>
+                        <Typography color="text.secondary">Program kaydı bulunamadı.</Typography>
                       </TableCell>
                     </TableRow>
                   )}

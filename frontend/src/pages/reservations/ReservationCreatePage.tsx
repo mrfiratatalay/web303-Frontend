@@ -41,7 +41,7 @@ function ReservationCreatePage() {
         const data = extractData<Classroom[]>(response);
         setClassrooms(Array.isArray(data) ? data : []);
       } catch (err) {
-        setError(getErrorMessage(err, 'Derslikler yuklenemedi.'));
+        setError(getErrorMessage(err, 'Derslikler yüklenemedi.'));
       } finally {
         setLoadingClassrooms(false);
       }
@@ -52,15 +52,15 @@ function ReservationCreatePage() {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     if (!classroomId) {
-      setError('Derslik secimi gerekli.');
+      setError('Derslik seçimi gereklidir.');
       return;
     }
     if (!startTime || !endTime) {
-      setError('Baslangic ve bitis zamani gerekli.');
+      setError('Başlangıç ve bitiş zamanı gereklidir.');
       return;
     }
     if (new Date(startTime) >= new Date(endTime)) {
-      setError('Bitis zamani baslangictan sonra olmali.');
+      setError('Bitiş zamanı başlangıçtan sonra olmalıdır.');
       return;
     }
 
@@ -75,16 +75,16 @@ function ReservationCreatePage() {
       });
       const data = extractData<Reservation>(response);
       if (data?.id) {
-        setToast({ open: true, type: 'success', message: 'Rezervasyon talebi gonderildi. Admin onayi bekleniyor.' });
+        setToast({ open: true, type: 'success', message: 'Rezervasyon talebi gönderildi. Admin onayı bekleniyor.' });
       } else {
-        setToast({ open: true, type: 'success', message: 'Rezervasyon olusturuldu.' });
+        setToast({ open: true, type: 'success', message: 'Rezervasyon oluşturuldu.' });
       }
       setClassroomId('');
       setStartTime('');
       setEndTime('');
       setPurpose('');
     } catch (err) {
-      const message = getErrorMessage(err, 'Rezervasyon olusturma basarisiz.');
+      const message = getErrorMessage(err, 'Rezervasyon oluşturma başarısız.');
       setError(message);
       setToast({ open: true, type: 'error', message });
     } finally {
@@ -116,9 +116,9 @@ function ReservationCreatePage() {
                 disabled={loadingClassrooms}
               >
                 {loadingClassrooms ? (
-                  <MenuItem disabled>Yukleniyor...</MenuItem>
+                  <MenuItem disabled>Yükleniyor...</MenuItem>
                 ) : classrooms.length === 0 ? (
-                  <MenuItem disabled>Derslik bulunamadi</MenuItem>
+                  <MenuItem disabled>Derslik bulunamadı</MenuItem>
                 ) : (
                   classrooms.map((c) => (
                     <MenuItem key={c.id} value={c.id}>
@@ -152,7 +152,7 @@ function ReservationCreatePage() {
             />
             <Box>
               <Button type="submit" variant="contained" disabled={submitting || loadingClassrooms}>
-                {submitting ? <LoadingSpinner label="Gonderiliyor..." /> : 'Rezervasyon Talebi Olustur'}
+                {submitting ? <LoadingSpinner label="Gönderiliyor..." /> : 'Rezervasyon Talebi Oluştur'}
               </Button>
             </Box>
           </Stack>

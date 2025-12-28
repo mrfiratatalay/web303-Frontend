@@ -53,7 +53,7 @@ function EventDetailPage() {
       const data = extractData<Event>(response);
       setEvent(data);
     } catch (err) {
-      setError(getErrorMessage(err, 'Etkinlik yuklenemedi.'));
+      setError(getErrorMessage(err, 'Etkinlik yüklenemedi.'));
     } finally {
       setLoading(false);
     }
@@ -85,10 +85,10 @@ function EventDetailPage() {
     setError('');
     try {
       await registerForEvent(id);
-      setToast({ open: true, message: 'Kayit basarili.', type: 'success' });
+      setToast({ open: true, message: 'Kayıt başarılı.', type: 'success' });
       loadEvent();
     } catch (err) {
-      setError(getErrorMessage(err, 'Kayit basarisiz.'));
+      setError(getErrorMessage(err, 'Kayıt başarısız.'));
     } finally {
       setActionLoading(false);
     }
@@ -97,17 +97,17 @@ function EventDetailPage() {
   const handleUnregister = async () => {
     if (!id) return;
     if (!registrationId) {
-      setError('Kayit ID bulunamadi.');
+      setError('Kayıt ID bulunamadı.');
       return;
     }
     setActionLoading(true);
     setError('');
     try {
       await cancelRegistration(id, registrationId);
-      setToast({ open: true, message: 'Kayit iptal edildi.', type: 'success' });
+      setToast({ open: true, message: 'Kayıt iptal edildi.', type: 'success' });
       loadEvent();
     } catch (err) {
-      setError(getErrorMessage(err, 'Iptal basarisiz.'));
+      setError(getErrorMessage(err, 'İptal başarısız.'));
     } finally {
       setActionLoading(false);
     }
@@ -127,7 +127,7 @@ function EventDetailPage() {
         state: { toast: { message: 'Etkinlik silindi.', type: 'success' } },
       });
     } catch (err) {
-      setError(getErrorMessage(err, 'Silme basarisiz.'));
+      setError(getErrorMessage(err, 'Silme başarısız.'));
       closeDeleteDialog();
     } finally {
       setActionLoading(false);
@@ -137,13 +137,13 @@ function EventDetailPage() {
   if (loading) {
     return (
       <Box py={4}>
-        <LoadingSpinner label="Etkinlik yukleniyor..." />
+        <LoadingSpinner label="Etkinlik yükleniyor..." />
       </Box>
     );
   }
 
   if (error || !event) {
-    return <Alert variant="error" message={error || 'Etkinlik bulunamadi.'} />;
+    return <Alert variant="error" message={error || 'Etkinlik bulunamadı.'} />;
   }
 
   return (
@@ -195,7 +195,7 @@ function EventDetailPage() {
             </Stack>
             <Stack spacing={0.5}>
               <Typography variant="subtitle2" color="text.secondary">
-                Aciklama
+                Açıklama
               </Typography>
               <Typography>{event.description || '-'}</Typography>
             </Stack>
@@ -204,18 +204,18 @@ function EventDetailPage() {
       </Card>
 
       <Card>
-        <CardHeader title="Kayit" />
+        <CardHeader title="Kayıt" />
         <CardContent>
           <Stack spacing={2}>
             <Typography color="text.secondary">
               {isRegistered
-                ? 'Bu etkinlige kayitlisiniz.'
-                : 'Katilmak icin kayit olun.'}
+                ? 'Bu etkinliğe kayıtlısınız.'
+                : 'Katılmak için kayıt olun.'}
             </Typography>
             <Stack direction="row" spacing={1}>
               {isRegistered ? (
                 <Button variant="outlined" onClick={handleUnregister} disabled={actionLoading}>
-                  {actionLoading ? 'Iptal ediliyor...' : 'Kaydi iptal et'}
+                  {actionLoading ? 'İptal ediliyor...' : 'Kaydı iptal et'}
                 </Button>
               ) : (
                 <Button
@@ -224,13 +224,13 @@ function EventDetailPage() {
                   disabled={actionLoading}
                 >
                   {actionLoading
-                    ? (user?.role === 'admin' ? 'Yukleniyor...' : 'Kayit yapiliyor...')
-                    : (user?.role === 'admin' ? 'Duzenle' : 'Kayit ol')
+                    ? (user?.role === 'admin' ? 'Yükleniyor...' : 'Kayıt yapılıyor...')
+                    : (user?.role === 'admin' ? 'Düzenle' : 'Kayıt ol')
                   }
                 </Button>
               )}
               <Button variant="text" component={RouterLink} to="/events/my-registrations">
-                Kayitlarim
+                Kayıtlarım
               </Button>
             </Stack>
           </Stack>
