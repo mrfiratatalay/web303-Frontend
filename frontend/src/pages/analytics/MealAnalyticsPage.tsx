@@ -180,16 +180,24 @@ const MealAnalyticsPage = () => {
                                 <Typography variant="h6" gutterBottom>
                                     Günlük Yemek Sayıları (Son 30 Gün)
                                 </Typography>
-                                <ResponsiveContainer width="100%" height={300}>
-                                    <LineChart data={dailyChartData}>
-                                        <CartesianGrid strokeDasharray="3 3" />
-                                        <XAxis dataKey="date" />
-                                        <YAxis />
-                                        <Tooltip />
-                                        <Legend />
-                                        <Line type="monotone" dataKey="count" stroke="#1976d2" name="Yemek Sayısı" />
-                                    </LineChart>
-                                </ResponsiveContainer>
+                                {dailyChartData.length > 0 ? (
+                                    <ResponsiveContainer width="100%" height={300}>
+                                        <LineChart data={dailyChartData}>
+                                            <CartesianGrid strokeDasharray="3 3" />
+                                            <XAxis dataKey="date" />
+                                            <YAxis />
+                                            <Tooltip />
+                                            <Legend />
+                                            <Line type="monotone" dataKey="count" stroke="#1976d2" name="Yemek Sayısı" />
+                                        </LineChart>
+                                    </ResponsiveContainer>
+                                ) : (
+                                    <Box sx={{ height: 300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <Typography color="text.secondary">
+                                            Son 30 günde yemek verisi bulunamadı
+                                        </Typography>
+                                    </Box>
+                                )}
                             </Paper>
                         </Grid>
 
@@ -199,24 +207,32 @@ const MealAnalyticsPage = () => {
                                 <Typography variant="h6" gutterBottom>
                                     Kullanım İstatistikleri
                                 </Typography>
-                                <ResponsiveContainer width="100%" height={300}>
-                                    <PieChart>
-                                        <Pie
-                                            data={usageStatsData}
-                                            cx="50%"
-                                            cy="50%"
-                                            labelLine={false}
-                                            label={(entry: any) => `${entry.name}: ${entry.value}`}
-                                            outerRadius={80}
-                                            dataKey="value"
-                                        >
-                                            {usageStatsData.map((entry, index) => (
-                                                <Cell key={`cell-${index}`} fill={entry.color} />
-                                            ))}
-                                        </Pie>
-                                        <Tooltip />
-                                    </PieChart>
-                                </ResponsiveContainer>
+                                {usageStatsData.some(item => item.value > 0) ? (
+                                    <ResponsiveContainer width="100%" height={300}>
+                                        <PieChart>
+                                            <Pie
+                                                data={usageStatsData}
+                                                cx="50%"
+                                                cy="50%"
+                                                labelLine={false}
+                                                label={(entry: any) => `${entry.name}: ${entry.value}`}
+                                                outerRadius={80}
+                                                dataKey="value"
+                                            >
+                                                {usageStatsData.map((entry, index) => (
+                                                    <Cell key={`cell-${index}`} fill={entry.color} />
+                                                ))}
+                                            </Pie>
+                                            <Tooltip />
+                                        </PieChart>
+                                    </ResponsiveContainer>
+                                ) : (
+                                    <Box sx={{ height: 300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <Typography color="text.secondary">
+                                            Henüz kullanım verisi bulunmuyor
+                                        </Typography>
+                                    </Box>
+                                )}
                             </Paper>
                         </Grid>
                     </Grid>
