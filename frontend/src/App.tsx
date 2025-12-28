@@ -263,7 +263,14 @@ function App() {
           }
         />
 
-        <Route path="/wallet" element={<WalletPage />} />
+        <Route
+          path="/wallet"
+          element={
+            <ProtectedRoute allowedRoles={['student', 'faculty']}>
+              <WalletPage />
+            </ProtectedRoute>
+          }
+        />
 
         <Route path="/events" element={<EventListPage />} />
         <Route path="/events/checkin"
@@ -354,7 +361,9 @@ function App() {
           path="/analytics/academic"
           element={
             <ProtectedRoute allowedRoles={['admin', 'faculty']}>
-              <AcademicAnalyticsPage />
+              <Suspense fallback={<Container sx={{ py: 4 }}><LoadingSkeleton variant="chart" count={2} /></Container>}>
+                <AcademicAnalyticsPage />
+              </Suspense>
             </ProtectedRoute>
           }
         />
@@ -362,7 +371,9 @@ function App() {
           path="/analytics/attendance"
           element={
             <ProtectedRoute allowedRoles={['admin', 'faculty']}>
-              <AttendanceAnalyticsPage />
+              <Suspense fallback={<Container sx={{ py: 4 }}><LoadingSkeleton variant="chart" count={2} /></Container>}>
+                <AttendanceAnalyticsPage />
+              </Suspense>
             </ProtectedRoute>
           }
         />
@@ -370,7 +381,9 @@ function App() {
           path="/analytics/meal"
           element={
             <ProtectedRoute allowedRoles={['admin']}>
-              <MealAnalyticsPage />
+              <Suspense fallback={<Container sx={{ py: 4 }}><LoadingSkeleton variant="chart" count={2} /></Container>}>
+                <MealAnalyticsPage />
+              </Suspense>
             </ProtectedRoute>
           }
         />
@@ -378,13 +391,29 @@ function App() {
           path="/analytics/event"
           element={
             <ProtectedRoute allowedRoles={['admin']}>
-              <EventAnalyticsPage />
+              <Suspense fallback={<Container sx={{ py: 4 }}><LoadingSkeleton variant="chart" count={2} /></Container>}>
+                <EventAnalyticsPage />
+              </Suspense>
             </ProtectedRoute>
           }
         />
 
-        <Route path="/notifications" element={<NotificationsPage />} />
-        <Route path="/notifications/preferences" element={<NotificationPreferencesPage />} />
+        <Route
+          path="/notifications"
+          element={
+            <Suspense fallback={<Container sx={{ py: 4 }}><LoadingSkeleton variant="list" count={5} /></Container>}>
+              <NotificationsPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/notifications/preferences"
+          element={
+            <Suspense fallback={<Container sx={{ py: 4 }}><LoadingSkeleton variant="form" count={3} /></Container>}>
+              <NotificationPreferencesPage />
+            </Suspense>
+          }
+        />
       </Route>
 
       <Route path="*" element={<NotFoundPage />} />
